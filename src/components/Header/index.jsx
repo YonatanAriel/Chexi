@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import styles from './Style.module.css'
 import {FaHeart} from 'react-icons/fa';
 import {GiOppositeHearts} from 'react-icons/gi';
@@ -7,23 +7,17 @@ import {HiLogin, HiLogout} from 'react-icons/hi';
 import {AiFillHome} from 'react-icons/ai';
 import {MdAssignmentInd} from 'react-icons/md';
 import {BsMusicNote} from 'react-icons/bs';
-function Header() {
+import Search from '../Search';
+function Header({setUserSearch}) {
   return ( <>
-    <div className={styles.mainDiv}>
-      <BsMusicNote size={40}/><h2 style={{marginLeft:"-63px", marginTop:"7px"}}>Chexi</h2>
-    <Link to="./Home"><AiFillHome /><span>Home</span></Link>
-    <Link to="./SignUp"><MdAssignmentInd /><span>Sign Up</span></Link>
-    <Link to="./Login"><HiLogin /><HiLogout /><span>Log In</span></Link>
-    <div className={styles.container} >
-      <form action="/" method="GET" className={styles.form}>
-        <input type="search" placeholder="What do you want to listen to?" className={styles.searchField} />
-        <button type="submit" className={styles.searchButton}>
-          <img src="src\photos\search.webp" />
-        </button>
-      </form>
-    </div>
-    <Link to="./LikedSongs"><FaHeart /><GiOppositeHearts /><span>Liked Songs</span></Link>
-    <Link to="./PlayLists"><RiPlayListFill /><span>PlayLists</span></Link>
+      <div className={styles.logoBackground}><BsMusicNote style={{marginBottom:"8px"/*marginBottom:"1.5vh"*/}} size={55}/><span className={styles.logoText}>Chex<span className={styles.redDot}>i</span></span></div>
+      <div className={styles.mainDiv}>
+      <Link className={styles.home} to="./"><AiFillHome /*className={styles.red}*/ /><span>Home</span></Link>
+    <Link to="./LikedSongs" className={styles.disappearItemsWhenScreenShrink}><FaHeart size={15} /><span >Liked Songs</span></Link>
+    <Link to="./PlayLists" className={styles.disappearItemsWhenScreenShrink}><RiPlayListFill size={17} style={{marginBottom:"-0.3vh"}} /><span>PlayLists</span></Link>
+    <Search setUserSearch={setUserSearch} />
+    <Link to="./Login"><HiLogin size={19} style={{marginBottom:"-0.6vh"}}/>{/*<HiLogout />*/}<span >Log In</span></Link>
+    <Link to="./SignUp"><MdAssignmentInd  style={{marginBottom:"-0.3vh"}}/><span >Sign Up</span></Link>
     </div>
     </>
   )

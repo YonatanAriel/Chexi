@@ -1,12 +1,16 @@
 .mainDiv{
     position: fixed;
     bottom:0;
-    background-color: rgba(255, 255, 255, 0.03);
+    background-color: rgba(255, 255, 255, 0.05);
     height: 8vh;
-    width: 99vw;
+    width: 98.5vw;
     display: flex;
     justify-content: center;
     align-items: center;
     border-radius: 30px 30px 0 0;
-    margin: 0 0.5vw;
+    margin: 0 0.75vw;
+    color: rgb(255, 1, 1);
+    z-index: 2;
+    column-gap: 3vw;
+    backdrop-filter: blur(10px); 
 }

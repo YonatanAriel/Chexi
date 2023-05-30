@@ -8,10 +8,16 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  color:white;
 }
 body {
-  background-color: rgba(0, 0, 0, 0.9);
+  /* background-color: rgba(0, 0, 0, 0.9); */
+  user-select: none;
+}
+img {
+  -webkit-user-drag: none; /* Safari/Chrome */
+  -khtml-user-drag: none; /* Konqueror */
+  -moz-user-drag: none; /* Firefox */
+  -o-user-drag: none; /* Opera */
 }
 
 
