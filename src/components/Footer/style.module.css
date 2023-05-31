@@ -1,3 +1,32 @@
+body {
+    overflow-x: hidden;
+ /* to not allow x scrolling when the video play from footer component */
+}
+.sticky {
+    position: sticky;
+    top:0;
+}
+.videoContainer {
+
+    position: absolute;
+    top:-19vh;
+    left:-50px;
+    height: 130vh;
+    display: flex;
+    align-items: center; 
+    pointer-events: none;
+        /* z-index: 1; */
+}
+.videoContainer iframe{
+    position: sticky;
+    border: none;
+    width:105vw;
+    height: 150vh;
+}
+.youtube-player-container .ytp-chrome-top,
+.youtube-player-container .ytp-gradient-bottom {
+  display: none;
+}
 .mainDiv{
     position: fixed;
     bottom:0;

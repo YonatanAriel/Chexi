@@ -10,8 +10,8 @@ function SongsContainer({ defaultSongs, setUserSearch,setSongPlayed,setIsSongPla
         defaultSongs.map((song, i) => (
           <div className={styles.song} onClick={() => {setSongPlayed(song),setIsSongPlaying(true)}} key={i}>
             <div className={styles.imgAndButton}>
-              <img className={styles.songImg} src={song.channel.icon}  onError={() => {
-    this.src = song.thumbnail.url;
+              <img className={styles.songImg} src={song.channel.icon}  onError={(e) => {
+    e.target.src =  song.thumbnail.url, console.log(e.target.src);
   }} alt={song.title} />
               <BsPlayCircleFill className={`${styles.songButton} ${styles.redButton}`} size={40} />
             </div>

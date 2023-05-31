@@ -9,6 +9,7 @@
     align-items: center;
     flex-wrap: wrap;
     gap: 2.1% 1%;
+    /* z-index: 2; */
 }
 .song {
     cursor: pointer;
