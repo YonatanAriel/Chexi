@@ -62,4 +62,6 @@ h3 {
     max-height: 83px;
     overflow: hidden;
     text-overflow: ellipsis;
+    text-shadow: 0.3px 0.3px 2px rgb(0, 0, 0),
+            -0.3px -0.3px 2px rgb(0, 0, 0)
 }

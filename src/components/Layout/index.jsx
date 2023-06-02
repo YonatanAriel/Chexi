@@ -9,6 +9,7 @@ import PlayLists from "../../pages/PlayLists";
 import styles from "./style.module.css";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import HandlePlayingSongContext from "../../contexts";
 
 function Layout() {
   const [isSongPlaying, setIsSongPlaying] = useState()
@@ -37,16 +38,6 @@ function Layout() {
   }
 };
 const [defaultSongs, setDefaultSongs] = useState([]);
-// useEffect(() => {
-//   axios
-//     .request(options)
-//     .then((res) => {
-//     setDefaultSongs(res.data.data);
-//       console.log(res.data,"5555");
-//       console.log(defaultSongs);
-//     })
-//     .catch((err) => console.log(err));
-// }, [userSearch]);
 useEffect(() => {
   axios
     .request(options2)
@@ -61,6 +52,7 @@ useEffect(() => {
   return (
     <>
     <div className={styles.appContainer}>
+      <HandlePlayingSongContext.Provider>
       <Header setUserSearch={setUserSearch}/>
       <Routes>
       <Route index element={<SongsContainer setSongPlayed={setSongPlayed} setIsSongPlaying={setIsSongPlaying} setUserSearch={setUserSearch} defaultSongs={defaultSongs} />} /> 
@@ -70,6 +62,7 @@ useEffect(() => {
         <Route path="/SignUp" element={<SignUp />} />
       </Routes>
       {songPlayed && <Footer isSongPlaying={isSongPlaying} setIsSongPlaying={setIsSongPlaying} songPlayed={songPlayed} />}
+      </HandlePlayingSongContext.Provider>
       </div>
     </>
   );

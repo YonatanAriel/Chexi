@@ -2,17 +2,16 @@ import { BsPlayCircleFill } from 'react-icons/bs';
 import styles from './style.module.css'
 import { GiLouvrePyramid } from 'react-icons/gi';
 
-function SongsContainer({ defaultSongs, setUserSearch,setSongPlayed,setIsSongPlaying }) {
+function SongsContainer({ defaultSongs,setSongPlayed,setIsSongPlaying }) {
   return (<>
     <div className={styles.mainDiv}>
-      {/* <video src=''/> */}
       {defaultSongs?.length > 0 ? (
         defaultSongs.map((song, i) => (
           <div className={styles.song} onClick={() => {setSongPlayed(song),setIsSongPlaying(true)}} key={i}>
             <div className={styles.imgAndButton}>
               <img className={styles.songImg} src={song.channel.icon}  onError={(e) => {
-    e.target.src =  song.thumbnail.url, console.log(e.target.src);
-  }} alt={song.title} />
+                  e.target.src =  song.thumbnail.url, console.log(e.target.src);
+                        }} alt={song.title} />
               <BsPlayCircleFill className={`${styles.songButton} ${styles.redButton}`} size={40} />
             </div>
             <h3>{song.title.split(/[\(\[]/)[0].trim().replace(/(.*)\s*-\s*(.*)/, '$2\n$1').trim().slice(0, 50)}</h3>

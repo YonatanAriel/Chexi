@@ -20,12 +20,16 @@ function Search({setUserSearch}) {
       window.removeEventListener('resize', handleResize);
     };
   }, []);
+  
+  const handleSearch = () => {
+    setUserSearch(inputText) ,navigate('/')
+  }
 
   return ( <>
     <div className={styles.container} >
     <div className={styles.form}>
-      <input type="text" onChange={(e) => setInputText(e.target.value) } placeholder={placeholder} className={styles.searchField} />
-      <button onClick={() => {setUserSearch(inputText) ,navigate('/')}} className={styles.searchButton}>
+      <input type="text" onKeyDown={(e) => {if(e.key === 'Enter'){handleSearch()}}} onChange={(e) => setInputText(e.target.value) } placeholder={placeholder} className={styles.searchField} />
+      <button onClick={handleSearch} className={styles.searchButton}>
         <img src="src\photos\search.webp" />
       </button>
     </div>

@@ -1,14 +1,19 @@
 import styles from './style.module.css';
 import YouTube from 'react-youtube';
-import React, {useEffect, useRef} from 'react'
-import { FaRegHeart, FaHeart, FaPlay } from 'react-icons/fa';
+import React, {useEffect, useRef, useState} from 'react'
+import { FaRegHeart, FaHeart, FaPlay, FaCompressArrowsAlt,FaExpandArrowsAlt } from 'react-icons/fa';
 import {TbPlayerSkipForwardFilled, TbPlayerSkipBackFilled, TbPlayerPauseFilled} from 'react-icons/tb';
-import {ImVolumeMute2, ImVolumeHigh, ImVolumeMedium, ImVolumeLow} from 'react-icons/im';
+import {ImVolumeMute2, ImVolumeHigh} from 'react-icons/im';
 function Footer({songPlayed, isSongPlaying, setIsSongPlaying}){
     const playerRef = useRef(null);
+    const [fullScreenVideo, setFullScreenVideo] = useState(false)
+    const [elapsedSeconds, setElapsedSeconds] = useState(0)
+    const [elapsedMinutes, setElapsedMinutes] = useState(0);
+    const [elapsedHours, setElapsedHours] = useState(0);
+    const [volume, setVolume] = useState(50)
     const opts = {
-        height: '',
-        width: '',
+        // height: '',
+        // width: '',
         playerVars: {
           autoplay: 1,
           fs: 1,
@@ -16,47 +21,104 @@ function Footer({songPlayed, isSongPlaying, setIsSongPlaying}){
           disablekb: 1,
           modestbranding: 1,
           showinfo: 0,
+          rel: 0,
+          // origin: 'http://localhost:5174'
         }
     }
     const handlePause = () => {
         setIsSongPlaying(false);
-        if (playerRef.current) {
-            playerRef.current.pauseVideo();
-          }
       };
       
       const handlePlay = () => {
         setIsSongPlaying(true);
-        if (playerRef.current) {
-            playerRef.current.playVideo();
-          }
       };
+
       useEffect(() => {
         if (playerRef.current) {
           if (isSongPlaying) {
             playerRef.current.playVideo();
-          } else {
+          } 
+          else {
             playerRef.current.pauseVideo();
           }
+          if (playerRef.current) {
+          playerRef.current.setVolume(volume);
+          }
         }
-      }, [isSongPlaying]);
+      }, [isSongPlaying, volume]);
+
+      useEffect(() => { 
+        const interval = setInterval(() => {
+          setElapsedSeconds((prevS) => {
+            if(elapsedMinutes === 59 && elapsedSeconds === 59){
+              setElapsedHours((prev) => prev + 1)
+              setElapsedMinutes(0)
+              return 0
+            }
+            else if(prevS === 59){
+              setElapsedMinutes((prevM) => prevM + 1)
+              return 0
+            }
+            else{
+              return prevS + 1
+            }
+          })
+        },1000)}
+    ,[])
+     const handleFullScreen = () => {
+      setFullScreenVideo((prev) => !prev)
+      console.log(fullScreenVideo)
+     }
+     const handleVolumeChange = (e) => {
+      const newVolume = Number(e.target.value)
+      setVolume(newVolume)
+     }
+     const handleMute = () => {
+      setVolume(0)
+     }
+     const handleUnmute = () => {
+      setVolume(50)
+     }
+      // const formattedTime = new Date(elapsedSeconds * 1000).toISOString()
+      // .substr(14, 5);
+//{/*style={{display:"none"}}/*}
     return <>
     <div className={styles.sticky}>
-        <div className={styles.videoContainer}>
-            <YouTube videoId={songPlayed.id} opts={opts} autoplay onReady={(event) => (playerRef.current = event.target)}  />
+        <div  className={styles.videoContainer}>
+            <YouTube style={ fullScreenVideo? {display:"none"} : {} } videoId={songPlayed.id} opts={opts} autoplay onReady={(e) => (playerRef.current = e.target)}  />
         </div>
     </div>
+
     <div className={styles.mainDiv}>
-    <FaRegHeart />
-    <FaHeart />
-    <p>0:34</p>
-    <TbPlayerSkipBackFilled />
-    {!isSongPlaying && <FaPlay onClick={handlePlay} size={30} />}
-    {isSongPlaying && <TbPlayerPauseFilled  onClick={handlePause} size={30}/>}
-    <TbPlayerSkipForwardFilled />
-    <p>{songPlayed.duration_formatted}</p>
-    <ImVolumeMute2 /><ImVolumeHigh /><ImVolumeMedium /><ImVolumeLow />
-    <input type="range" /> 
+      <div className={styles.fullScreenButton}>
+        {fullScreenVideo && <FaExpandArrowsAlt size={24} onClick={handleFullScreen} className={styles.iconButton} />}
+        {!fullScreenVideo && <FaCompressArrowsAlt size={24} onClick={handleFullScreen} className={styles.iconButton} />}
+      </div>
+      <div className={styles.artistDetails}>
+        <img src={songPlayed.channel.icon} alt="" />
+        <span>{songPlayed.channel.name}</span>
+      </div>
+      <div className={styles.centerItemsContainer}>
+        <div className={styles.palyingButtonsContainer}>
+          <FaRegHeart className={`${styles.iconButton} ${styles.heart}`}/>    
+          {/* <FaHeart /> */}
+          <TbPlayerSkipBackFilled size={19} className={styles.iconButton} />
+          {!isSongPlaying && <FaPlay className={`${styles.iconButton} ${styles.playAndPauseButton}`} onClick={handlePlay} size={30} />}
+          {isSongPlaying && <TbPlayerPauseFilled className={`${styles.iconButton} ${styles.playAndPauseButton}`} onClick={handlePause} size={30}/>}
+          <TbPlayerSkipForwardFilled size={19} className={styles.iconButton}/>
+        </div>
+        <div className={styles.progressContainer}>
+          <div className={styles.progressTime}>
+            <span >{(elapsedHours != 0) && (elapsedHours + ":")}{`${elapsedMinutes}:${elapsedSeconds}`}</span>
+          </div>
+          <input type="range" min="0" max="100"  className={styles.progressInput} />
+          <span className={styles.progressTime}>{songPlayed.duration_formatted}</span>
+        </div>
+      </div>
+      <div className={styles.volume}>
+        {volume == 0 ? (<ImVolumeMute2 size={22} color="red" onClick={handleUnmute} className={styles.iconButton} />) : (<ImVolumeHigh size={22} onClick={handleMute} className={styles.iconButton}/>)}
+        <input type="range" min="0" max="100" value={volume} onChange={handleVolumeChange} className={styles.volumeInput} />
+      </div>
     </div>
     </>
 }
