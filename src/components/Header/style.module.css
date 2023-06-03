@@ -4,12 +4,12 @@
     z-index: 10;
     top:0;
     /* left: 12vw; */
-    left: 164px;
+    /* left: 164px; */
     background-color: rgba(0, 0, 0,0.4);
     height: 60px;
     /* height: 9vh; */
     /* width: 1202px; */
-    width: 88vw;
+    /* width: 88vw; */
     display: flex;
     justify-content: center;
     align-items: center;
@@ -41,50 +41,33 @@
     font-size: 39px;
     color:wheat;
   }
-.mainDiv > a {
+.mainDiv a {
   flex-shrink: 0;
+  cursor: pointer;
 }
-  /* .redDot::after {
-    content: "";
-    display: inline-block;
-    width: 8px;
-    height: 8px;
-    background-color: red; 
-    border-radius: 50%;
-    vertical-align: middle;
-    margin-bottom: 1.2vh; 
-    margin-left: -3.57vw;
-  }  */
-   /* .redDot {
-    position: relative;
-
-  }
-  .redDot::before {
-    content: "";
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 8px;
-    height: 8px;
-    background-color: red;
-    border-radius: 50%;
-    margin-top:-1.7vh;
-    margin-right: -3vh;
-  } */
   div span {
     margin-left: 0.1vw;
   }
-  .signAndlogDiv {
+  /* .signAndlogDiv {
     margin-left: -10vw;
+  } */
+  .home_library_search {
+    position: absolute;
+    display: flex;
+    gap: 4vw;
+    align-items: center;
+    left:4vw;
   }
-  .red{
-    color: red;
+  .signAndLogDIv {
+    position: absolute;
+    right: 5vw;
+    display: flex;
+    gap:4vw;
   }
-   @media screen and (max-width:700px){
+   /* @media screen and (max-width:700px){
     .disappearItemsWhenScreenShrink{
       display: none;
     }
-  } 
+  }  */
 
  

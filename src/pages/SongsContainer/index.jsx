@@ -1,12 +1,13 @@
 import { BsPlayCircleFill } from 'react-icons/bs';
 import styles from './style.module.css'
 import { GiLouvrePyramid } from 'react-icons/gi';
+import { useEffect } from 'react';
 
-function SongsContainer({ defaultSongs,setSongPlayed,setIsSongPlaying }) {
+function SongsContainer({ songs,setSongPlayed,setIsSongPlaying, isLibraryOpen }) {
   return (<>
-    <div className={styles.mainDiv}>
-      {defaultSongs?.length > 0 ? (
-        defaultSongs.map((song, i) => (
+    <div style={{width: isLibraryOpen? "76.5vw" : "98.5vw"}} className={styles.mainDiv}>
+      {songs?.length > 0 ? (
+        songs.map((song, i) => (
           <div className={styles.song} onClick={() => {setSongPlayed(song),setIsSongPlaying(true)}} key={i}>
             <div className={styles.imgAndButton}>
               <img className={styles.songImg} src={song.channel.icon}  onError={(e) => {

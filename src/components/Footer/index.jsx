@@ -4,7 +4,7 @@ import React, {useEffect, useRef, useState} from 'react'
 import { FaRegHeart, FaHeart, FaPlay, FaCompressArrowsAlt,FaExpandArrowsAlt } from 'react-icons/fa';
 import {TbPlayerSkipForwardFilled, TbPlayerSkipBackFilled, TbPlayerPauseFilled} from 'react-icons/tb';
 import {ImVolumeMute2, ImVolumeHigh} from 'react-icons/im';
-function Footer({songPlayed, isSongPlaying, setIsSongPlaying}){
+function Footer({songPlayed, isSongPlaying, setIsSongPlaying, skipBackOrForward}){
     const playerRef = useRef(null);
     const [fullScreenVideo, setFullScreenVideo] = useState(false)
     const [elapsedSeconds, setElapsedSeconds] = useState(0)
@@ -49,26 +49,29 @@ function Footer({songPlayed, isSongPlaying, setIsSongPlaying}){
 
       useEffect(() => { 
         const interval = setInterval(() => {
-          setElapsedSeconds((prevS) => {
-            if(elapsedMinutes === 59 && elapsedSeconds === 59){
-              setElapsedHours((prev) => prev + 1)
-              setElapsedMinutes(0)
-              return 0
+          if(isSongPlaying){ //למה לא עובד?
+            setElapsedSeconds((prevS) => {
+              if(elapsedMinutes === 59 && elapsedSeconds === 59){
+                setElapsedHours((prev) => prev + 1)
+                setElapsedMinutes(0)
+                return 0
+              }
+              else if(prevS === 59){
+                setElapsedMinutes((prevM) => prevM + 1)
+                return 0
+              }
+              else{
+                return prevS + 1
+              }
+              })
             }
-            else if(prevS === 59){
-              setElapsedMinutes((prevM) => prevM + 1)
-              return 0
-            }
-            else{
-              return prevS + 1
-            }
-          })
         },1000)}
     ,[])
+
      const handleFullScreen = () => {
       setFullScreenVideo((prev) => !prev)
-      console.log(fullScreenVideo)
      }
+
      const handleVolumeChange = (e) => {
       const newVolume = Number(e.target.value)
       setVolume(newVolume)
@@ -79,33 +82,34 @@ function Footer({songPlayed, isSongPlaying, setIsSongPlaying}){
      const handleUnmute = () => {
       setVolume(50)
      }
-      // const formattedTime = new Date(elapsedSeconds * 1000).toISOString()
-      // .substr(14, 5);
-//{/*style={{display:"none"}}/*}
+
+
     return <>
     <div className={styles.sticky}>
         <div  className={styles.videoContainer}>
-            <YouTube style={ fullScreenVideo? {display:"none"} : {} } videoId={songPlayed.id} opts={opts} autoplay onReady={(e) => (playerRef.current = e.target)}  />
+            <YouTube style={ fullScreenVideo? {} : {display:"none"} } videoId={songPlayed.id} opts={opts} autoplay onReady={(e) => (playerRef.current = e.target)}  />
         </div>
     </div>
 
     <div className={styles.mainDiv}>
       <div className={styles.fullScreenButton}>
-        {fullScreenVideo && <FaExpandArrowsAlt size={24} onClick={handleFullScreen} className={styles.iconButton} />}
-        {!fullScreenVideo && <FaCompressArrowsAlt size={24} onClick={handleFullScreen} className={styles.iconButton} />}
+        {!fullScreenVideo && <FaExpandArrowsAlt size={24} onClick={handleFullScreen} className={styles.iconButton} />}
+        {fullScreenVideo && <FaCompressArrowsAlt size={24} onClick={handleFullScreen} className={styles.iconButton} />}
       </div>
+      {/*songPlayed.thumbnail.url */}
       <div className={styles.artistDetails}>
-        <img src={songPlayed.channel.icon} alt="" />
+        <img src={songPlayed.channel.icon } onError={(e) => {
+                  e.target.src =  songPlayed.thumbnail.url, console.log(e.target.src);}} />
         <span>{songPlayed.channel.name}</span>
       </div>
       <div className={styles.centerItemsContainer}>
         <div className={styles.palyingButtonsContainer}>
           <FaRegHeart className={`${styles.iconButton} ${styles.heart}`}/>    
           {/* <FaHeart /> */}
-          <TbPlayerSkipBackFilled size={19} className={styles.iconButton} />
+          <TbPlayerSkipBackFilled onClick={() => skipBackOrForward("back")} size={19} className={styles.iconButton} />
           {!isSongPlaying && <FaPlay className={`${styles.iconButton} ${styles.playAndPauseButton}`} onClick={handlePlay} size={30} />}
           {isSongPlaying && <TbPlayerPauseFilled className={`${styles.iconButton} ${styles.playAndPauseButton}`} onClick={handlePause} size={30}/>}
-          <TbPlayerSkipForwardFilled size={19} className={styles.iconButton}/>
+          <TbPlayerSkipForwardFilled onClick={() => skipBackOrForward("forward")} size={19} className={styles.iconButton}/>
         </div>
         <div className={styles.progressContainer}>
           <div className={styles.progressTime}>

@@ -31,7 +31,7 @@ body {
     position: fixed;
     bottom:0;
     background-color: rgba(255, 255, 255, 0.05);
-    height: 14vh;
+    height: 13vh;
     width: 98.5vw;
     display: flex;
     justify-content: center;
@@ -62,7 +62,7 @@ input[type=range] {
     background: none;
   }
   input[type=range]:focus {
-    /* outline: none; */
+    outline: none;
   }
   input[type=range]::-webkit-slider-runnable-track {
     /* width: 100%; */
@@ -92,9 +92,9 @@ input[type=range] {
     display: flex;
     justify-content: center;
     align-items: center;
-    width:140px;
-    max-width: 140px;
-    min-width: 140px;
+    width:150px;
+    max-width: 150px;
+    min-width: 150px;
     max-height: 11vh;
     /* background-color: aqua; */
     /* overflow: hidden; */
@@ -126,7 +126,7 @@ input[type=range] {
     align-items: center;
     justify-content: center;
     width: 21vw;
-    margin: 1vh 1.5vw 1vh 0;
+    margin: 1vh 1.2vw 1vh 0;
     /* background-color: #FF0000; */
 }
 .heart {
@@ -149,16 +149,21 @@ input[type=range] {
 .progressInput {
     width: 24vw;
     margin: 0 2vw 0 0.8vw;
-    pointer-events: none;
+    /* pointer-events: none; */
+    cursor: pointer;
 }
-.progressInput::-webkit-slider-runnable-track {
-    /* width: 100%; */
-    height: 40px;
-    border-radius: 5px;
+input[type="range"].progressInput::-webkit-slider-thumb {
+    width: 15px;
+    height: 15px;
+    /* margin: 0; */
+    /* border-radius: 0%; */
     background-color: wheat;
   }
+  input[type=range].progressInput::-webkit-slider-runnable-track {
+    /* background-color: rgb(255, 255, 255); */
+  }
 
-.volume {
+  .volume {
     position: absolute;
     right: 2vw;
     display: flex;

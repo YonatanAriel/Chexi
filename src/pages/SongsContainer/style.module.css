@@ -1,8 +1,10 @@
 .mainDiv {
     position: absolute;
     bottom:0;
-    left: 0;
+    /* left: 0; */
+    right: 0;
     height: 85.7vh;
+    padding-bottom: 30vh;
     width: 98.5vw;
     display: flex;
     justify-content: center;
