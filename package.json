@@ -15,6 +15,7 @@
     "react-dom": "^18.2.0",
     "react-icons": "^4.8.0",
     "react-router-dom": "^6.11.1",
+    "react-spinners-kit": "^1.9.1",
     "react-youtube": "^10.1.0",
     "youtube-player": "^5.6.0"
   },
@@ -26,6 +27,7 @@
     "eslint-plugin-react": "^7.32.2",
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-react-refresh": "^0.3.4",
+    "prettier": "^2.8.8",
     "vite": "^4.3.2"
   }
 }

@@ -4,7 +4,7 @@
     /* left: 0; */
     right: 0;
     height: 85.7vh;
-    padding-bottom: 30vh;
+    padding-bottom: 30vh; 
     width: 98.5vw;
     display: flex;
     justify-content: center;
@@ -66,4 +66,13 @@ h3 {
     text-overflow: ellipsis;
     text-shadow: 0.3px 0.3px 2px rgb(0, 0, 0),
             -0.3px -0.3px 2px rgb(0, 0, 0)
+}
+.loading {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height:calc(100vh - 60px) ;
+    position: absolute;
+    bottom: 0;
+    right: 0;
 }

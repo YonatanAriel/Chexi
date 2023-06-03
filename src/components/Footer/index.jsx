@@ -1,12 +1,22 @@
 import styles from './style.module.css';
 import YouTube from 'react-youtube';
-import React, {useEffect, useRef, useState} from 'react'
+import React, {useContext, useEffect, useRef, useState} from 'react'
 import { FaRegHeart, FaHeart, FaPlay, FaCompressArrowsAlt,FaExpandArrowsAlt } from 'react-icons/fa';
 import {TbPlayerSkipForwardFilled, TbPlayerSkipBackFilled, TbPlayerPauseFilled} from 'react-icons/tb';
 import {ImVolumeMute2, ImVolumeHigh} from 'react-icons/im';
-function Footer({songPlayed, isSongPlaying, setIsSongPlaying, skipBackOrForward}){
+import HandlePlayingSongContext from '../../contexts';
+//GrSemantics (arrow up)
+
+import {BsCameraVideoFill, BsFillCameraVideoOffFill} from 'react-icons/bs'
+import { Link, useLocation } from 'react-router-dom';
+
+// , isSongPlaying , setIsSongPlaying
+function Footer({songPlayed, skipBackOrForward}){
+   
+    const {isSongPlaying, setIsSongPlaying} = useContext(HandlePlayingSongContext);
     const playerRef = useRef(null);
-    const [fullScreenVideo, setFullScreenVideo] = useState(false)
+    const [backgroundVideo, setBackgroundVideo] = useState(false)
+    const [fullScreenVideo,setFullScreenVideo] = useState(false)
     const [elapsedSeconds, setElapsedSeconds] = useState(0)
     const [elapsedMinutes, setElapsedMinutes] = useState(0);
     const [elapsedHours, setElapsedHours] = useState(0);
@@ -25,6 +35,7 @@ function Footer({songPlayed, isSongPlaying, setIsSongPlaying, skipBackOrForward}
           // origin: 'http://localhost:5174'
         }
     }
+    const location = useLocation();
     const handlePause = () => {
         setIsSongPlaying(false);
       };
@@ -68,8 +79,10 @@ function Footer({songPlayed, isSongPlaying, setIsSongPlaying, skipBackOrForward}
         },1000)}
     ,[])
 
-     const handleFullScreen = () => {
-      setFullScreenVideo((prev) => !prev)
+     const handleBackgrundVideo = () => {
+      setBackgroundVideo((prev) => !prev)
+      {console.log(backgroundVideo)}
+      
      }
 
      const handleVolumeChange = (e) => {
@@ -82,19 +95,25 @@ function Footer({songPlayed, isSongPlaying, setIsSongPlaying, skipBackOrForward}
      const handleUnmute = () => {
       setVolume(50)
      }
-
+     //
 
     return <>
-    <div className={styles.sticky}>
-        <div  className={styles.videoContainer}>
-            <YouTube style={ fullScreenVideo? {} : {display:"none"} } videoId={songPlayed.id} opts={opts} autoplay onReady={(e) => (playerRef.current = e.target)}  />
+    <div className={styles.sticky} >
+        <div  className={styles.videoContainer }  >
+            <YouTube style={{display: location.pathname === "/Video" || backgroundVideo ? "block" : "none"}}
+             videoId={songPlayed.id} opts={opts}
+             autoplay onReady={(e) => (playerRef.current = e.target)}
+              onEnd={() => {skipBackOrForward("forward")}} />
         </div>
     </div>
-
     <div className={styles.mainDiv}>
-      <div className={styles.fullScreenButton}>
-        {!fullScreenVideo && <FaExpandArrowsAlt size={24} onClick={handleFullScreen} className={styles.iconButton} />}
-        {fullScreenVideo && <FaCompressArrowsAlt size={24} onClick={handleFullScreen} className={styles.iconButton} />}
+      <div className={styles.fullScreenButtons}>
+        {location.pathname === "/Video"?
+          ( <Link to={"/"} onClick={() => setFullScreenVideo(true)}>{<BsFillCameraVideoOffFill size={25} style={{marginLeft:"0.2vw"}} />}</Link> ) 
+        : ( <Link to={"Video"} onClick={() => setFullScreenVideo(false)}>{<BsCameraVideoFill size={25} style={{marginLeft:"0.2vw"}}/>}</Link> )
+        }
+        {!backgroundVideo && <FaExpandArrowsAlt size={24} onClick={handleBackgrundVideo} className={styles.iconButton} />}
+        {backgroundVideo && <FaCompressArrowsAlt size={24} onClick={handleBackgrundVideo} className={styles.iconButton} />}
       </div>
       {/*songPlayed.thumbnail.url */}
       <div className={styles.artistDetails}>

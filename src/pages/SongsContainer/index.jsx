@@ -1,11 +1,18 @@
 import { BsPlayCircleFill } from 'react-icons/bs';
 import styles from './style.module.css'
 import { GiLouvrePyramid } from 'react-icons/gi';
-import { useEffect } from 'react';
+import { useContext, useEffect } from 'react';
+import HandlePlayingSongContext from '../../contexts';
+import { FireworkSpinner } from "react-spinners-kit";
 
-function SongsContainer({ songs,setSongPlayed,setIsSongPlaying, isLibraryOpen }) {
+// ,setIsSongPlaying
+
+function SongsContainer({ songs,setSongPlayed, isLibraryOpen }) {
+
+  const {setIsSongPlaying} = useContext(HandlePlayingSongContext)
+
   return (<>
-    <div style={{width: isLibraryOpen? "76.5vw" : "98.5vw"}} className={styles.mainDiv}>
+    <div style={{width: isLibraryOpen? "78.5vw" : "98.5vw"}} className={styles.mainDiv}>
       {songs?.length > 0 ? (
         songs.map((song, i) => (
           <div className={styles.song} onClick={() => {setSongPlayed(song),setIsSongPlaying(true)}} key={i}>
@@ -18,8 +25,10 @@ function SongsContainer({ songs,setSongPlayed,setIsSongPlaying, isLibraryOpen })
             <h3>{song.title.split(/[\(\[]/)[0].trim().replace(/(.*)\s*-\s*(.*)/, '$2\n$1').trim().slice(0, 50)}</h3>
           </div>/*song.channel.icon? song.channel.icon : song.thumbnail.url*/
         ))
-      ) : (
-        <h1>loading...</h1>
+      ) : ( <div className={styles.loading} 
+            style={{width: isLibraryOpen? "78.5vw" : "100vw"}}>
+        < FireworkSpinner color="wheat" size={200} />
+        </div>
       )}
     </div>
     </> );

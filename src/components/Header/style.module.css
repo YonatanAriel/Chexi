@@ -16,6 +16,13 @@
     column-gap:3.5vw;
     border-radius:0 0 4px 2px;
     color: wheat;
+    left: 164px;
+    width: 88vw;
+}
+.libraryOpenMainDiv{
+  border-bottom-left-radius: 0;
+  left: 20vw;
+  width: 80vw;
 }
   .logoBackground {
     position: fixed;

@@ -12,6 +12,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import HandlePlayingSongContext from "../../contexts";
 import Library from "../Library";
+import VideoContainer from '../../pages/VideoContainer'
 
 function Layout() {
   const [isSongPlaying, setIsSongPlaying] = useState()
@@ -85,17 +86,20 @@ const skipBackOrForward = (backOrForward) => {
   return (
     <>
     <div className={styles.appContainer}>
-      <HandlePlayingSongContext.Provider>
       <Header isLibraryOpen={isLibraryOpen} setIsLibraryOpen={setIsLibraryOpen} setUserSearch={setUserSearch}/>
+      <HandlePlayingSongContext.Provider value={{isSongPlaying, setIsSongPlaying}}>
       <Routes>
-      <Route index element={<SongsContainer isLibraryOpen={isLibraryOpen} setSongPlayed={setSongPlayed} setIsSongPlaying={setIsSongPlaying} setUserSearch={setUserSearch} songs={songs} />} /> 
+        {/*setIsSongPlaying={setIsSongPlaying}*/} 
+      <Route index element={<SongsContainer isLibraryOpen={isLibraryOpen} setSongPlayed={setSongPlayed}  setUserSearch={setUserSearch} songs={songs} />} /> 
         <Route path="/LikedSongs" element={<LikedSongs />} />
         <Route path="/PlayLists" element={<PlayLists />} />
         <Route path="/Login" element={<Login />} />
         <Route path="/SignUp" element={<SignUp />} />
         <Route path="/FavoriteArtists" element={<FavoriteArtists/>} />
+        <Route path="/Video" element={<VideoContainer />}/>
       </Routes>
-      {songPlayed && <Footer isSongPlaying={isSongPlaying} setIsSongPlaying={setIsSongPlaying} songPlayed={songPlayed} skipBackOrForward={skipBackOrForward}/>}
+      {/* isSongPlaying={isSongPlaying} setIsSongPlaying={setIsSongPlaying} */}
+      {songPlayed && <Footer songPlayed={songPlayed} skipBackOrForward={skipBackOrForward}/>}
       {isLibraryOpen && <Library />}
       </HandlePlayingSongContext.Provider>
       </div>

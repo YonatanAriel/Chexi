@@ -6,6 +6,7 @@ body {
     position: sticky;
     /* position: fixed; */
     top:0;
+    /* bottom: -60vh; */
 }
 .videoContainer {
     position: absolute;
@@ -74,16 +75,19 @@ input[type=range] {
     height: 15px;
     width: 15px;
     border-radius: 50%;
-    background: #FF0000;
+    /* background: #FF0000; */
+    background: wheat;
     -webkit-appearance: none;
     margin-top: -5px;
   }
-.fullScreenButton {
+.fullScreenButtons {
     position: absolute;
     left: 2vw;
     display: flex;
     align-items: center;
-
+    flex-direction: column;
+    justify-content: center;
+    gap: 0.3vh;
 }
 .artistDetails {
     position: absolute;
