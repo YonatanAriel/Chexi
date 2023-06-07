@@ -28,7 +28,8 @@ function Search({setUserSearch}) {
   return ( <>
     <div className={styles.container} >
     <div className={styles.form}>
-      <input type="text" onKeyDown={(e) => {if(e.key === 'Enter'){handleSearch()}}} onChange={(e) => setInputText(e.target.value) } placeholder={placeholder} className={styles.searchField} />
+      <input type="text" onKeyDown={(e) => {if(e.key === 'Enter'){handleSearch()}}} 
+      onChange={(e) => setInputText(e.target.value) } placeholder={placeholder} className={styles.searchField} />
       <button onClick={handleSearch} className={styles.searchButton}>
         <img src="src\photos\search.webp" />
       </button>

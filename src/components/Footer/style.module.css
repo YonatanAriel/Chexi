@@ -2,17 +2,19 @@ body {
     overflow-x: hidden;
  /* to not allow x scrolling when the video play from footer component */
 }
-.sticky {
-    position: sticky;
-    /* position: fixed; */
-    top:0;
-    /* bottom: -60vh; */
-}
 .videoContainer {
-    position: absolute;
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    transform: scale(1.2);
+
+    /* position: absolute;
     top:-19vh;
     left:-50px;
-    height: 130vh;
+    height: 130vh; */
+
     display: flex;
     align-items: center; 
     pointer-events: none;
@@ -28,12 +30,28 @@ body {
 .youtube-player-container .ytp-gradient-bottom {
   display: none;
 }
+.arrowButton {
+    position: fixed;
+    right:4vw;
+    bottom: 13vh;
+    width: 5vw;
+    height: 3.8vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px 10px 0 0;
+    background-color: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(20px); 
+    color:wheat;
+    z-index: 2;
+    cursor: pointer;
+}
 .mainDiv{
     position: fixed;
     bottom:0;
     background-color: rgba(255, 255, 255, 0.05);
     height: 13vh;
-    width: 98.5vw;
+    width: 100vw;
     display: flex;
     justify-content: center;
     align-items: center;

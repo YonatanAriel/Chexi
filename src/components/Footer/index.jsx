@@ -5,22 +5,29 @@ import { FaRegHeart, FaHeart, FaPlay, FaCompressArrowsAlt,FaExpandArrowsAlt } fr
 import {TbPlayerSkipForwardFilled, TbPlayerSkipBackFilled, TbPlayerPauseFilled} from 'react-icons/tb';
 import {ImVolumeMute2, ImVolumeHigh} from 'react-icons/im';
 import HandlePlayingSongContext from '../../contexts';
-//GrSemantics (arrow up)
-
 import {BsCameraVideoFill, BsFillCameraVideoOffFill} from 'react-icons/bs'
 import { Link, useLocation } from 'react-router-dom';
+import {TiArrowSortedDown, TiArrowSortedUp} from 'react-icons/ti'
+//GrSemantics (arrow up)
+
+import {IoIosArrowUp, IoIosArrowDown} from 'react-icons/io'
+
 
 // , isSongPlaying , setIsSongPlaying
 function Footer({songPlayed, skipBackOrForward}){
+
    
     const {isSongPlaying, setIsSongPlaying} = useContext(HandlePlayingSongContext);
+    // const playerRef = useRef(null);
     const playerRef = useRef(null);
     const [backgroundVideo, setBackgroundVideo] = useState(false)
     const [fullScreenVideo,setFullScreenVideo] = useState(false)
-    const [elapsedSeconds, setElapsedSeconds] = useState(0)
-    const [elapsedMinutes, setElapsedMinutes] = useState(0);
-    const [elapsedHours, setElapsedHours] = useState(0);
+    // const [elapsedSeconds, setElapsedSeconds] = useState(0)
+    // const [elapsedMinutes, setElapsedMinutes] = useState(0);
+    // const [elapsedHours, setElapsedHours] = useState(0);
     const [volume, setVolume] = useState(50)
+    const [showFooter , setShowFooter] = useState(true);
+
     const opts = {
         // height: '',
         // width: '',
@@ -35,6 +42,8 @@ function Footer({songPlayed, skipBackOrForward}){
           // origin: 'http://localhost:5174'
         }
     }
+    
+    
     const location = useLocation();
     const handlePause = () => {
         setIsSongPlaying(false);
@@ -58,26 +67,26 @@ function Footer({songPlayed, skipBackOrForward}){
         }
       }, [isSongPlaying, volume]);
 
-      useEffect(() => { 
-        const interval = setInterval(() => {
-          if(isSongPlaying){ //למה לא עובד?
-            setElapsedSeconds((prevS) => {
-              if(elapsedMinutes === 59 && elapsedSeconds === 59){
-                setElapsedHours((prev) => prev + 1)
-                setElapsedMinutes(0)
-                return 0
-              }
-              else if(prevS === 59){
-                setElapsedMinutes((prevM) => prevM + 1)
-                return 0
-              }
-              else{
-                return prevS + 1
-              }
-              })
-            }
-        },1000)}
-    ,[])
+    //   useEffect(() => { 
+    //     const interval = setInterval(() => {
+    //       if(isSongPlaying){ //למה לא עובד?
+    //         setElapsedSeconds((prevS) => {
+    //           if(elapsedMinutes === 59 && elapsedSeconds === 59){
+    //             setElapsedHours((prev) => prev + 1)
+    //             setElapsedMinutes(0)
+    //             return 0
+    //           }
+    //           else if(prevS === 59){
+    //             setElapsedMinutes((prevM) => prevM + 1)
+    //             return 0
+    //           }
+    //           else{
+    //             return prevS + 1
+    //           }
+    //           })
+    //         }
+    //     },1000)}
+    // ,[])
 
      const handleBackgrundVideo = () => {
       setBackgroundVideo((prev) => !prev)
@@ -98,15 +107,18 @@ function Footer({songPlayed, skipBackOrForward}){
      //
 
     return <>
-    <div className={styles.sticky} >
         <div  className={styles.videoContainer }  >
             <YouTube style={{display: location.pathname === "/Video" || backgroundVideo ? "block" : "none"}}
              videoId={songPlayed.id} opts={opts}
              autoplay onReady={(e) => (playerRef.current = e.target)}
               onEnd={() => {skipBackOrForward("forward")}} />
         </div>
+        {/* <TiArrowSortedDown size={50}/> */}
+    <div className={styles.arrowButton} style={{bottom: !showFooter && 0}} onClick={ () => setShowFooter(prev => !prev)}>
+      {showFooter? (<IoIosArrowDown className={styles.blurIcon} size={41} />)
+       : (<IoIosArrowUp className={styles.blurIcon} size={41} />)}
     </div>
-    <div className={styles.mainDiv}>
+ {showFooter && (<div className={styles.mainDiv}>
       <div className={styles.fullScreenButtons}>
         {location.pathname === "/Video"?
           ( <Link to={"/"} onClick={() => setFullScreenVideo(true)}>{<BsFillCameraVideoOffFill size={25} style={{marginLeft:"0.2vw"}} />}</Link> ) 
@@ -132,9 +144,12 @@ function Footer({songPlayed, skipBackOrForward}){
         </div>
         <div className={styles.progressContainer}>
           <div className={styles.progressTime}>
-            <span >{(elapsedHours != 0) && (elapsedHours + ":")}{`${elapsedMinutes}:${elapsedSeconds}`}</span>
+            {/* <span >{(elapsedHours != 0) && (elapsedHours + ":")}{`${elapsedMinutes}:${elapsedSeconds}`}</span> */}
           </div>
-          <input type="range" min="0" max="100"  className={styles.progressInput} />
+          <input type="range" min="0" max="100"
+          
+          className={styles.progressInput}/>
+
           <span className={styles.progressTime}>{songPlayed.duration_formatted}</span>
         </div>
       </div>
@@ -142,25 +157,8 @@ function Footer({songPlayed, skipBackOrForward}){
         {volume == 0 ? (<ImVolumeMute2 size={22} color="red" onClick={handleUnmute} className={styles.iconButton} />) : (<ImVolumeHigh size={22} onClick={handleMute} className={styles.iconButton}/>)}
         <input type="range" min="0" max="100" value={volume} onChange={handleVolumeChange} className={styles.volumeInput} />
       </div>
-    </div>
+    </div>)}
     </>
 }
 export default Footer
 
-// (songPlayed.duration / 60).toFixed(2).replace(".",":")
-// useEffect(() => {
-//   if (isSongPlaying) {
-//     audioRef.current.play(); // Start playing the audio
-//   } else {
-//     audioRef.current.pause(); // Pause the audio
-//   }
-// }, [isSongPlaying,songPlayed]);
-// const audioRef = useRef();
-// const handlePlay = () => {
-// setIsSongPlaying(true);
-// audioRef.current.play();
-// };
-// const handlePause = () => {
-// setIsSongPlaying(false);
-// audioRef.current.pause();
-// };

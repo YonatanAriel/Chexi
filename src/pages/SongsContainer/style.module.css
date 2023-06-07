@@ -1,16 +1,22 @@
 .mainDiv {
     position: absolute;
-    bottom:0;
+    /* bottom:0; */
     /* left: 0; */
+
+    top: 0;
     right: 0;
-    height: 85.7vh;
-    padding-bottom: 30vh; 
+    /* height: 245vh; */
+    padding-bottom: 18vh; 
     width: 98.5vw;
     display: flex;
+    padding-top: 15vh;
     justify-content: center;
     align-items: center;
     flex-wrap: wrap;
-    gap: 2.1% 1%;
+    gap: 1%;
+    row-gap: 10px;
+    /* gap: 2.1% 1%; */
+    /* overflow-y: scroll; */
     /* z-index: 2; */
 }
 .song {
@@ -32,10 +38,10 @@
     word-break: break-word;
     padding: 0 10px 15px;
     box-sizing: border-box;
-    height: 50.3vh;
+    /* height: 50.3vh; */
 }
 .songImg {
-    height: 15vw;
+    /* height: 15vw; */
     width: 15vw;
     margin: 2vh 0 1vh;
     border-radius: 5px;
