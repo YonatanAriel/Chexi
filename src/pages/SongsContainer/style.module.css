@@ -42,9 +42,14 @@
 }
 .songImg {
     /* height: 15vw; */
-    width: 15vw;
+    /* width: 15vw; */
+    width: 100%;
+    z-index: -5;
+    /* overflow: hidden; */
     margin: 2vh 0 1vh;
     border-radius: 5px;
+    object-fit: cover;
+    /* background-size:cover; */
 }
 .ArtistName {
     margin: 1vh 0 1.5vh;

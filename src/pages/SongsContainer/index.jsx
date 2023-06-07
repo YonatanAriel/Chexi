@@ -35,8 +35,8 @@ function SongsContainer({ songs,setSongPlayed, isLibraryOpen }) {
           <div className={styles.song} style={{height:songDivHeight}} onClick={() => {setSongPlayed(song),setIsSongPlaying(true)}} key={i}>
             <div className={styles.imgAndButton}>
             {/* song.channel.icon */}
-              <img key={song.thumbnail.id} className={styles.songImg} src={song.channel.icon} style={{height: imgHeight}} 
-              onError={(e) => {e.target.src =  song.thumbnail.url; 
+              <img key={song.thumbnail.id} className={styles.songImg} src={song.thumbnail.url} style={{height: imgHeight}} 
+              onError={(e) => {e.target.src = song.channel.icon ; 
                     setImagesErrorCount(prev => prev + 1);}}
                      alt={song.title} />
               <BsPlayCircleFill className={`${styles.songButton} ${styles.redButton}`} size={40} />

@@ -7,6 +7,7 @@ import {ImVolumeMute2, ImVolumeHigh} from 'react-icons/im';
 import HandlePlayingSongContext from '../../contexts';
 import {BsCameraVideoFill, BsFillCameraVideoOffFill} from 'react-icons/bs'
 import { Link, useLocation } from 'react-router-dom';
+import {BsPlusCircle,BsPlusCircleFill} from 'react-icons/bs'
 import {TiArrowSortedDown, TiArrowSortedUp} from 'react-icons/ti'
 //GrSemantics (arrow up)
 
@@ -28,6 +29,68 @@ function Footer({songPlayed, skipBackOrForward}){
     const [volume, setVolume] = useState(50)
     const [showFooter , setShowFooter] = useState(true);
 
+
+    const [minutes, setMinutes] = useState(0);
+    const [seconds, setSeconds] = useState(0);
+    
+    // useEffect(() => {
+    //   if(seconds === 59){
+    //     setSeconds(0)
+    //     setMinutes(prev => prev + 1)
+    //   }
+    //   setSeconds(prev => prev + 1)
+    // },[currentSeconds])
+    const [songProgress, setSongProgress] = useState(0);
+    useEffect(() => console.log(songProgress),[songProgress])
+    const handlePlayerStateChange = (e) => {
+      if (e.data === window.YT.PlayerState.PLAYING) {
+        setInterval(() => {
+        const duration = playerRef.current.getDuration();
+        const currentTime = playerRef.current.getCurrentTime();
+        const progress = (currentTime / duration) * 100;
+        setSongProgress(progress);},1000)
+
+        const player = e.target;
+        const interval = setInterval(() => {
+          const newCurrentTime = player.getCurrentTime();
+          const newMinutes = Math.floor(newCurrentTime / 60);
+          const newSeconds = Math.floor(newCurrentTime % 60);
+          setMinutes(newMinutes);
+          setSeconds(newSeconds);
+          // console.log(newCurrentTime)
+        }, 1000)
+        if(e.data === window.YT.PlayerState.ENDED){
+          setMinutes(0)
+          setSeconds(0)
+        }
+       else if (e.data === window.YT.PlayerState.PAUSED) {
+      }
+      }
+    };
+    const handleProgressChange = (e) => {
+      const progress = parseInt(e.target.value);
+      const duration = playerRef.current.getDuration()
+      const seekTime = (progress / 100) * duration
+      playerRef.current.seekTo(seekTime);
+      setSongProgress(progress);
+    };
+  
+    // const handlePlayerStateChange = (e) => {
+    //     if (e.data === window.YT.PlayerState.PLAYING) {
+    //       setInterval(() => {
+    //         setSeconds(prev => prev + 1)
+    //         if(seconds == 59){
+    //           setMinutes(prev => prev + 1)
+    //           setSeconds(0)
+    //         }
+    //       }, 1000);
+    //       if(e.data === window.YT.PlayerState.ENDED){
+    //               setMinutes(0)
+    //               setSeconds(0)
+    //       }
+    //     }
+    //   }
+    
     const opts = {
         // height: '',
         // width: '',
@@ -38,12 +101,10 @@ function Footer({songPlayed, skipBackOrForward}){
           disablekb: 1,
           modestbranding: 1,
           showinfo: 0,
-          rel: 0,
+          rel: 0,        
           // origin: 'http://localhost:5174'
         }
     }
-    
-    
     const location = useLocation();
     const handlePause = () => {
         setIsSongPlaying(false);
@@ -67,26 +128,6 @@ function Footer({songPlayed, skipBackOrForward}){
         }
       }, [isSongPlaying, volume]);
 
-    //   useEffect(() => { 
-    //     const interval = setInterval(() => {
-    //       if(isSongPlaying){ //למה לא עובד?
-    //         setElapsedSeconds((prevS) => {
-    //           if(elapsedMinutes === 59 && elapsedSeconds === 59){
-    //             setElapsedHours((prev) => prev + 1)
-    //             setElapsedMinutes(0)
-    //             return 0
-    //           }
-    //           else if(prevS === 59){
-    //             setElapsedMinutes((prevM) => prevM + 1)
-    //             return 0
-    //           }
-    //           else{
-    //             return prevS + 1
-    //           }
-    //           })
-    //         }
-    //     },1000)}
-    // ,[])
 
      const handleBackgrundVideo = () => {
       setBackgroundVideo((prev) => !prev)
@@ -107,8 +148,19 @@ function Footer({songPlayed, skipBackOrForward}){
      //
 
     return <>
+   <div
+  style={{
+    position: "fixed",
+    top: 0,
+    bottom: 0,
+    zIndex:400,
+    left: "50%",
+    transform: "translateX(-50%)",
+    borderLeft: "1px solid red"
+  }}
+></div>
         <div  className={styles.videoContainer }  >
-            <YouTube style={{display: location.pathname === "/Video" || backgroundVideo ? "block" : "none"}}
+            <YouTube onStateChange={handlePlayerStateChange} style={{display: location.pathname === "/Video" || backgroundVideo ? "block" : "none"}}
              videoId={songPlayed.id} opts={opts}
              autoplay onReady={(e) => (playerRef.current = e.target)}
               onEnd={() => {skipBackOrForward("forward")}} />
@@ -135,19 +187,22 @@ function Footer({songPlayed, skipBackOrForward}){
       </div>
       <div className={styles.centerItemsContainer}>
         <div className={styles.palyingButtonsContainer}>
-          <FaRegHeart className={`${styles.iconButton} ${styles.heart}`}/>    
+          <FaRegHeart size={18} className={`${styles.iconButton} ${styles.heart}`}/>    
           {/* <FaHeart /> */}
           <TbPlayerSkipBackFilled onClick={() => skipBackOrForward("back")} size={19} className={styles.iconButton} />
           {!isSongPlaying && <FaPlay className={`${styles.iconButton} ${styles.playAndPauseButton}`} onClick={handlePlay} size={30} />}
           {isSongPlaying && <TbPlayerPauseFilled className={`${styles.iconButton} ${styles.playAndPauseButton}`} onClick={handlePause} size={30}/>}
           <TbPlayerSkipForwardFilled onClick={() => skipBackOrForward("forward")} size={19} className={styles.iconButton}/>
+          <BsPlusCircle size={18} className={styles.iconButton}/>
+          {/* <BsPlusCircleFill size={19} className={styles.iconButton} /> */}
         </div>
         <div className={styles.progressContainer}>
           <div className={styles.progressTime}>
-            {/* <span >{(elapsedHours != 0) && (elapsedHours + ":")}{`${elapsedMinutes}:${elapsedSeconds}`}</span> */}
+          { `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`}            {/* <span >{(elapsedHours != 0) && (elapsedHours + ":")}{`${elapsedMinutes}:${elapsedSeconds}`}</span> */}
           </div>
           <input type="range" min="0" max="100"
-          
+          value={songProgress}
+          onChange={handleProgressChange}
           className={styles.progressInput}/>
 
           <span className={styles.progressTime}>{songPlayed.duration_formatted}</span>

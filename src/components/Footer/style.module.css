@@ -149,14 +149,13 @@ input[type=range] {
     justify-content: center;
     width: 21vw;
     margin: 1vh 1.2vw 1vh 0;
+    gap:14%;
     /* background-color: #FF0000; */
 }
 .heart {
-    position: absolute;
-    left: 0;
 }
 .playAndPauseButton {
-    margin: 0 3vw;
+    /* margin: 0 3vw; */
 }
 .progressContainer {
     display: flex;
@@ -187,7 +186,7 @@ input[type="range"].progressInput::-webkit-slider-thumb {
 
   .volume {
     position: absolute;
-    right: 2vw;
+    right: 3vw;
     display: flex;
     align-items: center;
 
