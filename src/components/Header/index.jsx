@@ -8,11 +8,10 @@ import {BsMusicNote} from 'react-icons/bs';
 import Search from '../Search';
 import { IoLibrary } from 'react-icons/io5';
 
-function Header({setUserSearch,isLibraryOpen, setIsLibraryOpen}) {
+function Header({setUserSearch,isLibraryOpen, setIsLibraryOpen, backgroundVideo}) {
   return ( <>
-  <div></div>
-      <div style={{padding: isLibraryOpen && "6vh 0 0 1.5vw"}}  className={styles.logoBackground}><BsMusicNote style={{marginBottom:"8px"/*marginBottom:"1.5vh"*/}} size={55}/><span className={styles.logoText}>Chexi</span></div>
-      <div  className={`${styles.mainDiv} ${isLibraryOpen? styles.libraryOpenMainDiv : ""}`}>
+      <div style={{padding: isLibraryOpen && "6vh 0 0 1.5vw", backgroundColor: backgroundVideo && "black"}}  className={styles.logoBackground}><BsMusicNote style={{marginBottom:"8px"/*marginBottom:"1.5vh"*/}} size={55}/><span className={styles.logoText}>Chexi</span></div>
+      <div  className={`${styles.mainDiv} ${isLibraryOpen? styles.libraryOpenMainDiv : ""}`} style={{backgroundColor: backgroundVideo && "black"}}>
         <div className={styles.home_library_search}>
           <Link className={styles.home} to="./"><AiFillHome /*className={styles.red}*/ /><span>Home</span></Link>
           <a onClick={() => setIsLibraryOpen((prev) => !prev)}><IoLibrary style={{margin:"0 0.1vw -0.2vh 0"}}/>Library</a>    

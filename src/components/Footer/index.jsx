@@ -15,13 +15,12 @@ import {IoIosArrowUp, IoIosArrowDown} from 'react-icons/io'
 
 
 // , isSongPlaying , setIsSongPlaying
-function Footer({songPlayed, skipBackOrForward}){
+function Footer({songPlayed, skipBackOrForward, backgroundVideo, setBackgroundVideo}){
 
    
     const {isSongPlaying, setIsSongPlaying} = useContext(HandlePlayingSongContext);
     // const playerRef = useRef(null);
     const playerRef = useRef(null);
-    const [backgroundVideo, setBackgroundVideo] = useState(false)
     const [fullScreenVideo,setFullScreenVideo] = useState(false)
     // const [elapsedSeconds, setElapsedSeconds] = useState(0)
     // const [elapsedMinutes, setElapsedMinutes] = useState(0);
@@ -41,7 +40,7 @@ function Footer({songPlayed, skipBackOrForward}){
     //   setSeconds(prev => prev + 1)
     // },[currentSeconds])
     const [songProgress, setSongProgress] = useState(0);
-    useEffect(() => console.log(songProgress),[songProgress])
+    // useEffect(() => console.log(songProgress),[songProgress])
     const handlePlayerStateChange = (e) => {
       if (e.data === window.YT.PlayerState.PLAYING) {
         setInterval(() => {
@@ -181,14 +180,14 @@ function Footer({songPlayed, skipBackOrForward}){
       </div>
       {/*songPlayed.thumbnail.url */}
       <div className={styles.artistDetails}>
-        <img src={songPlayed.channel.icon } onError={(e) => {
+        <img src={songPlayed.channel.icon} onError={(e) => {
                   e.target.src =  songPlayed.thumbnail.url, console.log(e.target.src);}} />
         <span>{songPlayed.channel.name}</span>
       </div>
       <div className={styles.centerItemsContainer}>
         <div className={styles.palyingButtonsContainer}>
           <FaRegHeart size={18} className={`${styles.iconButton} ${styles.heart}`}/>    
-          {/* <FaHeart /> */}
+          {/* <FaHeart size={18} style={{color:"red"}}/> */}
           <TbPlayerSkipBackFilled onClick={() => skipBackOrForward("back")} size={19} className={styles.iconButton} />
           {!isSongPlaying && <FaPlay className={`${styles.iconButton} ${styles.playAndPauseButton}`} onClick={handlePlay} size={30} />}
           {isSongPlaying && <TbPlayerPauseFilled className={`${styles.iconButton} ${styles.playAndPauseButton}`} onClick={handlePause} size={30}/>}

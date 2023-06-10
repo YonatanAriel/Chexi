@@ -19,6 +19,7 @@ function Layout() {
   const [songPlayed, setSongPlayed] = useState()
   const [userSearch, setUserSearch] = useState("dua lipa")
   const [isLibraryOpen, setIsLibraryOpen] = useState(false)
+  const [backgroundVideo, setBackgroundVideo] = useState(false)
   const options = {
     method: 'GET',
     url: 'https://simple-youtube-search.p.rapidapi.com/search',
@@ -86,20 +87,20 @@ const skipBackOrForward = (backOrForward) => {
   return (
     <>
     <div className={styles.appContainer}>
-      <Header isLibraryOpen={isLibraryOpen} setIsLibraryOpen={setIsLibraryOpen} setUserSearch={setUserSearch}/>
+      <Header backgroundVideo={backgroundVideo} isLibraryOpen={isLibraryOpen} setIsLibraryOpen={setIsLibraryOpen} setUserSearch={setUserSearch}/>
       <HandlePlayingSongContext.Provider value={{isSongPlaying, setIsSongPlaying}}>
       <Routes>
         {/*setIsSongPlaying={setIsSongPlaying}*/} 
-      <Route index element={<SongsContainer isLibraryOpen={isLibraryOpen} setSongPlayed={setSongPlayed}  setUserSearch={setUserSearch} songs={songs} />} /> 
+      <Route index element={<SongsContainer backgroundVideo={backgroundVideo} songPlayed={songPlayed} isLibraryOpen={isLibraryOpen} setSongPlayed={setSongPlayed}  setUserSearch={setUserSearch} songs={songs} />} /> 
         <Route path="/LikedSongs" element={<LikedSongs />} />
         <Route path="/PlayLists" element={<PlayLists />} />
         <Route path="/Login" element={<Login />} />
         <Route path="/SignUp" element={<SignUp />} />
         <Route path="/FavoriteArtists" element={<FavoriteArtists/>} />
-        <Route path="/Video" element={<VideoContainer />}/>
+        <Route path="/Video" element={<VideoContainer  />}/>
       </Routes>
       {/* isSongPlaying={isSongPlaying} setIsSongPlaying={setIsSongPlaying} */}
-      {songPlayed && <Footer songPlayed={songPlayed} skipBackOrForward={skipBackOrForward}/>}
+      {songPlayed && <Footer backgroundVideo={backgroundVideo} setBackgroundVideo={setBackgroundVideo} songPlayed={songPlayed} skipBackOrForward={skipBackOrForward}/>}
       {isLibraryOpen && <Library />}
       </HandlePlayingSongContext.Provider>
       </div>

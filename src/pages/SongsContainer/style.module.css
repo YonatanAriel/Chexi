@@ -2,7 +2,6 @@
     position: absolute;
     /* bottom:0; */
     /* left: 0; */
-
     top: 0;
     right: 0;
     /* height: 245vh; */
@@ -13,14 +12,13 @@
     justify-content: center;
     align-items: center;
     flex-wrap: wrap;
-    gap: 1%;
-    row-gap: 10px;
+    gap: 10px;
     /* gap: 2.1% 1%; */
     /* overflow-y: scroll; */
     /* z-index: 2; */
 }
 .song {
-    cursor: pointer;
+    /* cursor: pointer; */
     width: 17vw;    
     display: flex;
     flex-direction: column;
@@ -28,6 +26,7 @@
     text-align: center;
     background-color: rgba(255, 255, 255, 0.03);
     /* background-color: hsla(0, 0%, 100%, 0.03); */
+    /* background-color: rgb(0, 0, 0, 1); */
     border-radius: 5px;
     /* flex-grow: 1; */
      max-width: 17vw;
@@ -40,36 +39,55 @@
     box-sizing: border-box;
     /* height: 50.3vh; */
 }
-.songImg {
-    /* height: 15vw; */
-    /* width: 15vw; */
-    width: 100%;
-    z-index: -5;
-    /* overflow: hidden; */
-    margin: 2vh 0 1vh;
-    border-radius: 5px;
-    object-fit: cover;
-    /* background-size:cover; */
-}
-.ArtistName {
-    margin: 1vh 0 1.5vh;
+.backgroundVideo{
+    background-color: black;
 } 
-.songButton {
-  display: none;
-  position: absolute;
-  top: 50%;
-  left: 50%; 
-  transform: translate(-50%, -50%); 
-  display: none;
-}
-.song:hover .songButton{
-    display: block;
+.song:hover {
+    background-color: rgba(255, 255, 255, 0.06);
+    box-shadow: 0.01px 0.01px 60px rgb(0, 0, 0),
+    -0.01px -0.01px 60px rgb(0, 0, 0);
+
+    /* transform: scale(0.98); */
 }
 .imgAndButton {
     position: relative;
 }
-.redButton {
-    color: red; 
+.songImg {
+    /* height: 15vw;
+    width: 15vw; */
+    /* width: 100%; */
+    z-index: -5;
+    margin: 2vh 0 1vh;
+    border-radius: 5px;
+    object-fit: cover;
+}
+.songImg:hover {
+    transform: scale(1.01);
+    box-shadow: 0.001px 0.001px 5px rgb(0, 0, 0),
+     -0.001px -0.001px 5px rgb(0, 0, 0);
+}
+.ArtistName {
+    margin: 1vh 0 1.5vh;
+} 
+.songButtonOrAnima {
+  position: absolute;
+  bottom: 1.9vh;
+  left: 0;
+  right: 0;
+  overflow: hidden;
+  border-radius:0 0 5px 5px;
+  max-height: 70%; 
+}
+.songButton {
+    position: absolute;
+    top: 50%;
+    left: 50%; 
+    transform: translate(-50%, -50%); 
+    display: none;
+    color: red;
+}
+.song:hover .songButton{
+    display: block;
 }
 h3 {
     max-height: 83px;
