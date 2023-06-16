@@ -1,7 +1,7 @@
 import Header from "../Header";
 import SongsContainer from "../../pages/SongsContainer";
 import Footer from "../Footer";
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, useLocation } from "react-router-dom";
 import Login from "../../pages/Login";
 import SignUp from "../../pages/SignUp";
 import LikedSongs from "../../pages/LikedSongs";
@@ -20,6 +20,7 @@ function Layout() {
   const [userSearch, setUserSearch] = useState("dua lipa")
   const [isLibraryOpen, setIsLibraryOpen] = useState(false)
   const [backgroundVideo, setBackgroundVideo] = useState(false)
+  const location = useLocation().pathname;
   const options = {
     method: 'GET',
     url: 'https://simple-youtube-search.p.rapidapi.com/search',
@@ -91,17 +92,17 @@ const skipBackOrForward = (backOrForward) => {
       <HandlePlayingSongContext.Provider value={{isSongPlaying, setIsSongPlaying}}>
       <Routes>
         {/*setIsSongPlaying={setIsSongPlaying}*/} 
-      <Route index element={<SongsContainer backgroundVideo={backgroundVideo} songPlayed={songPlayed} isLibraryOpen={isLibraryOpen} setSongPlayed={setSongPlayed}  setUserSearch={setUserSearch} songs={songs} />} /> 
-        <Route path="/LikedSongs" element={<LikedSongs />} />
+      <Route index element={<SongsContainer  backgroundVideo={backgroundVideo} songPlayed={songPlayed} isLibraryOpen={isLibraryOpen} setSongPlayed={setSongPlayed}  setUserSearch={setUserSearch} songs={songs} />} /> 
+        <Route path="/LikedSongs" element={<LikedSongs songs={songs} songPlayed={songPlayed} />} />
         <Route path="/PlayLists" element={<PlayLists />} />
+        <Route path="/FavoriteArtists" element={<FavoriteArtists songPlayed={songPlayed} songs={songs}/>} />
         <Route path="/Login" element={<Login />} />
         <Route path="/SignUp" element={<SignUp />} />
-        <Route path="/FavoriteArtists" element={<FavoriteArtists/>} />
         <Route path="/Video" element={<VideoContainer  />}/>
       </Routes>
       {/* isSongPlaying={isSongPlaying} setIsSongPlaying={setIsSongPlaying} */}
-      {songPlayed && <Footer backgroundVideo={backgroundVideo} setBackgroundVideo={setBackgroundVideo} songPlayed={songPlayed} skipBackOrForward={skipBackOrForward}/>}
-      {isLibraryOpen && <Library />}
+      {songPlayed && <Footer  backgroundVideo={backgroundVideo} setBackgroundVideo={setBackgroundVideo} songPlayed={songPlayed} skipBackOrForward={skipBackOrForward}/>}
+      {(["/LikedSongs", "/PlayLists","/FavoriteArtists"].includes(location) || isLibraryOpen) && <Library />}
       </HandlePlayingSongContext.Provider>
       </div>
     </>

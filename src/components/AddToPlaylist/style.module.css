@@ -1,0 +1,36 @@
+.popup {
+    /* width: 20%; */
+    /* height: 300%; */
+    background-color: rgba(255, 255, 255, 0.05);
+    /* background-color: aqua; */
+    position:fixed;
+    /* position: relative; */
+    bottom:95px;
+    /* left: -50%;  */
+    transform: translateX(43%);
+    border-radius: 20px;
+    /* background: inherit; */
+    z-index: 10;
+    display: flex;
+    place-content: center;
+    padding: 20px;
+    backdrop-filter: blur(30px);
+}
+.createPlaylist {
+    position: relative;
+}
+.createPlaylistInput{
+    height: 50px;
+    border-radius: 100px;
+    outline: none;
+    border: none;
+    padding: 10px 35px 10px 15px;
+    width: max-content;
+}
+.addPlaylistButton {
+    position: absolute;
+    right:-3%;
+    top:3%;
+    background: none;
+    color: black;
+}

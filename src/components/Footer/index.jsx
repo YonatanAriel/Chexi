@@ -10,6 +10,7 @@ import { Link, useLocation } from 'react-router-dom';
 import {BsPlusCircle,BsPlusCircleFill} from 'react-icons/bs'
 import {TiArrowSortedDown, TiArrowSortedUp} from 'react-icons/ti'
 //GrSemantics (arrow up)
+import AddToPlaylist from '../AddToPlaylist'
 
 import {IoIosArrowUp, IoIosArrowDown} from 'react-icons/io'
 
@@ -27,10 +28,9 @@ function Footer({songPlayed, skipBackOrForward, backgroundVideo, setBackgroundVi
     // const [elapsedHours, setElapsedHours] = useState(0);
     const [volume, setVolume] = useState(50)
     const [showFooter , setShowFooter] = useState(true);
-
-
     const [minutes, setMinutes] = useState(0);
     const [seconds, setSeconds] = useState(0);
+    const [showPlylistPopAp, setShowPlylistPopAp] = useState(false)
     
     // useEffect(() => {
     //   if(seconds === 59){
@@ -40,7 +40,7 @@ function Footer({songPlayed, skipBackOrForward, backgroundVideo, setBackgroundVi
     //   setSeconds(prev => prev + 1)
     // },[currentSeconds])
     const [songProgress, setSongProgress] = useState(0);
-    // useEffect(() => console.log(songProgress),[songProgress])
+    // useEffect(() => console.log(newCurrentTime),[newCurrentTime])
     const handlePlayerStateChange = (e) => {
       if (e.data === window.YT.PlayerState.PLAYING) {
         setInterval(() => {
@@ -48,22 +48,24 @@ function Footer({songPlayed, skipBackOrForward, backgroundVideo, setBackgroundVi
         const currentTime = playerRef.current.getCurrentTime();
         const progress = (currentTime / duration) * 100;
         setSongProgress(progress);},1000)
-
         const player = e.target;
         const interval = setInterval(() => {
           const newCurrentTime = player.getCurrentTime();
+          // console.log(newCurrentTime)
           const newMinutes = Math.floor(newCurrentTime / 60);
           const newSeconds = Math.floor(newCurrentTime % 60);
           setMinutes(newMinutes);
           setSeconds(newSeconds);
           // console.log(newCurrentTime)
+          if(e.data === window.YT.PlayerState.ENDED){
+            clearInterval(interval)
+            setMinutes(0)
+            setSeconds(0)
+          }
+  
         }, 1000)
-        if(e.data === window.YT.PlayerState.ENDED){
-          setMinutes(0)
-          setSeconds(0)
-        }
-       else if (e.data === window.YT.PlayerState.PAUSED) {
-      }
+      //  else if (e.data === window.YT.PlayerState.PAUSED) {
+      // }
       }
     };
     const handleProgressChange = (e) => {
@@ -127,7 +129,6 @@ function Footer({songPlayed, skipBackOrForward, backgroundVideo, setBackgroundVi
         }
       }, [isSongPlaying, volume]);
 
-
      const handleBackgrundVideo = () => {
       setBackgroundVideo((prev) => !prev)
       {console.log(backgroundVideo)}
@@ -164,12 +165,14 @@ function Footer({songPlayed, skipBackOrForward, backgroundVideo, setBackgroundVi
              autoplay onReady={(e) => (playerRef.current = e.target)}
               onEnd={() => {skipBackOrForward("forward")}} />
         </div>
+        
         {/* <TiArrowSortedDown size={50}/> */}
-    <div className={styles.arrowButton} style={{bottom: !showFooter && 0}} onClick={ () => setShowFooter(prev => !prev)}>
+    <div className={`${styles.arrowButton} ${!showFooter && styles.arrowUpButton}`}  onClick={ () => setShowFooter(prev => !prev)}>
       {showFooter? (<IoIosArrowDown className={styles.blurIcon} size={41} />)
        : (<IoIosArrowUp className={styles.blurIcon} size={41} />)}
     </div>
  {showFooter && (<div className={styles.mainDiv}>
+  {showPlylistPopAp && <AddToPlaylist  />}
       <div className={styles.fullScreenButtons}>
         {location.pathname === "/Video"?
           ( <Link to={"/"} onClick={() => setFullScreenVideo(true)}>{<BsFillCameraVideoOffFill size={25} style={{marginLeft:"0.2vw"}} />}</Link> ) 
@@ -192,8 +195,10 @@ function Footer({songPlayed, skipBackOrForward, backgroundVideo, setBackgroundVi
           {!isSongPlaying && <FaPlay className={`${styles.iconButton} ${styles.playAndPauseButton}`} onClick={handlePlay} size={30} />}
           {isSongPlaying && <TbPlayerPauseFilled className={`${styles.iconButton} ${styles.playAndPauseButton}`} onClick={handlePause} size={30}/>}
           <TbPlayerSkipForwardFilled onClick={() => skipBackOrForward("forward")} size={19} className={styles.iconButton}/>
-          <BsPlusCircle size={18} className={styles.iconButton}/>
-          {/* <BsPlusCircleFill size={19} className={styles.iconButton} /> */}
+          <div className={styles.AddToPlaylist}>
+            <BsPlusCircle onClick={() => setShowPlylistPopAp(prev => !prev) } size={18} className={`${styles.iconButton} ${styles.addToPlaylistButton}`}/>
+            {/* <BsPlusCircleFill size={19} className={styles.iconButton} /> */}
+          </div>
         </div>
         <div className={styles.progressContainer}>
           <div className={styles.progressTime}>
@@ -203,12 +208,11 @@ function Footer({songPlayed, skipBackOrForward, backgroundVideo, setBackgroundVi
           value={songProgress}
           onChange={handleProgressChange}
           className={styles.progressInput}/>
-
           <span className={styles.progressTime}>{songPlayed.duration_formatted}</span>
         </div>
       </div>
       <div className={styles.volume}>
-        {volume == 0 ? (<ImVolumeMute2 size={22} color="red" onClick={handleUnmute} className={styles.iconButton} />) : (<ImVolumeHigh size={22} onClick={handleMute} className={styles.iconButton}/>)}
+        {volume == 0 ? (<ImVolumeMute2 size={22} color="red" onClick={handleUnmute} className={styles.iconButton} />) : (<ImVolumeHigh size={22} onClick={handleMute} className={styles.volumeHighButton}/>)}
         <input type="range" min="0" max="100" value={volume} onChange={handleVolumeChange} className={styles.volumeInput} />
       </div>
     </div>)}

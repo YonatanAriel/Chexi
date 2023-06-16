@@ -9,7 +9,7 @@ body {
     left: 0;
     bottom: 0;
     transform: scale(1.2);
-
+    z-index: -1;
     /* position: absolute;
     top:-19vh;
     left:-50px;
@@ -46,6 +46,21 @@ body {
     z-index: 2;
     cursor: pointer;
 }
+.arrowUpButton {
+    animation: flash 1.3s infinite alternate;
+    bottom: 0;
+}
+@keyframes flash {
+    0% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+    }
+  }
 .mainDiv{
     position: fixed;
     bottom:0;
@@ -69,9 +84,6 @@ body {
 .iconButton {
     cursor: pointer;
     /* size: 30; */
-}
-.iconButton :hover{
-    color: red;
 }
 input[type=range] {
     /* height: 22px; */
@@ -154,8 +166,21 @@ input[type=range] {
 }
 .heart {
 }
+.heart :hover {
+    color:red
+}
 .playAndPauseButton {
     /* margin: 0 3vw; */
+}
+.AddToPlaylist {
+    position: relative;
+}
+.addToPlaylistButton {
+    transition: transform 0.3s ease;
+}
+.addToPlaylistButton:hover {
+    transform:scale(1.2) rotate(360deg);
+    /* color:red; */
 }
 .progressContainer {
     display: flex;
@@ -183,13 +208,17 @@ input[type="range"].progressInput::-webkit-slider-thumb {
   input[type=range].progressInput::-webkit-slider-runnable-track {
     /* background-color: rgb(255, 255, 255); */
   }
-
   .volume {
     position: absolute;
     right: 3vw;
     display: flex;
     align-items: center;
-
+}
+.volumeHighButton {
+    cursor: pointer;
+}
+.volumeHighButton :hover {
+    color: red;
 }
 .volumeInput {
     cursor: pointer;

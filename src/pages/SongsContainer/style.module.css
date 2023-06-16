@@ -1,12 +1,18 @@
+
 .mainDiv {
     position: absolute;
+    position: fixed;
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.24) 0.005%, black);
+    height: 100vh;
+    width: 100vw;
     /* bottom:0; */
     /* left: 0; */
     top: 0;
     right: 0;
     /* height: 245vh; */
+    height: 100%;
     padding-bottom: 18vh; 
-    width: 98.5vw;
+    /* width: 98.5vw; */
     display: flex;
     padding-top: 15vh;
     justify-content: center;
@@ -14,11 +20,11 @@
     flex-wrap: wrap;
     gap: 10px;
     /* gap: 2.1% 1%; */
-    /* overflow-y: scroll; */
+    overflow-y: scroll;
     /* z-index: 2; */
 }
 .song {
-    /* cursor: pointer; */
+    backdrop-filter: blur(20px);
     width: 17vw;    
     display: flex;
     flex-direction: column;
@@ -26,7 +32,6 @@
     text-align: center;
     background-color: rgba(255, 255, 255, 0.03);
     /* background-color: hsla(0, 0%, 100%, 0.03); */
-    /* background-color: rgb(0, 0, 0, 1); */
     border-radius: 5px;
     /* flex-grow: 1; */
      max-width: 17vw;
@@ -43,6 +48,8 @@
     background-color: black;
 } 
 .song:hover {
+    /* scale(1.02) */
+    /* transform:  rotateY(360deg); */
     background-color: rgba(255, 255, 255, 0.06);
     box-shadow: 0.01px 0.01px 60px rgb(0, 0, 0),
     -0.01px -0.01px 60px rgb(0, 0, 0);
@@ -53,18 +60,20 @@
     position: relative;
 }
 .songImg {
+    transition: all 0.5s ease;
     /* height: 15vw;
     width: 15vw; */
-    /* width: 100%; */
+    width: 100%;
     z-index: -5;
     margin: 2vh 0 1vh;
     border-radius: 5px;
     object-fit: cover;
 }
-.songImg:hover {
-    transform: scale(1.01);
-    box-shadow: 0.001px 0.001px 5px rgb(0, 0, 0),
-     -0.001px -0.001px 5px rgb(0, 0, 0);
+.song:hover .songImg {
+    transform: scale(1.01) ;
+    box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px ;    
+    /* box-shadow: 0.001px 0.001px 5px rgb(59, 59, 59),
+     -0.001px -0.001px 5px rgba(0, 0, 0, 0.364); */
 }
 .ArtistName {
     margin: 1vh 0 1.5vh;

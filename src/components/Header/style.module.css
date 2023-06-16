@@ -1,13 +1,14 @@
 /* screen width - 1366px */
 .mainDiv {
+  backdrop-filter: blur(2px);
     position: fixed;
     z-index: 10;
     top:0;
     /* left: 12vw; */
     /* left: 164px; */
-    background-color: rgba(0, 0, 0,0.4);
+    /* background-color: rgba(0, 0, 0,0.4); */
+    background-color: rgba(0, 0, 0, 0.6);
     /* background-color: rgba(0, 0, 0,1); */
-
     height: 60px;
     /* height: 9vh; */
     /* width: 1202px; */
@@ -27,6 +28,7 @@
   width: 80vw;
 }
   .logoBackground {
+    backdrop-filter: blur(2px);
     position: fixed;
     z-index: 10;
     top: 0;
@@ -36,6 +38,7 @@
     /* height: 12vh; */
     height:80px ;
     background-color: rgba(0, 0, 0, 0.4);
+    background-color: rgba(0, 0, 0, 0.6);
     border-radius: 0 0 12px 0;
     color:wheat;
     display: flex;

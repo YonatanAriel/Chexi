@@ -29,10 +29,12 @@ function SongsContainer({ songs,songPlayed, setSongPlayed, isLibraryOpen, backgr
       //  }
 
   return (<>
-    <div style={{width: isLibraryOpen? "78.5vw" : "98.5vw"}} className={styles.mainDiv}>
+  {/* {width: isLibraryOpen? "78.5vw" : "98.5vw"} */}
+    <div style={{width: isLibraryOpen? "80vw" : "100vw"}} className={styles.mainDiv}>
       {songs?.length > 0 ? (
         songs.map((song, i) => ( 
-          <div className={`${styles.song} ${backgroundVideo && styles.backgroundVideo}`} style={{height:songDivHeight, cursor: songPlayed !== song && "pointer"}} onClick={() => {setSongPlayed(song),setIsSongPlaying(true)}} key={i}>
+          // ${backgroundVideo && styles.backgroundVideo}
+          <div className={`${styles.song} `} style={{height:songDivHeight, cursor: songPlayed !== song && "pointer"}} onClick={() => {setSongPlayed(song),setIsSongPlaying(true)}} key={i}>
             <div className={styles.imgAndButton}>
             {/* song.channel.icon */}
               <img key={song.thumbnail.id} className={styles.songImg} src={song.channel.icon} style={{height: imgHeight}} 
@@ -41,7 +43,6 @@ function SongsContainer({ songs,songPlayed, setSongPlayed, isLibraryOpen, backgr
                      alt={song.title} />
                      {songPlayed == song && isSongPlaying ? (<div className={styles.songButtonOrAnima} ><WaveSpinner size={85} /></div>) 
                      : (<BsPlayCircleFill className={styles.songButton} size={40} />)}
-                     
             </div>
             <h3>{song.title.split(/[\(\[]/)[0].trim().replace(/(.*)\s*-\s*(.*)/, '$2\n$1').trim().slice(0, 50)}</h3>
           </div>/*song.channel.icon? song.channel.icon : song.thumbnail.url*/

@@ -1,0 +1,93 @@
+.popup {
+    top: 0px;
+    left: 0;
+    position: absolute;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.121);
+    backdrop-filter: blur(25px);
+    z-index: 20;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.addNewArtistPopup {
+    position: relative;
+    display: flex;
+    align-items: center;
+    height: fit-content;
+}
+.popupInput {
+    height: 50px;
+    border-radius: 100px;
+    outline: none;
+    border: none;
+    width: 30vw;
+    padding: 10px 35px 10px 15px;
+}
+.popupButton {
+    position: absolute; 
+    top:3%;
+    right: -10px;
+    background: none;
+    color: black;
+}
+
+.FavoriteArtistsContainer {
+    left: 20vw;
+    top:60px ;
+    width: 80vw;
+    height: calc(100vh - 60px);
+    overflow-y: auto;
+    position: fixed;
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.72) 20%, black);
+    color: wheat;
+    padding: 0 20px;
+}
+.addNewArtistContainer {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    padding: 30px;
+    justify-content: center;
+}
+.addNewArtistContainer  span {
+    font-size: 4.5em;
+    font-weight: 500;
+} 
+.addArtistButton {
+    cursor: pointer;
+}
+
+.artistsContainer {
+    position: absolute;
+    display: flex;
+    flex-wrap: wrap;
+    flex-grow: 0;
+    gap: 15px;
+    place-content: center;
+    padding-bottom: 18vh;
+}
+.artist {
+    width: fit-content;
+    height:48vh; 
+    width: 26%;
+    background-color: rgba(255, 255, 255, 0.03);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border-radius: 5px;
+    font-size: larger;
+    font-weight: 600;
+    padding-bottom: 10px;
+    backdrop-filter: blur(30px);
+    cursor: pointer;
+}
+.artist img {
+    width: 90%;
+    height:80%;
+    border-radius: 5px;
+    margin: 7px 0 13px 0;
+}
+
