@@ -58,3 +58,12 @@ button {
     background-color: #f9f9f9;
   }
 }
+::-webkit-scrollbar {
+  width: 15px;
+  backdrop-filter: blur(20px);
+}
+::-webkit-scrollbar-thumb {
+  background-color: wheat;
+  border-radius: 3px;
+
+} 

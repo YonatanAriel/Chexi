@@ -10,9 +10,9 @@ import { IoLibrary } from 'react-icons/io5';
 
 function Header({setUserSearch,isLibraryOpen, setIsLibraryOpen, backgroundVideo}) {
   const changeStyleForLibrary = ["/LikedSongs", "/PlayLists","/FavoriteArtists"].includes(useLocation().pathname) || isLibraryOpen;
- console.log(changeStyleForLibrary)
  return ( <>
-      <div style={{padding: changeStyleForLibrary && "6vh 0 0 1.5vw"}}  className={styles.logoBackground}><BsMusicNote style={{marginBottom:"8px"/*marginBottom:"1.5vh"*/}} size={55}/><span className={styles.logoText}>Chexi</span></div>
+ {/*  */}
+      <div   className={styles.logoBackground} style={{padding: changeStyleForLibrary && !backgroundVideo && "6vh 0 0 1.5vw"}}><BsMusicNote style={{marginBottom:"8px"/*marginBottom:"1.5vh"*/}} size={55}/><span className={styles.logoText}>Chexi</span></div>
       {/* style={{backgroundColor: backgroundVideo && "black"}} */}
       <div  className={`${styles.mainDiv} ${changeStyleForLibrary? styles.libraryOpenMainDiv : ""}`} >
         <div className={styles.home_library_search}>

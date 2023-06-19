@@ -47,7 +47,7 @@ body {
     cursor: pointer;
 }
 .arrowUpButton {
-    animation: flash 1.3s infinite alternate;
+    animation: flash 2s infinite alternate;
     bottom: 0;
 }
 @keyframes flash {

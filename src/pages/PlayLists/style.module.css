@@ -1,0 +1,27 @@
+.PlayListsContainer {
+    width: 100vw;
+    height: calc(100vh - 60px);
+    position: absolute;
+    top: 60px;
+    left: 20vw;
+    
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.24) 0.005%, black);
+    /* background-color: aqua; */
+}
+.PlayListsContainer div {
+    position:absolute ;
+    top: 0px;
+    left: 0vw;
+    padding: 40px;
+    /* background-color:aqua; */
+    height: 30%;
+    width: 100%;
+    color: wheat;
+    display: flex;
+    align-items: center;
+}
+.PlayListsContainer div span {
+    font-size: 4.5rem;
+    font-weight: 600;
+    margin-right: 2%;
+}

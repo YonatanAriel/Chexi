@@ -7,17 +7,25 @@
     /* position: relative; */
     bottom:95px;
     /* left: -50%;  */
-    transform: translateX(43%);
+    /* transform: translateX(183%); */
+    right: 28.8vw;
     border-radius: 20px;
     /* background: inherit; */
     z-index: 10;
+    padding: 25px;
+    backdrop-filter: blur(20px);
     display: flex;
-    place-content: center;
-    padding: 20px;
-    backdrop-filter: blur(30px);
+    flex-direction: column;
+    align-items: center;
+    gap:2.5vh;
+    max-width: 25%;
+    max-height: 42vh;
+    border-radius: 20px;
 }
 .createPlaylist {
     position: relative;
+    /* margin-bottom: 2.5vh; */
+    width: 90%;
 }
 .createPlaylistInput{
     height: 50px;
@@ -25,7 +33,7 @@
     outline: none;
     border: none;
     padding: 10px 35px 10px 15px;
-    width: max-content;
+    width: 100%;
 }
 .addPlaylistButton {
     position: absolute;
@@ -34,3 +42,38 @@
     background: none;
     color: black;
 }
+.popup ul {
+    color:wheat;
+    display: flex;
+    flex-direction: column;
+    border-radius: 5px;
+    gap:10px;
+    list-style-type: none; 
+    max-width: 90%;
+    overflow-y: auto;
+    /* overflow: auto; */
+    /* backdrop-filter: blur(20px); */
+}
+.popup li {
+    display: flex;
+    align-items: center;
+    gap:10px;
+    font-size: 1.2rem;
+    font-weight: 500;
+    cursor: pointer;
+}
+.popup ul img {
+    width: 40%;
+    max-height: 60px;
+    min-width:40%;
+    border-radius: 5px;
+}
+/* .popup ul::-webkit-scrollbar {
+    width: 15px;
+    border-radius: 2px;
+  }
+.popup ul::-webkit-scrollbar-thumb {
+    background-color: wheat;
+    border-radius: 2px;
+
+}  */

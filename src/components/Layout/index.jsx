@@ -101,8 +101,8 @@ const skipBackOrForward = (backOrForward) => {
         <Route path="/Video" element={<VideoContainer  />}/>
       </Routes>
       {/* isSongPlaying={isSongPlaying} setIsSongPlaying={setIsSongPlaying} */}
-      {songPlayed && <Footer  backgroundVideo={backgroundVideo} setBackgroundVideo={setBackgroundVideo} songPlayed={songPlayed} skipBackOrForward={skipBackOrForward}/>}
-      {(["/LikedSongs", "/PlayLists","/FavoriteArtists"].includes(location) || isLibraryOpen) && <Library />}
+      {songPlayed && <Footer songs={songs}  backgroundVideo={backgroundVideo} setBackgroundVideo={setBackgroundVideo} songPlayed={songPlayed} skipBackOrForward={skipBackOrForward}/>}
+      {(["/LikedSongs", "/PlayLists","/FavoriteArtists"].includes(location) || isLibraryOpen) && <Library backgroundVideo={backgroundVideo}/>}
       </HandlePlayingSongContext.Provider>
       </div>
     </>

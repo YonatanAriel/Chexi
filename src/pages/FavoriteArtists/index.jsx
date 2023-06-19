@@ -7,11 +7,16 @@ import Playlist from "../../components/playlist";
 function FavoriteArtists({ songs, songPlayed }) {
   const artists = ["ישי ריבו", "שלמה ארצי", "housier"];
   const [showArtistPopup, setShowArtistPopup] = useState(false);
+  const handlePopupClick = (e) => {
+    e.stopPropagation();
+  };
   return (
     <>
+    {/*  */}
       {/* <Playlist songPlayed={songPlayed} songs={songs}/> */}
       {showArtistPopup && (
-        <div className={styles.popup} onClick={() => setShowArtistPopup(false)}>
+        <div className={styles.popup}  onClick={() => setShowArtistPopup(false) }>
+        <div onClick={handlePopupClick}>
           <div className={styles.addNewArtistPopup}>
             <input
               type="text"
@@ -22,6 +27,7 @@ function FavoriteArtists({ songs, songPlayed }) {
               <HiPlus size={25} />
             </button>
           </div>{" "}
+        </div>
         </div>
       )}
       <div className={styles.FavoriteArtistsContainer}>
