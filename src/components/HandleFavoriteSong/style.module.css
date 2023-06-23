@@ -1,0 +1,4 @@
+.heart:hover {
+    color: red;
+    cursor: pointer;
+}

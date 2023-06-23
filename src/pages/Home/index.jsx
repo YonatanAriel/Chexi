@@ -2,19 +2,16 @@ import { BsPlayCircleFill } from "react-icons/bs";
 import styles from "./style.module.css";
 import { GiLouvrePyramid } from "react-icons/gi";
 import { lazy, useContext, useEffect, useState } from "react";
-import HandlePlayingSongContext from "../../contexts";
+import HandlePlayingSongContext from "../../contexts/HandlePlayingSong";
 import { FireworkSpinner, WaveSpinner } from "react-spinners-kit";
 
 // ,setIsSongPlaying
 
-function SongsContainer({
-  songs,
-  songPlayed,
-  setSongPlayed,
+function Home({
   isLibraryOpen,
   backgroundVideo,
 }) {
-  const { isSongPlaying, setIsSongPlaying } = useContext(
+  const { isSongPlaying, setIsSongPlaying, songPlayed, setSongPlayed, songs } = useContext(
     HandlePlayingSongContext
   );
   const [imagesErrorCount, setImagesErrorCount] = useState(0);
@@ -115,6 +112,6 @@ function SongsContainer({
   );
 }
 
-export default SongsContainer;
+export default Home;
 // .channel.icon / thumbnail.url
 //song.title.split(/[\(\[]/)[0].trim().slice(0,65).replace(/ ?- ?/g, "\n")

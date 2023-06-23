@@ -1,41 +1,25 @@
 import styles from "./style.module.css";
-import { HiPlus } from "react-icons/hi";
 import { BsFillPersonPlusFill, BsFillPlusCircleFill } from "react-icons/bs";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import Playlist from "../../components/playlist";
+import NewPlaylistOrArtist from "../../components/popUps/newPlaylistOrArtist";
+import HandlePlayingSongContext from "../../contexts/HandlePlayingSong";
 
-function FavoriteArtists({ songs, songPlayed }) {
+function FavoriteArtists() {
   const artists = ["ישי ריבו", "שלמה ארצי", "housier"];
-  const [showArtistPopup, setShowArtistPopup] = useState(false);
-  const handlePopupClick = (e) => {
-    e.stopPropagation();
-  };
+  const [showPopup, setShowPopup] = useState(false);
+  const {songs, songPlayed} = useContext(HandlePlayingSongContext)
   return (
     <>
-    {/*  */}
       {/* <Playlist songPlayed={songPlayed} songs={songs}/> */}
-      {showArtistPopup && (
-        <div className={styles.popup}  onClick={() => setShowArtistPopup(false) }>
-        <div onClick={handlePopupClick}>
-          <div className={styles.addNewArtistPopup}>
-            <input
-              type="text"
-              className={styles.popupInput}
-              placeholder="What is the artist name?"
-            />
-            <button className={styles.popupButton}>
-              <HiPlus size={25} />
-            </button>
-          </div>{" "}
-        </div>
-        </div>
-      )}
+      {showPopup && (<NewPlaylistOrArtist setShowPopup={setShowPopup} page={"favoriteArtists"} />)}
+            
       <div className={styles.FavoriteArtistsContainer}>
         <div className={styles.addNewArtistContainer}>
-          <span>Add new artist</span>
+          <span>New artist</span>
           <div
             className={styles.addArtistButton}
-            onClick={() => setShowArtistPopup(true)}
+            onClick={() => setShowPopup(true)}
           >
             <BsFillPersonPlusFill size={90} />
           </div>

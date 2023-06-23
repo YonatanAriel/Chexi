@@ -164,11 +164,6 @@ input[type=range] {
     gap:14%;
     /* background-color: #FF0000; */
 }
-.heart {
-}
-.heart :hover {
-    color:red
-}
 .playAndPauseButton {
     /* margin: 0 3vw; */
 }

@@ -1,0 +1,23 @@
+.createPlaylist {
+    position: relative;
+    /* margin-bottom: 2.5vh; */
+    width: 90%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.createPlaylistInput{
+    height: 50px;
+    border-radius: 100px;
+    outline: none;
+    border: none;
+    padding: 10px 35px 10px 15px;
+    width: 100%;
+}
+.addPlaylistButton {
+    position: absolute;
+    right:-3%;
+    top:3%;
+    background: none;
+    color: black;
+}

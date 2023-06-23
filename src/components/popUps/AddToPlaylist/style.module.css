@@ -19,28 +19,9 @@
     align-items: center;
     gap:2.5vh;
     max-width: 25%;
+    min-width: 25%;
     max-height: 42vh;
     border-radius: 20px;
-}
-.createPlaylist {
-    position: relative;
-    /* margin-bottom: 2.5vh; */
-    width: 90%;
-}
-.createPlaylistInput{
-    height: 50px;
-    border-radius: 100px;
-    outline: none;
-    border: none;
-    padding: 10px 35px 10px 15px;
-    width: 100%;
-}
-.addPlaylistButton {
-    position: absolute;
-    right:-3%;
-    top:3%;
-    background: none;
-    color: black;
 }
 .popup ul {
     color:wheat;
@@ -50,6 +31,7 @@
     gap:10px;
     list-style-type: none; 
     max-width: 90%;
+    min-width: 90%;
     overflow-y: auto;
     /* overflow: auto; */
     /* backdrop-filter: blur(20px); */
@@ -63,9 +45,10 @@
     cursor: pointer;
 }
 .popup ul img {
-    width: 40%;
-    max-height: 60px;
-    min-width:40%;
+    /* width: 8vw; */
+    /* min-width:40%; */
+    max-height: 3.78vw;
+    min-width: 6.76vw;
     border-radius: 5px;
 }
 /* .popup ul::-webkit-scrollbar {
@@ -77,3 +60,6 @@
     border-radius: 2px;
 
 }  */
+.popup li span {
+    overflow:hidden;
+}

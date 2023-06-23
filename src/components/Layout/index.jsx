@@ -1,18 +1,20 @@
 import Header from "../Header";
-import SongsContainer from "../../pages/SongsContainer";
-import Footer from "../Footer";
+import Home from "../../pages/Home";
+import Footer from "../popUps/Footer";
 import { Route, Routes, useLocation } from "react-router-dom";
 import Login from "../../pages/Login";
 import SignUp from "../../pages/SignUp";
 import LikedSongs from "../../pages/LikedSongs";
-import PlayLists from "../../pages/PlayLists";
+import Playlists from "../../pages/Playlists";
 import FavoriteArtists from '../../pages/FavoriteArtists'
 import styles from "./style.module.css";
 import { useEffect, useState } from "react";
 import axios from "axios";
-import HandlePlayingSongContext from "../../contexts";
-import Library from "../Library";
+import HandlePlayingSongContext from "../../contexts/HandlePlayingSong";
+import Library from "../popUps/Library";
 import VideoContainer from '../../pages/VideoContainer'
+import UserContext from "../../contexts/User"
+import PlaylistsContext from "../../contexts/Playlists";
 
 function Layout() {
   const [isSongPlaying, setIsSongPlaying] = useState()
@@ -21,6 +23,7 @@ function Layout() {
   const [isLibraryOpen, setIsLibraryOpen] = useState(false)
   const [backgroundVideo, setBackgroundVideo] = useState(false)
   const location = useLocation().pathname;
+  const [playlists, setPlaylists] = useState()
   const options = {
     method: 'GET',
     url: 'https://simple-youtube-search.p.rapidapi.com/search',
@@ -85,25 +88,31 @@ const skipBackOrForward = (backOrForward) => {
   }
  }
 
+const user = {id: "6492191120b18571032ebd93"}
+
   return (
     <>
     <div className={styles.appContainer}>
+      <UserContext.Provider value={user}>
       <Header backgroundVideo={backgroundVideo} isLibraryOpen={isLibraryOpen} setIsLibraryOpen={setIsLibraryOpen} setUserSearch={setUserSearch}/>
-      <HandlePlayingSongContext.Provider value={{isSongPlaying, setIsSongPlaying}}>
+      <HandlePlayingSongContext.Provider value={{songs, songPlayed,setSongPlayed, isSongPlaying, setIsSongPlaying}}>
+      <PlaylistsContext.Provider value={{playlists, setPlaylists}}>
       <Routes>
         {/*setIsSongPlaying={setIsSongPlaying}*/} 
-      <Route index element={<SongsContainer  backgroundVideo={backgroundVideo} songPlayed={songPlayed} isLibraryOpen={isLibraryOpen} setSongPlayed={setSongPlayed}  setUserSearch={setUserSearch} songs={songs} />} /> 
-        <Route path="/LikedSongs" element={<LikedSongs songs={songs} songPlayed={songPlayed} />} />
-        <Route path="/PlayLists" element={<PlayLists />} />
-        <Route path="/FavoriteArtists" element={<FavoriteArtists songPlayed={songPlayed} songs={songs}/>} />
+      <Route index element={<Home  backgroundVideo={backgroundVideo} isLibraryOpen={isLibraryOpen} setUserSearch={setUserSearch}/>} /> 
+        <Route path="/LikedSongs" element={<LikedSongs />} />
+        <Route path="/Playlists" element={<Playlists />} />
+        <Route path="/FavoriteArtists" element={<FavoriteArtists />} />
         <Route path="/Login" element={<Login />} />
         <Route path="/SignUp" element={<SignUp />} />
         <Route path="/Video" element={<VideoContainer  />}/>
       </Routes>
       {/* isSongPlaying={isSongPlaying} setIsSongPlaying={setIsSongPlaying} */}
-      {songPlayed && <Footer songs={songs}  backgroundVideo={backgroundVideo} setBackgroundVideo={setBackgroundVideo} songPlayed={songPlayed} skipBackOrForward={skipBackOrForward}/>}
-      {(["/LikedSongs", "/PlayLists","/FavoriteArtists"].includes(location) || isLibraryOpen) && <Library backgroundVideo={backgroundVideo}/>}
+      {songPlayed && <Footer  backgroundVideo={backgroundVideo} setBackgroundVideo={setBackgroundVideo} skipBackOrForward={skipBackOrForward}/>}
+      </PlaylistsContext.Provider>
+      {(["/LikedSongs", "/Playlists","/FavoriteArtists"].includes(location) || isLibraryOpen) && <Library backgroundVideo={backgroundVideo}/>}
       </HandlePlayingSongContext.Provider>
+      </UserContext.Provider>
       </div>
     </>
   );

@@ -1,5 +1,6 @@
 import styles from "./style.module.css";
 import YouTube from "react-youtube";
+// import HandleYoutube from "../HandleYoutube/index";
 import React, { useContext, useEffect, useRef, useState } from "react";
 import {
   FaRegHeart,
@@ -14,27 +15,23 @@ import {
   TbPlayerPauseFilled,
 } from "react-icons/tb";
 import { ImVolumeMute2, ImVolumeHigh } from "react-icons/im";
-import HandlePlayingSongContext from "../../contexts";
+import HandlePlayingSongContext from "../../../contexts/HandlePlayingSong";
 import { BsCameraVideoFill, BsFillCameraVideoOffFill } from "react-icons/bs";
 import { Link, useLocation } from "react-router-dom";
 import { BsPlusCircle, BsPlusCircleFill } from "react-icons/bs";
 import { TiArrowSortedDown, TiArrowSortedUp } from "react-icons/ti";
 //GrSemantics (arrow up)
 import AddToPlaylist from "../AddToPlaylist";
-
 import { IoIosArrowUp, IoIosArrowDown } from "react-icons/io";
+import HandleFavoriteSong from "../../HandleFavoriteSong";
 
 // , isSongPlaying , setIsSongPlaying
 function Footer({
-  songs,
-  songPlayed,
   skipBackOrForward,
   backgroundVideo,
   setBackgroundVideo,
 }) {
-  const { isSongPlaying, setIsSongPlaying } = useContext(
-    HandlePlayingSongContext
-  );
+  const { isSongPlaying, setIsSongPlaying, songs, songPlayed} = useContext(HandlePlayingSongContext);
   // const playerRef = useRef(null);
   const playerRef = useRef(null);
   const [fullScreenVideo, setFullScreenVideo] = useState(false);
@@ -45,7 +42,7 @@ function Footer({
   const [showFooter, setShowFooter] = useState(true);
   const [minutes, setMinutes] = useState(0);
   const [seconds, setSeconds] = useState(0);
-  const [showPlylistPopAp, setShowPlylistPopAp] = useState(false);
+  const [showPlaylistPopAp, setShowPlaylistPopAp] = useState(false);
 
   // useEffect(() => {
   //   if(seconds === 59){
@@ -161,6 +158,8 @@ function Footer({
 
   return (
     <>
+      {/* <HandleYoutube setMinutes={setMinutes} setSeconds={setSeconds} 
+      setSongProgress={setSongProgress} songPlayed={songPlayed} /> */}
       <div
         style={{
           position: "fixed",
@@ -206,7 +205,6 @@ function Footer({
       </div>
       {showFooter && (
         <div className={styles.mainDiv}>
-          
           <div className={styles.fullScreenButtons}>
             {location.pathname === "/Video" ? (
               <Link to={"/"} onClick={() => setFullScreenVideo(true)}>
@@ -254,12 +252,13 @@ function Footer({
             <span>{songPlayed.channel.name}</span>
           </div>
           <div className={styles.centerItemsContainer}>
-            <div className={styles.palyingButtonsContainer}>
-              <FaRegHeart
+            <div className={styles.palyingButtonsContainer} >
+              <HandleFavoriteSong />
+               {/* <FaRegHeart
                 size={18}
                 className={`${styles.iconButton} ${styles.heart}`}
               />
-              {/* <FaHeart size={18} style={{color:"red"}}/> */}
+               <FaHeart size={18} style={{color:"red"}}/>  */}
               <TbPlayerSkipBackFilled
                 onClick={() => skipBackOrForward("back")}
                 size={19}
@@ -286,7 +285,7 @@ function Footer({
               />
               <div className={styles.AddToPlaylist}>
                 <BsPlusCircle
-                  onClick={() => setShowPlylistPopAp((prev) => !prev)}
+                  onClick={() => setShowPlaylistPopAp((prev) => !prev)}
                   size={18}
                   className={`${styles.iconButton} ${styles.addToPlaylistButton}`}
                 />
@@ -339,7 +338,7 @@ function Footer({
           </div>
         </div>
       )}
-      {showPlylistPopAp && showFooter && <AddToPlaylist songs={songs} />}
+      {showPlaylistPopAp && showFooter && <AddToPlaylist setShowPlaylistPopAp={setShowPlaylistPopAp} />}
     </>
   );
 }

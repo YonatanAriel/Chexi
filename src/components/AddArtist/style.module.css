@@ -1,0 +1,22 @@
+.addNewArtistPopup {
+    position: relative;
+    display: flex;
+    align-items: center;
+    height: fit-content;
+    width: 80%;
+}
+.popupInput {
+    height: 50px;
+    border-radius: 100px;
+    outline: none;
+    border: none;
+    width: 100%;
+    padding: 10px 35px 10px 15px;
+}
+.popupButton {
+    position: absolute; 
+    top:3%;
+    right: -10px;
+    background: none;
+    color: black;
+}

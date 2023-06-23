@@ -1,23 +1,4 @@
-/* #root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
-} */
-*{
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-body {
-  /* background-color: rgba(0, 0, 0, 0.9); */
-  user-select: none;
-}
-img {
-  -webkit-user-drag: none; /* Safari/Chrome */
-  -khtml-user-drag: none; /* Konqueror */
-  -moz-user-drag: none; /* Firefox */
-  -o-user-drag: none; /* Opera */
-}
+
+
 
 

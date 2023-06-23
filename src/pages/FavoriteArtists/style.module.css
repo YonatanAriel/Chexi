@@ -1,53 +1,3 @@
-.popup {
-    position: absolute;
-    top: 0;
-    left: 0;
-    min-width: 100vw;
-    min-height: 100vh;
-    z-index: 20;
-    /* background-color: rgba(0, 0, 0, 0.873); */
-    backdrop-filter: blur(70px);
-    display: grid;
-    place-items: center;
-}
-.popup > div:first-child {
-    position: absolute;
-    width: 30vw;
-    height: 30vw;
-    /* background-color:transparent;
-    background-color: initial; */
-    /* backdrop-filter: blur(25px); */
-    background: linear-gradient(to bottom,black, rgba(0, 0, 0, 0.4), black);
-    /* backdrop-filter: blur(100px); */
-    z-index: 21;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border-radius: 10px;
-    /* border: solid 15px wheat; */
-}
-.addNewArtistPopup {
-    position: relative;
-    display: flex;
-    align-items: center;
-    height: fit-content;
-}
-.popupInput {
-    height: 50px;
-    border-radius: 100px;
-    outline: none;
-    border: none;
-    width: 100%;
-    padding: 10px 35px 10px 15px;
-}
-.popupButton {
-    position: absolute; 
-    top:3%;
-    right: -10px;
-    background: none;
-    color: black;
-}
-
 .FavoriteArtistsContainer {
     left: 20vw;
     top:60px ;
@@ -95,14 +45,19 @@
     border-radius: 5px;
     font-size: larger;
     font-weight: 600;
-    padding-bottom: 10px;
+    /* padding-bottom: 10px; */
+    padding: 10px 0 10px 0;
     backdrop-filter: blur(30px);
     cursor: pointer;
+    text-align: center;
 }
 .artist img {
     width: 90%;
     height:80%;
     border-radius: 5px;
-    margin: 7px 0 13px 0;
+    margin: 0 0 13px 0;
 }
-
+.artist span{
+    max-height: 2rem;
+    overflow-y: auto;
+}

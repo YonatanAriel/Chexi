@@ -12,21 +12,23 @@
   -moz-osx-font-smoothing: grayscale;
   -webkit-text-size-adjust: 100%;
 }
-
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
 a {
   font-weight: 500;
   text-decoration: inherit;
   color: wheat;
 }
-a:hover {
-}
 
 body {
-  margin: 0;
   display: flex;
   place-items: center;
   min-width: 320px;
   min-height: 100vh;
+  user-select: none;
 }
 
 h1 {
@@ -46,7 +48,7 @@ button {
   transition: border-color 0.25s;
 }
 
-@media (prefers-color-scheme: light) {
+/* @media (prefers-color-scheme: light) {
   :root {
     color: #213547;
 
@@ -57,13 +59,20 @@ button {
   button {
     background-color: #f9f9f9;
   }
+} */
+img {
+  -webkit-user-drag: none; /* Safari/Chrome */
+  -khtml-user-drag: none; /* Konqueror */
+  -moz-user-drag: none; /* Firefox */
+  -o-user-drag: none; /* Opera */
 }
 ::-webkit-scrollbar {
   width: 15px;
-  backdrop-filter: blur(20px);
+  /* backdrop-filter: blur(20px); */
 }
 ::-webkit-scrollbar-thumb {
-  background-color: wheat;
+  /* background-color: wheat; */
   border-radius: 3px;
-
+  backdrop-filter: blur(20px);
+  background-color:wheat;
 } 

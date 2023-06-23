@@ -31,7 +31,7 @@ function Search({setUserSearch}) {
       <input type="text" onKeyDown={(e) => {if(e.key === 'Enter'){handleSearch()}}} 
       onChange={(e) => setInputText(e.target.value) } placeholder={placeholder} className={styles.searchField} />
       <button onClick={handleSearch} className={styles.searchButton}>
-        <img src="src\photos\search.webp" />
+        <img src="src\assets\photos\search.webp" />
       </button>
     </div>
   </div>
