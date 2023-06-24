@@ -1,7 +1,10 @@
-import { useState } from "react"
+import { useContext, useEffect, useState } from "react"
 import styles from "./style.module.css"
+import Playlists from "../../contexts/Playlists";
 
-function PlaylistCard({ playlist, setShowSongs, setPlaylistData}) {
+function PlaylistCard({ playlist, setShowSongs }) {
+  const {setCurrentPlaylistData} = useContext(Playlists)
+  
     function getRandomIndex(arr) {
         return Math.floor(Math.random() * arr.length);
       }
@@ -10,7 +13,7 @@ function PlaylistCard({ playlist, setShowSongs, setPlaylistData}) {
   return ( <>
             <div className={styles.playlist} onClick={() =>{ 
                 setShowSongs(true),
-                setPlaylistData(playlist)
+                setCurrentPlaylistData(playlist)
             }}>
                 <img src={playlist?.songsId[randomPlaylistIndex]?.songImg} alt={playlist.name} />
                 <span>{playlist.name}</span>

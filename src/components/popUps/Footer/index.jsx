@@ -24,6 +24,7 @@ import { TiArrowSortedDown, TiArrowSortedUp } from "react-icons/ti";
 import AddToPlaylist from "../AddToPlaylist";
 import { IoIosArrowUp, IoIosArrowDown } from "react-icons/io";
 import HandleFavoriteSong from "../../HandleFavoriteSong";
+import ShowPopups from "../../../contexts/ShowPopups";
 
 // , isSongPlaying , setIsSongPlaying
 function Footer({
@@ -42,7 +43,7 @@ function Footer({
   const [showFooter, setShowFooter] = useState(true);
   const [minutes, setMinutes] = useState(0);
   const [seconds, setSeconds] = useState(0);
-  const [showPlaylistPopAp, setShowPlaylistPopAp] = useState(false);
+  const {showAddToPlaylistPopup, setShowAddToPlaylistPopup} = useContext(ShowPopups)
 
   // useEffect(() => {
   //   if(seconds === 59){
@@ -285,7 +286,7 @@ function Footer({
               />
               <div className={styles.AddToPlaylist}>
                 <BsPlusCircle
-                  onClick={() => setShowPlaylistPopAp((prev) => !prev)}
+                  onClick={() => setShowAddToPlaylistPopup((prev) => !prev)}
                   size={18}
                   className={`${styles.iconButton} ${styles.addToPlaylistButton}`}
                 />
@@ -338,7 +339,7 @@ function Footer({
           </div>
         </div>
       )}
-      {showPlaylistPopAp && showFooter && <AddToPlaylist setShowPlaylistPopAp={setShowPlaylistPopAp} />}
+      {showAddToPlaylistPopup && showFooter && <AddToPlaylist setShowAddToPlaylistPopup={setShowAddToPlaylistPopup} />}
     </>
   );
 }

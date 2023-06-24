@@ -3,24 +3,35 @@ import CreatePlaylist from "../../CreatePlaylist";
 import styles from "./style.module.css";
 import User from "../../../contexts/User";
 import axios from "axios";
-// import Playlists from "../../../contexts/Playlists";
+import Playlists from "../../../contexts/Playlists";
+import HandlePlayingSongContext from "../../../contexts/HandlePlayingSong";
+import ShowPopups from "../../../contexts/ShowPopups";
 
-function AddToPlaylist({setShowPlaylistPopAp}) {
+function AddToPlaylist() {
   const {id} = useContext(User)
-  // const {playlists, setPlaylists} = useContext(Playlists)
-  const [playlists, setPlaylists] = useState()
-  useEffect(()=> console.log(playlists),[playlists])
-  useEffect(() => {axios.get(`http://localhost:1000/playlists/user/${id}`)
-  .then(res => setPlaylists(res.data))
-  .catch(err => console.log(err))}, [])
+  const { playlists, setRenderPlaylistsPage } = useContext(Playlists)
+  const {songPlayed} = useContext(HandlePlayingSongContext)
+  const {setShowAddToPlaylistPopup} = useContext(ShowPopups)
+  const songPlayedData = {title: songPlayed?.title, videoId: songPlayed?.id, songImg: songPlayed?.thumbnail.url,
+    channelName: songPlayed?.channel.name, channelImg: songPlayed?.channel.icon,
+     duration: songPlayed?.duration ,duration_formatted: songPlayed?.duration_formatted}
 
+const addSongToPlaylist = (playlist) => {
+  setShowAddToPlaylistPopup(false);
+  axios.post(`http://localhost:1000/playlists/addsong/${playlist._id}`, songPlayedData)
+  .then((res) => {
+   console.log(res);
+   setRenderPlaylistsPage(prev => !prev)
+ })
+   .catch(err => console.log(err))
+}
   return (
      <div className={styles.popup}>
-                  <CreatePlaylist setShowPopup={setShowPlaylistPopAp} addSong={true}/>
+                  <CreatePlaylist songPlayedData={songPlayedData} addSong={true}/>
         <ul>
            {playlists?.map((playlist, i) => {
             return (
-              <li key={i}>
+              <li key={i} onClick={() => addSongToPlaylist(playlist)}>
                 <img src={playlist?.songsId[0]?.songImg} alt={playlist?.name} />
                 <span>{playlist?.name.substring(0, 20)}</span>
               </li>

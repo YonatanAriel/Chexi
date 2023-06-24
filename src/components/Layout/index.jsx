@@ -15,6 +15,7 @@ import Library from "../popUps/Library";
 import VideoContainer from '../../pages/VideoContainer'
 import UserContext from "../../contexts/User"
 import PlaylistsContext from "../../contexts/Playlists";
+import ShowPopupsContext from "../../contexts/ShowPopups";
 
 function Layout() {
   const [isSongPlaying, setIsSongPlaying] = useState()
@@ -22,8 +23,13 @@ function Layout() {
   const [userSearch, setUserSearch] = useState("dua lipa")
   const [isLibraryOpen, setIsLibraryOpen] = useState(false)
   const [backgroundVideo, setBackgroundVideo] = useState(false)
-  const location = useLocation().pathname;
   const [playlists, setPlaylists] = useState()
+  const [currentPlaylistData, setCurrentPlaylistData] = useState()
+  const [showCreatePlaylistPopup, setShowCreatePlaylistPopup] = useState(false)
+  const [showAddToPlaylistPopup, setShowAddToPlaylistPopup] = useState(false);
+  const [renderPlaylistsPage, setRenderPlaylistsPage] = useState(false)
+  const location = useLocation().pathname;
+  const user = {id: "6492191120b18571032ebd93"}
   const options = {
     method: 'GET',
     url: 'https://simple-youtube-search.p.rapidapi.com/search',
@@ -36,6 +42,22 @@ function Layout() {
       'X-RapidAPI-Host': 'simple-youtube-search.p.rapidapi.com'
     }
   };
+  useEffect(() => {axios.get(`http://localhost:1000/playlists/user/${user.id}`)
+  .then(res =>{
+     setPlaylists(res.data)
+    })
+    .catch(err => console.log(err))}, [renderPlaylistsPage])
+
+    useEffect(() => {
+      if(currentPlaylistData){
+      const updatedCurrentPlaylistData = playlists?.find((playlist) => playlist._id === currentPlaylistData?._id);
+      setCurrentPlaylistData(updatedCurrentPlaylistData) //to render Playlist component when the user add new song
+      }
+    },[playlists])
+
+//,showCreatePlaylistPopup, showAddToPlaylistPopup
+
+
 //   const options2 = {
 //   method: 'GET',
 //   url: 'https://deezerdevs-deezer.p.rapidapi.com/search',
@@ -58,7 +80,7 @@ useEffect(() => {
 }, [userSearch]);
 
 const handleSongsId = (songs) => {
-  const songsWithId = songs.map((song, i) => {
+  const songsWithId = songs?.map((song, i) => {
    return {...song, index: i}});
   setSongs(songsWithId);
 }
@@ -88,7 +110,6 @@ const skipBackOrForward = (backOrForward) => {
   }
  }
 
-const user = {id: "6492191120b18571032ebd93"}
 
   return (
     <>
@@ -96,7 +117,8 @@ const user = {id: "6492191120b18571032ebd93"}
       <UserContext.Provider value={user}>
       <Header backgroundVideo={backgroundVideo} isLibraryOpen={isLibraryOpen} setIsLibraryOpen={setIsLibraryOpen} setUserSearch={setUserSearch}/>
       <HandlePlayingSongContext.Provider value={{songs, songPlayed,setSongPlayed, isSongPlaying, setIsSongPlaying}}>
-      <PlaylistsContext.Provider value={{playlists, setPlaylists}}>
+      <PlaylistsContext.Provider value={{playlists, setPlaylists, setRenderPlaylistsPage, currentPlaylistData, setCurrentPlaylistData}}>
+        <ShowPopupsContext.Provider value={{showCreatePlaylistPopup, setShowCreatePlaylistPopup, showAddToPlaylistPopup, setShowAddToPlaylistPopup}}>
       <Routes>
         {/*setIsSongPlaying={setIsSongPlaying}*/} 
       <Route index element={<Home  backgroundVideo={backgroundVideo} isLibraryOpen={isLibraryOpen} setUserSearch={setUserSearch}/>} /> 
@@ -109,6 +131,7 @@ const user = {id: "6492191120b18571032ebd93"}
       </Routes>
       {/* isSongPlaying={isSongPlaying} setIsSongPlaying={setIsSongPlaying} */}
       {songPlayed && <Footer  backgroundVideo={backgroundVideo} setBackgroundVideo={setBackgroundVideo} skipBackOrForward={skipBackOrForward}/>}
+      </ShowPopupsContext.Provider>
       </PlaylistsContext.Provider>
       {(["/LikedSongs", "/Playlists","/FavoriteArtists"].includes(location) || isLibraryOpen) && <Library backgroundVideo={backgroundVideo}/>}
       </HandlePlayingSongContext.Provider>

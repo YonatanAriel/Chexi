@@ -30,14 +30,14 @@ function Home({
     setImagesErrorCount(0);
   }, [songs]);
   useEffect(() => {
-    if (imagesErrorCount === songs.length) {
+    if (imagesErrorCount === songs?.length) {
       setSongDivHeight("36vh");
       setImgHeight("8.415vw");
     } else {
       setSongDivHeight("50.3vh");
       setImgHeight("15vw");
     }
-  }, [imagesErrorCount, songs.length, songs]);
+  }, [imagesErrorCount, songs?.length, songs]);
   //  const songDiv = e.target.parentNode.parentNode;
   // if(imagesErrorCount === songs.length){
   //  e.target.style.height = "8.415vw", songDiv.style.height = '36vh'}

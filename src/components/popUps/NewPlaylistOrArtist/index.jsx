@@ -1,20 +1,30 @@
+import { useContext } from "react";
 import AddArtist from "../../AddArtist";
 import CreatePlaylist from "../../CreatePlaylist";
 import styles from "./style.module.css";
+import ShowPopups from "../../../contexts/ShowPopups";
 
 function NewPlaylistOrArtist({ setShowPopup, page }) {
+
+  const {showCreatePlaylistPopup, setShowCreatePlaylistPopup} = useContext(ShowPopups)
   const handlePopupClick = (e) => {
     e.stopPropagation();
   };
-
+  const handleClick = () => {
+   if(showCreatePlaylistPopup){
+     setShowCreatePlaylistPopup(false)
+      return
+   } 
+  setShowPopup && setShowPopup(false)
+  }
   return (
-    <div className={styles.popup} onClick={() => setShowPopup(false)}>
-      <div onClick={handlePopupClick}>
+    <div className={styles.popup} onClick={handleClick}>
+      <div onClick={handlePopupClick}>       
         {page === "favoriteArtists" ? (
           <AddArtist />
         ) : (
           <div className={styles.createPlaylist}>
-            <CreatePlaylist setShowPopup={setShowPopup} placeHolder={"What is the playlist name?"} />
+            <CreatePlaylist placeHolder={"What is the playlist name?"} />
           </div>
         )}
       </div>

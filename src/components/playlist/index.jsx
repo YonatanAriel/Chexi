@@ -14,7 +14,7 @@ function Playlist({ title, songs }) {
       </div>
       <div className={styles.songsContainer}>
         {songs?.map((song, i) => (
-          <Song song={song} index={i + 1} key={i} />
+          <Song song={song} index={i + 1} key={song._id} />
         ))}
       </div>
     </div>

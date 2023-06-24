@@ -6,7 +6,6 @@ import { useContext } from "react";
 
 function Song({ song, index }) {
   const {isSongPlaying,setIsSongPlaying, songPlayed} = useContext(HandlePlayingSongContext);
-
   return (
     <>
       <div
