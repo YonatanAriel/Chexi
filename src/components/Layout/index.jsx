@@ -28,6 +28,7 @@ function Layout() {
   const [showCreatePlaylistPopup, setShowCreatePlaylistPopup] = useState(false)
   const [showAddToPlaylistPopup, setShowAddToPlaylistPopup] = useState(false);
   const [renderPlaylistsPage, setRenderPlaylistsPage] = useState(false)
+  const [likedSongsPlaylist, setLikedSongsPlaylist] = useState() 
   const location = useLocation().pathname;
   const user = {id: "6492191120b18571032ebd93"}
   const options = {
@@ -117,7 +118,7 @@ const skipBackOrForward = (backOrForward) => {
       <UserContext.Provider value={user}>
       <Header backgroundVideo={backgroundVideo} isLibraryOpen={isLibraryOpen} setIsLibraryOpen={setIsLibraryOpen} setUserSearch={setUserSearch}/>
       <HandlePlayingSongContext.Provider value={{songs, songPlayed,setSongPlayed, isSongPlaying, setIsSongPlaying}}>
-      <PlaylistsContext.Provider value={{playlists, setPlaylists, setRenderPlaylistsPage, currentPlaylistData, setCurrentPlaylistData}}>
+      <PlaylistsContext.Provider value={{playlists, setPlaylists, setRenderPlaylistsPage, currentPlaylistData, setCurrentPlaylistData, likedSongsPlaylist, setLikedSongsPlaylist}}>
         <ShowPopupsContext.Provider value={{showCreatePlaylistPopup, setShowCreatePlaylistPopup, showAddToPlaylistPopup, setShowAddToPlaylistPopup}}>
       <Routes>
         {/*setIsSongPlaying={setIsSongPlaying}*/} 

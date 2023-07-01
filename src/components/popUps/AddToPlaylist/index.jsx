@@ -10,8 +10,8 @@ import ShowPopups from "../../../contexts/ShowPopups";
 function AddToPlaylist() {
   const {id} = useContext(User)
   const { playlists, setRenderPlaylistsPage } = useContext(Playlists)
-  const {songPlayed} = useContext(HandlePlayingSongContext)
   const {setShowAddToPlaylistPopup} = useContext(ShowPopups)
+  const {songPlayed} = useContext(HandlePlayingSongContext)
   const songPlayedData = {title: songPlayed?.title, videoId: songPlayed?.id, songImg: songPlayed?.thumbnail.url,
     channelName: songPlayed?.channel.name, channelImg: songPlayed?.channel.icon,
      duration: songPlayed?.duration ,duration_formatted: songPlayed?.duration_formatted}

@@ -4,18 +4,21 @@ import Playlists from "../../contexts/Playlists";
 
 function PlaylistCard({ playlist, setShowSongs }) {
   const {setCurrentPlaylistData} = useContext(Playlists)
-  
-    function getRandomIndex(arr) {
-        return Math.floor(Math.random() * arr.length);
-      }
-    const randomPlaylistIndex = getRandomIndex(playlist?.songsId)
+  const [imgIndex, setImgIndex] = useState()
+  function getRandomIndex(arr) {
+      return Math.floor(Math.random() * arr.length);
+    }
+  useEffect(() => {
+    const randomSongIndex = getRandomIndex(playlist?.songsId)
+    setImgIndex(randomSongIndex)
+  },[])
       
   return ( <>
             <div className={styles.playlist} onClick={() =>{ 
                 setShowSongs(true),
                 setCurrentPlaylistData(playlist)
             }}>
-                <img src={playlist?.songsId[randomPlaylistIndex]?.songImg} alt={playlist.name} />
+                <img src={playlist?.songsId[imgIndex]?.songImg} alt={playlist.name} />
                 <span>{playlist.name}</span>
               </div>
           </>

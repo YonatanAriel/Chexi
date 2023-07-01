@@ -10,7 +10,7 @@ function Song({ song, index }) {
     <>
       <div
         className={styles.mainDiv}
-        style={{ cursor: songPlayed !== song && "pointer" }}
+        style={{ cursor: songPlayed?.id !== song?.videoId && "pointer" }}
       >
         <div className={styles.numberAndButtonsContainer}>
           <div>{index}</div>
@@ -22,16 +22,16 @@ function Song({ song, index }) {
         {/* songPlayed == song && isSongPlaying */}
         <div className={styles.imgContainer}>
           <img
-            src={song.songImg}
+            src={song?.songImg}
             onError={(e) => {
-              e.target.src = song.channelImg;
+              e.target.src = song?.channelImg;
             }}
-            alt={song.title}
+            alt={song?.title}
           />
-          {(songPlayed?.id == song.videoId && isSongPlaying) && <div><WaveSpinner size={33} /></div>}
+          {(songPlayed?.id == song?.videoId && isSongPlaying) && <div><WaveSpinner size={33} /></div>}
         </div>
-        <span>{song.title}</span>
-        <span>{song.duration_formatted}</span>
+        <span>{song?.title}</span>
+        <span>{song?.duration_formatted}</span>
       </div>
     </>
   );

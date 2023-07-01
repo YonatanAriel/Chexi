@@ -21,7 +21,7 @@ function NewPlaylistOrArtist({ setShowPopup, page }) {
     <div className={styles.popup} onClick={handleClick}>
       <div onClick={handlePopupClick}>       
         {page === "favoriteArtists" ? (
-          <AddArtist />
+          <AddArtist setShowPopup={setShowPopup} />
         ) : (
           <div className={styles.createPlaylist}>
             <CreatePlaylist placeHolder={"What is the playlist name?"} />

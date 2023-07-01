@@ -3,7 +3,6 @@ import { IoIosAddCircle, IoMdAddCircleOutline } from "react-icons/io";
 import { useContext, useEffect, useState } from "react";
 import NewPlaylistOrArtist from "../../components/popUps/newPlaylistOrArtist";
 import HandlePlayingSongContext from "../../contexts/HandlePlayingSong";
-// import axios from "axios";
 import PlaylistCard from "../../components/PlaylistCard";
 import Playlist from "../../components/playlist";
 import PlaylistsContext from "../../contexts/Playlists";
@@ -13,20 +12,15 @@ function Playlists() {
   const {showCreatePlaylistPopup, setShowCreatePlaylistPopup} = useContext(ShowPopups)
   const {songs} = useContext(HandlePlayingSongContext)
   const {playlists, setPlaylists, renderPlaylistsPage, setRenderPlaylistsPage, currentPlaylistData, setCurrentPlaylistData} = useContext(PlaylistsContext)
-
-  // useEffect(() => {axios.get(`http://localhost:1000/playlists/user/${id}`)
-  // .then(res => setPlaylists(res.data))
-  // .catch(err => console.log(err))}, [showCreatePlaylistPopup])
-
   const [showSongs, setShowSongs] = useState(false)
-  // const [currentPlaylistData, setCurrentPlaylistData] = useState()
+  const [filteredPlaylists, setFilteredPlaylists] = useState()
+  useEffect(() => {
+    setFilteredPlaylists(playlists?.filter((playlist) => playlist.isFavorite === false))
+  },[playlists])
+ useEffect(() => {
+ console.log(playlists)},[])
 
-  // useEffect(() => {
-  //   console.log(currentPlaylistData)
-  // },[playlists])
-  
-  // updatedcurrentPlaylistData = playlists.find((playlist) => )
-  // setCurrentPlaylistData
+
   return <> {showSongs? (<Playlist  title={currentPlaylistData.name} songs={currentPlaylistData.songsId} />)
     :
         ( <>{showCreatePlaylistPopup && <NewPlaylistOrArtist />}
@@ -38,7 +32,7 @@ function Playlists() {
           </div>
         </div>
         <div>
-          {playlists?.map((playlist, i) => {
+          {filteredPlaylists?.map((playlist, i) => {
             return  <PlaylistCard setShowSongs={setShowSongs} key={i} playlist={playlist}/>
             })}
         </div>

@@ -27,7 +27,7 @@ useEffect(() => {
   axios.post(`http://localhost:1000/playlists/addsong/${playlistId}`, songPlayedData)
    .then((res) => {
     console.log(res);
-    // setRenderPlaylistsPage(prev => !prev)
+    setRenderPlaylistsPage(prev => !prev)
   })
     .catch(err => console.log(err))
 }
@@ -36,7 +36,7 @@ useEffect(() => {
   const handleButtonClick = async () => {
     // if(inputValue.trim().length === 0 )
    !addSong && inputValue && setShowCreatePlaylistPopup(false);
-    await (axios.post("http://localhost:1000/playlists/addplaylist", { name: inputValue, userId: id })
+    await (axios.post("http://localhost:1000/playlists/addplaylist", { name: inputValue, userId: id, isFavorite: false })
     .then(res =>{
       setPlaylistId(res.data._id)
       setRenderPlaylistsPage(prev => !prev)

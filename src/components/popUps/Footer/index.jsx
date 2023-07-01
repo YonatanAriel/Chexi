@@ -45,6 +45,7 @@ function Footer({
   const [seconds, setSeconds] = useState(0);
   const {showAddToPlaylistPopup, setShowAddToPlaylistPopup} = useContext(ShowPopups)
 
+
   // useEffect(() => {
   //   if(seconds === 59){
   //     setSeconds(0)
