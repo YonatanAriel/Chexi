@@ -20,7 +20,8 @@
     border-radius:0 0 4px 2px;
     color: wheat;
     left: 164px;
-    width: 88vw;
+    width: calc(100vw - 164px);
+    /* width: 88vw; */
 }
 .libraryOpenMainDiv{
   border-bottom-left-radius: 0;
@@ -37,7 +38,6 @@
     width: 164px;
     /* height: 12vh; */
     height:80px ;
-    background-color: rgba(0, 0, 0, 0.4);
     background-color: rgba(0, 0, 0, 0.6);
     border-radius: 0 0 12px 0;
     color:wheat;

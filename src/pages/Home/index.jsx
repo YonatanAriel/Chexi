@@ -83,7 +83,7 @@ function Home({
                 />
                 {songPlayed == song && isSongPlaying ? (
                   <div className={styles.songButtonOrAnima}>
-                    <WaveSpinner size={85} />
+                    <WaveSpinner size={95} />
                   </div>
                 ) : (
                   <BsPlayCircleFill className={styles.songButton} size={40} />

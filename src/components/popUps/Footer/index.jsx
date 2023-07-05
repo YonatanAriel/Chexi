@@ -340,7 +340,7 @@ function Footer({
           </div>
         </div>
       )}
-      {showAddToPlaylistPopup && showFooter && <AddToPlaylist setShowAddToPlaylistPopup={setShowAddToPlaylistPopup} />}
+      {showAddToPlaylistPopup && showFooter && <AddToPlaylist />}
     </>
   );
 }

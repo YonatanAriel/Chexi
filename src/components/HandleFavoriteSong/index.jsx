@@ -88,6 +88,7 @@ function HandleFavoriteSong() {
     },[likedSongsPlaylistId])
       
   return ( <>
+  {/* {likedSongsPlaylist?.songsId?.toString().includes(songPlayedData?._id?.toString()) */}
               {likedSongsPlaylist?.songsId?.find(song => song._id.toString() == songPlayedData?._id?.toString())? (<FaHeart size={18} style={{color:"red", cursor: "pointer"}} onClick={() => handleHeartClick("remove")} />)
                  :
                (<FaRegHeart size={18} className={styles.heart} onClick={() => handleHeartClick("add")}  />)}

@@ -5,7 +5,7 @@ import { Route, Routes, useLocation } from "react-router-dom";
 import Login from "../../pages/Login";
 import SignUp from "../../pages/SignUp";
 import LikedSongs from "../../pages/LikedSongs";
-import Playlists from "../../pages/Playlists";
+import Playlists from "../../pages/Playlists"
 import FavoriteArtists from '../../pages/FavoriteArtists'
 import styles from "./style.module.css";
 import { useEffect, useState } from "react";
@@ -116,7 +116,7 @@ const skipBackOrForward = (backOrForward) => {
     <>
     <div className={styles.appContainer}>
       <UserContext.Provider value={user}>
-      <Header backgroundVideo={backgroundVideo} isLibraryOpen={isLibraryOpen} setIsLibraryOpen={setIsLibraryOpen} setUserSearch={setUserSearch}/>
+      {!["/Login", "/SignUp"].includes(location) && <Header backgroundVideo={backgroundVideo} isLibraryOpen={isLibraryOpen} setIsLibraryOpen={setIsLibraryOpen} setUserSearch={setUserSearch}/>}
       <HandlePlayingSongContext.Provider value={{songs, songPlayed,setSongPlayed, isSongPlaying, setIsSongPlaying}}>
       <PlaylistsContext.Provider value={{playlists, setPlaylists, setRenderPlaylistsPage, currentPlaylistData, setCurrentPlaylistData, likedSongsPlaylist, setLikedSongsPlaylist}}>
         <ShowPopupsContext.Provider value={{showCreatePlaylistPopup, setShowCreatePlaylistPopup, showAddToPlaylistPopup, setShowAddToPlaylistPopup}}>
@@ -134,7 +134,7 @@ const skipBackOrForward = (backOrForward) => {
       {songPlayed && <Footer  backgroundVideo={backgroundVideo} setBackgroundVideo={setBackgroundVideo} skipBackOrForward={skipBackOrForward}/>}
       </ShowPopupsContext.Provider>
       </PlaylistsContext.Provider>
-      {(["/LikedSongs", "/Playlists","/FavoriteArtists"].includes(location) || isLibraryOpen) && <Library backgroundVideo={backgroundVideo}/>}
+      {!["/Login", "/SignUp"].includes(location) && (["/LikedSongs", "/Playlists","/FavoriteArtists"].includes(location) || isLibraryOpen) && <Library backgroundVideo={backgroundVideo}/>}
       </HandlePlayingSongContext.Provider>
       </UserContext.Provider>
       </div>

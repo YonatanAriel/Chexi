@@ -20,8 +20,19 @@
     gap:2.5vh;
     max-width: 25%;
     min-width: 25%;
-    max-height: 42vh;
+    max-height: 45vh;
     border-radius: 20px;
+}
+.popup > svg:first-child {
+    color: wheat;
+    margin-top: -7%;
+    cursor: pointer;
+}
+.popup > span:nth-child(2) {
+    font-size: 2rem;
+    font-weight:600;
+    color: wheat;
+    margin-top: -9%;
 }
 .popup ul {
     color:wheat;

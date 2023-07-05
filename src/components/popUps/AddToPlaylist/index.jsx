@@ -6,6 +6,7 @@ import axios from "axios";
 import Playlists from "../../../contexts/Playlists";
 import HandlePlayingSongContext from "../../../contexts/HandlePlayingSong";
 import ShowPopups from "../../../contexts/ShowPopups";
+import {IoIosArrowDown} from "react-icons/io"
 
 function AddToPlaylist() {
   const {id} = useContext(User)
@@ -27,6 +28,8 @@ const addSongToPlaylist = (playlist) => {
 }
   return (
      <div className={styles.popup}>
+      <IoIosArrowDown  size={115} onClick={() => setShowAddToPlaylistPopup(false)}/>
+      <span>Add to playlist</span>
                   <CreatePlaylist songPlayedData={songPlayedData} addSong={true}/>
         <ul>
            {playlists?.map((playlist, i) => {
