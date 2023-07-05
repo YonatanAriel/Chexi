@@ -1,24 +1,20 @@
 .logoBackground {
-    backdrop-filter: blur(2px);
     position: fixed;
     z-index: 10;
     top: 0;
     left: 0;
-    /* width: 12vw; */
     width: 100vw;
-    /* height: 12vh; */
     height:130px ;
     background-color: rgba(0, 0, 0, 0.6);
-    border-radius: 0 0 12px 0;
     color:wheat;
     display: flex;
     align-items: center;
-    flex-shrink: 0;
+    backdrop-filter: blur(50px);
+
   }
   .logoContainer {
     position: relative;
     margin: auto;
-    /* background-color: aqua; */
     display: flex;
     align-items: center;
     justify-content: center;
@@ -43,6 +39,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    overflow-y: hidden;
 }
 .form {
     position: relative;
@@ -52,18 +49,19 @@
     border-radius: 10px;
     display: flex;
     flex-direction: column;
-    gap: 40px;
+    /* gap: 40px; */
     align-items:center;
     /* justify-content: center; */
     width: 45%;
     min-width: 80vh;
     height: 90%;
     color: wheat;
+    backdrop-filter: blur(20px);
 }
 .form > span:first-child {
     font-size: 3.5rem;
     font-weight: 700;
-    margin: 60px 0 0px 0;
+    margin: 45px 0 30px 0;
     /* margin-bottom: 50px; */
 }
 .form div {
@@ -73,6 +71,14 @@
     align-items: center;
     gap: 15px;
 }
+.inputContainer {
+    display: flex;
+    flex-direction: column;
+    min-height: 50%;
+}
+.inputContainer > div {
+    height: 50%;
+}
 .form input{
     width: 80%;
     height: 40px;
@@ -81,6 +87,8 @@
     display: flex;
     align-items: center;
     text-align: center;
+    /* need to remove the outline none */
+    outline: none;
 }
 .form label {
     font-size: 1.3rem;
@@ -88,8 +96,19 @@
     letter-spacing: 1px;
 }
 .form button {
+    margin: 20px 0;
     color: wheat;
 }
 .form > a:last-child {
     font-size: 1.2rem;
 }
+.error {
+    color: red;
+}
+.redBorder {
+    border: solid 1px red;
+}
+.greenBorder {
+    border: solid 1px green;
+}
+
