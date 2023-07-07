@@ -1,21 +1,26 @@
 import { useContext, useRef } from "react";
 import styles from "./style.module.css"
 import { HiPlus } from "react-icons/hi";
-import User from "../../contexts/User";
 import axios from "axios"
+import Token from "../../contexts/Token";
 
 function AddArtist({setShowPopup}) {
   const inputRef = useRef(null)
-  const {id} = useContext(User)
+  const {token} = useContext(Token)
 
   const HandleAddArtist = () => {
-    const artistName = inputRef.current.value
-    if(artistName.trim()){
-      setShowPopup(false)
-      console.log(id);
-      axios.post("http://localhost:1000/users/addfavoriteartist" ,{userId: id, artistName: artistName})
-      .then(res => console.log(res))
-      .catch(err => console.log(err))
+    if(token){
+      const artistName = inputRef.current.value
+      if(artistName.trim()){
+        setShowPopup(false)
+          axios.post("http://localhost:1000/users/addfavoriteartist" ,{artistName: artistName},
+          {headers: {
+            Authorization: `Bearer ${token}`
+          }
+          })
+          .then(res => console.log(res))
+          .catch(err => console.log(err))
+        }
     }
   }
 

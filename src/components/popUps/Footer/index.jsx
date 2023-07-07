@@ -245,7 +245,7 @@ function Footer({
           {/*songPlayed.thumbnail.url */}
           <div className={styles.artistDetails}>
             <img
-              src={songPlayed.channel.icon}
+              src={songPlayed?.channel.icon}
               onError={(e) => {
                 (e.target.src = songPlayed.thumbnail.url),
                   console.log(e.target.src);

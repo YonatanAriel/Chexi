@@ -4,18 +4,26 @@ import { useContext, useEffect, useState } from "react";
 import Playlists from "../../contexts/Playlists";
 import axios from "axios";
 import User from "../../contexts/User";
+import Token from "../../contexts/Token";
 
 function LikedSongs() {
   const {playlists, likedSongsPlaylist, setLikedSongsPlaylist} = useContext(Playlists)
   const [songs, setSongs] = useState()
-  const {id} = useContext(User)
+  const {token} = useContext(Token)
   //  console.log(playlists?.find(playlist => playlist.isFavorite === true).songsId)
   useEffect(() => {
-    axios.post("http://localhost:1000/playlists/likedsongs", {userId: id})
-    .then((res) => {
-      console.log(res.data.songsId);
-      setSongs(res.data.songsId);
-    })
+    // axios.post("http://localhost:1000/playlists/likedsongs", {userId: id})
+      if(token){
+        axios.get("http://localhost:1000/playlists/likedsongs", 
+        {headers: {
+          Authorization: `Bearer ${token}`
+        }
+        })
+        .then((res) => {
+          console.log(res.data.songsId);
+          setSongs(res.data.songsId);
+        })
+    }
   },[])
   useEffect(() => {
     setSongs(likedSongsPlaylist?.songsId)

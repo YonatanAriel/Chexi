@@ -16,6 +16,7 @@ import VideoContainer from '../../pages/VideoContainer'
 import UserContext from "../../contexts/User"
 import PlaylistsContext from "../../contexts/Playlists";
 import ShowPopupsContext from "../../contexts/ShowPopups";
+import Token from "../../contexts/Token";
 
 function Layout() {
   const [isSongPlaying, setIsSongPlaying] = useState()
@@ -29,6 +30,7 @@ function Layout() {
   const [showAddToPlaylistPopup, setShowAddToPlaylistPopup] = useState(false);
   const [renderPlaylistsPage, setRenderPlaylistsPage] = useState(false)
   const [likedSongsPlaylist, setLikedSongsPlaylist] = useState() 
+  const [token, setToken] = useState(localStorage.getItem("token"))
   const location = useLocation().pathname;
   const user = {id: "6492191120b18571032ebd93"}
   const options = {
@@ -43,11 +45,19 @@ function Layout() {
       'X-RapidAPI-Host': 'simple-youtube-search.p.rapidapi.com'
     }
   };
-  useEffect(() => {axios.get(`http://localhost:1000/playlists/user/${user.id}`)
-  .then(res =>{
-     setPlaylists(res.data)
-    })
-    .catch(err => console.log(err))}, [renderPlaylistsPage])
+  // useEffect(() => {axios.get(`http://localhost:1000/playlists/user/${user.id}`)
+  useEffect(() => {
+    if(token){
+        axios.get(`http://localhost:1000/playlists/user`, {headers: {
+        Authorization: `Bearer ${token}`
+      }
+      })
+      .then(res =>{
+        setPlaylists(res.data)
+        console.log(res.data);
+        })
+        .catch(err => console.log(err))}
+  }, [renderPlaylistsPage])
 
     useEffect(() => {
       if(currentPlaylistData){
@@ -115,6 +125,7 @@ const skipBackOrForward = (backOrForward) => {
   return (
     <>
     <div className={styles.appContainer}>
+      <Token.Provider value={{token, setToken}}>
       <UserContext.Provider value={user}>
       {!["/Login", "/SignUp"].includes(location) && <Header backgroundVideo={backgroundVideo} isLibraryOpen={isLibraryOpen} setIsLibraryOpen={setIsLibraryOpen} setUserSearch={setUserSearch}/>}
       <HandlePlayingSongContext.Provider value={{songs, songPlayed,setSongPlayed, isSongPlaying, setIsSongPlaying}}>
@@ -137,6 +148,7 @@ const skipBackOrForward = (backOrForward) => {
       {!["/Login", "/SignUp"].includes(location) && (["/LikedSongs", "/Playlists","/FavoriteArtists"].includes(location) || isLibraryOpen) && <Library backgroundVideo={backgroundVideo}/>}
       </HandlePlayingSongContext.Provider>
       </UserContext.Provider>
+      </Token.Provider>
       </div>
     </>
   );
