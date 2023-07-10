@@ -4,6 +4,8 @@ import { GiLouvrePyramid } from "react-icons/gi";
 import { lazy, useContext, useEffect, useState } from "react";
 import HandlePlayingSongContext from "../../contexts/HandlePlayingSong";
 import { FireworkSpinner, WaveSpinner } from "react-spinners-kit";
+import Playlist from "../../components/playlist";
+import Playlists from "../../contexts/Playlists";
 
 // ,setIsSongPlaying
 
@@ -14,6 +16,7 @@ function Home({
   const { isSongPlaying, setIsSongPlaying, songPlayed, setSongPlayed, songs } = useContext(
     HandlePlayingSongContext
   );
+  const {setPlayedPlaylist} = useContext(Playlists)
   const [imagesErrorCount, setImagesErrorCount] = useState(0);
   const [songDivHeight, setSongDivHeight] = useState("50.3vh");
   const [imgHeight, setImgHeight] = useState("15vw");
@@ -25,6 +28,7 @@ function Home({
   useEffect(() => {
     loadedImages === 10 && setloadRemainingImgs(true), [loadedImages];
   });
+  useEffect(() => console.log(songs),[songs])
 
   useEffect(() => {
     setImagesErrorCount(0);
@@ -60,16 +64,16 @@ function Home({
                 cursor: songPlayed !== song && "pointer",
               }}
               onClick={() => {
-                setSongPlayed(song), setIsSongPlaying(true);
+                setPlayedPlaylist(null), setSongPlayed(song), setIsSongPlaying(true);
               }}
               key={i}
             >
               <div className={styles.imgAndButton}>
                 {/* song.channel.icon */}
                 <img
-                  key={song.thumbnail.id}
+                  key={song?.thumbnail?.id}
                   className={styles.songImg}
-                  src={song.channel.icon}
+                  src={song?.channel?.icon}
                   style={{ height: imgHeight }}
                   loading={
                     i < 10 ? "lazy" : loadRemainingImgs ? "eager" : "lazy"

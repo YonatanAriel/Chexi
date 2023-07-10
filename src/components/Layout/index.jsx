@@ -30,6 +30,7 @@ function Layout() {
   const [showAddToPlaylistPopup, setShowAddToPlaylistPopup] = useState(false);
   const [renderPlaylistsPage, setRenderPlaylistsPage] = useState(false)
   const [likedSongsPlaylist, setLikedSongsPlaylist] = useState() 
+  const [playedPlaylist, setPlayedPlaylist] = useState()
   const [token, setToken] = useState(localStorage.getItem("token"))
   const location = useLocation().pathname;
   const user = {id: "6492191120b18571032ebd93"}
@@ -57,7 +58,7 @@ function Layout() {
         console.log(res.data);
         })
         .catch(err => console.log(err))}
-  }, [renderPlaylistsPage])
+  }, [renderPlaylistsPage, token])
 
     useEffect(() => {
       if(currentPlaylistData){
@@ -89,19 +90,26 @@ useEffect(() => {
     })
     .catch((err) => console.log(err));
 }, [userSearch]);
+//token?
+useEffect(() => console.log(songs),[songs])
 
-const handleSongsId = (songs) => {
+const handleSongsId = (songs, playPlaylist) => {
   const songsWithId = songs?.map((song, i) => {
-   return {...song, index: i}});
-  setSongs(songsWithId);
+    return {...song, index: i}});
+    if(playPlaylist){
+      console.log(songsWithId);
+      return songsWithId
+    }
+    setSongs(songsWithId);
 }
 
-const skipBackOrForward = (backOrForward) => {
-  if(songs && songs.length > 0){
+const skipBackOrForward = (backOrForward, songsPlaylist) => {
+  const songsList = songsPlaylist;
+  if(songsList && songsList.length > 0){
     let newSong;
     let newIndex;
     if(backOrForward === "forward"){
-      if(songPlayed.index === songs.length - 1){
+      if(songPlayed.index === songsList.length - 1){
         newIndex = 0;
       }
       else{
@@ -110,15 +118,38 @@ const skipBackOrForward = (backOrForward) => {
     }
     else if(backOrForward === "back"){
       if(songPlayed.index === 0){
-        newIndex = songs.length - 1;
+        newIndex = songsList.length - 1;
       }
       else{
         newIndex = songPlayed.index - 1;
       }
     }
-    newSong = songs.find((song) => song.index === newIndex);
+    newSong = songsList.find((song) => song.index === newIndex);
     setSongPlayed(newSong);
   }
+  // if(songs && songs.length > 0){
+  //   let newSong;
+  //   let newIndex;
+  //   if(backOrForward === "forward"){
+  //     if(songPlayed.index === songs.length - 1){
+  //       newIndex = 0;
+  //     }
+  //     else{
+  //       newIndex  = songPlayed.index + 1;
+  //     }
+  //   }
+  //   else if(backOrForward === "back"){
+  //     if(songPlayed.index === 0){
+  //       newIndex = songs.length - 1;
+  //     }
+  //     else{
+  //       newIndex = songPlayed.index - 1;
+  //     }
+  //   }
+  //   newSong = songs.find((song) => song.index === newIndex);
+  //   setSongPlayed(newSong);
+  // }
+
  }
 
 
@@ -128,8 +159,8 @@ const skipBackOrForward = (backOrForward) => {
       <Token.Provider value={{token, setToken}}>
       <UserContext.Provider value={user}>
       {!["/Login", "/SignUp"].includes(location) && <Header backgroundVideo={backgroundVideo} isLibraryOpen={isLibraryOpen} setIsLibraryOpen={setIsLibraryOpen} setUserSearch={setUserSearch}/>}
-      <HandlePlayingSongContext.Provider value={{songs, songPlayed,setSongPlayed, isSongPlaying, setIsSongPlaying}}>
-      <PlaylistsContext.Provider value={{playlists, setPlaylists, setRenderPlaylistsPage, currentPlaylistData, setCurrentPlaylistData, likedSongsPlaylist, setLikedSongsPlaylist}}>
+      <HandlePlayingSongContext.Provider value={{songs,  songPlayed,setSongPlayed, isSongPlaying, setIsSongPlaying, handleSongsId}}>
+      <PlaylistsContext.Provider value={{playlists, setPlaylists, setRenderPlaylistsPage, currentPlaylistData, setCurrentPlaylistData, likedSongsPlaylist, setLikedSongsPlaylist, playedPlaylist, setPlayedPlaylist}}>
         <ShowPopupsContext.Provider value={{showCreatePlaylistPopup, setShowCreatePlaylistPopup, showAddToPlaylistPopup, setShowAddToPlaylistPopup}}>
       <Routes>
         {/*setIsSongPlaying={setIsSongPlaying}*/} 

@@ -10,8 +10,7 @@ import Token from "../../contexts/Token";
 function HandleFavoriteSong() {
   const user = useContext(User);
   const { songPlayed } = useContext(HandlePlayingSongContext);
-  const { playlists, likedSongsPlaylist, setLikedSongsPlaylist } =
-    useContext(Playlists);
+  const { playlists, likedSongsPlaylist, setLikedSongsPlaylist, playedPlaylist } = useContext(Playlists);
   const [isFavorite, setIsFavorite] = useState();
   const [likedSongsPlaylistId, setLikedSongsPlaylistId] = useState(
     playlists?.find((playlist) => playlist.isFavorite === true)?._id
@@ -27,16 +26,16 @@ function HandleFavoriteSong() {
     setSongPlayedData((prev) => ({
       ...prev,
       title: songPlayed?.title,
-      videoId: songPlayed?.id,
-      songImg: songPlayed?.thumbnail.url,
-      channelName: songPlayed?.channel.name,
-      channelImg: songPlayed?.channel.icon,
+      videoId: playedPlaylist? songPlayed?.videoId : songPlayed?.id,
+      songImg: playedPlaylist? songPlayed?.songImg : songPlayed?.thumbnail?.url,
+      channelName: playedPlaylist? songPlayed?.channelName : songPlayed?.channel?.name,
+      channelImg: playedPlaylist? songPlayed?.channelImg : songPlayed?.channel?.icon,
       duration: songPlayed?.duration,
       duration_formatted: songPlayed?.duration_formatted,
     }));
   }, [songPlayed]);
   useEffect(() => {
-    if (
+    if (token &&
       likedSongsPlaylist?.songsId?.find(
         (song) =>
           song?.videoId?.toString() === songPlayedData?.videoId?.toString()
@@ -47,7 +46,6 @@ function HandleFavoriteSong() {
       setIsFavorite(false);
     }
   }, [songPlayedData, likedSongsPlaylist]);
-  useEffect(() => console.log(isFavorite), [isFavorite]);
 
   useEffect(() => {
     //to get the liked songs playlist
@@ -181,7 +179,6 @@ function HandleFavoriteSong() {
       // )
     ) {
       setIsFavorite(true);
-      console.log("ppp");
       axios
         .post(
           `http://localhost:1000/playlists/addsong/${likedSongsPlaylistId}`,
@@ -194,7 +191,6 @@ function HandleFavoriteSong() {
         )
         .then((res) => {
           console.log(res.data);
-          console.log(likedSongsPlaylist.songsId);
           if (!likedSongsPlaylist.songsId.includes(res.data)) {
             setLikedSongsPlaylist((prev) => ({
               ...prev,
@@ -207,13 +203,11 @@ function HandleFavoriteSong() {
     }
   }
   }, [likedSongsPlaylistId]);
-  useEffect(
-    () => console.log(likedSongsPlaylist?.songsId, songPlayedData),
-    [likedSongsPlaylist]
-  );
+
   return (
+   token? (
     <>
-      {/* {likedSongsPlaylist?.songsId?.find(song => song?._id?.toString() == songPlayedData?._id?.toString())? */}
+    {/* {likedSongsPlaylist?.songsId?.find(song => song?._id?.toString() == songPlayedData?._id?.toString())? */}
       {(isFavorite
       || likedSongsPlaylist?.songsId?.find(
         (song) =>
@@ -232,7 +226,9 @@ function HandleFavoriteSong() {
           onClick={() => handleHeartClick("add")}
         />
       )}
-    </>
+    </>) 
+    : (<FaRegHeart size={18} className={styles.heart} />)
+
   );
 }
 

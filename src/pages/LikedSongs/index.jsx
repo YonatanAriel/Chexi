@@ -5,14 +5,14 @@ import Playlists from "../../contexts/Playlists";
 import axios from "axios";
 import User from "../../contexts/User";
 import Token from "../../contexts/Token";
+import HandlePlayingSongContext from "../../contexts/HandlePlayingSong";
 
 function LikedSongs() {
   const {playlists, likedSongsPlaylist, setLikedSongsPlaylist} = useContext(Playlists)
-  const [songs, setSongs] = useState()
+  const [likedSongs, setLikdSongs] = useState()
   const {token} = useContext(Token)
-  //  console.log(playlists?.find(playlist => playlist.isFavorite === true).songsId)
+  const {handleSongsId} = useContext(HandlePlayingSongContext)
   useEffect(() => {
-    // axios.post("http://localhost:1000/playlists/likedsongs", {userId: id})
       if(token){
         axios.get("http://localhost:1000/playlists/likedsongs", 
         {headers: {
@@ -21,17 +21,20 @@ function LikedSongs() {
         })
         .then((res) => {
           console.log(res.data.songsId);
-          setSongs(res.data.songsId);
+          setLikdSongs(handleSongsId(res.data.songsId, true));
         })
-    }
-  },[])
+      }
+    },[])
+   useEffect(()=> console.log(likedSongs),[likedSongs])
   useEffect(() => {
-    setSongs(likedSongsPlaylist?.songsId)
+     if(token){
+      setLikdSongs(handleSongsId(likedSongsPlaylist?.songsId, true))
+     }
   },[likedSongsPlaylist])
   return (
     <>
       <Playlist
-      songs={songs}
+      songs={likedSongs}
         title={"My favorit songs"}
       />
     </>

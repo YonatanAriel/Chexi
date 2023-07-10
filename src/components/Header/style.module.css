@@ -56,6 +56,13 @@
 .mainDiv a {
   flex-shrink: 0;
   cursor: pointer;
+  
+}
+.mainDiv a:hover {
+  /* transform: scale(0.97); */
+  /* color: rgb(255, 218, 150); */
+  color: white;
+  /* color: rgb(255, 0, 28); */
 }
   div span {
     margin-left: 0.1vw;

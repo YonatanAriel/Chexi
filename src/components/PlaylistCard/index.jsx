@@ -1,6 +1,7 @@
 import { useContext, useEffect, useState } from "react"
 import styles from "./style.module.css"
 import Playlists from "../../contexts/Playlists";
+import { BsMusicNote } from "react-icons/bs";
 
 function PlaylistCard({ playlist, setShowSongs }) {
   const {setCurrentPlaylistData} = useContext(Playlists)
@@ -8,6 +9,7 @@ function PlaylistCard({ playlist, setShowSongs }) {
   function getRandomIndex(arr) {
       return Math.floor(Math.random() * arr.length);
     }
+
   useEffect(() => {
     const randomSongIndex = getRandomIndex(playlist?.songsId)
     setImgIndex(randomSongIndex)
@@ -18,7 +20,9 @@ function PlaylistCard({ playlist, setShowSongs }) {
                 setShowSongs(true),
                 setCurrentPlaylistData(playlist)
             }}>
-                <img src={playlist?.songsId[imgIndex]?.songImg} alt={playlist.name} />
+              {(playlist?.songsId[imgIndex]?.songImg)?
+                <img src={playlist?.songsId[imgIndex]?.songImg} alt={playlist.name} /> :
+                <div><BsMusicNote size={92}/><span>Chexi</span></div> }
                 <span>{playlist.name}</span>
               </div>
           </>

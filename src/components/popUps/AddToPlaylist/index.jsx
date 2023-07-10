@@ -6,15 +6,17 @@ import Playlists from "../../../contexts/Playlists";
 import HandlePlayingSongContext from "../../../contexts/HandlePlayingSong";
 import ShowPopups from "../../../contexts/ShowPopups";
 import {IoIosArrowDown} from "react-icons/io"
+import { BsMusicNote } from "react-icons/bs";
 import Token from "../../../contexts/Token";
 
 function AddToPlaylist() {
-  const { playlists, setRenderPlaylistsPage } = useContext(Playlists)
+  const { playlists, setRenderPlaylistsPage, playedPlaylist } = useContext(Playlists)
   const {setShowAddToPlaylistPopup} = useContext(ShowPopups)
   const {songPlayed} = useContext(HandlePlayingSongContext)
   const {token} = useContext(Token)
-  const songPlayedData = {title: songPlayed?.title, videoId: songPlayed?.id, songImg: songPlayed?.thumbnail.url,
-    channelName: songPlayed?.channel.name, channelImg: songPlayed?.channel.icon,
+  const songPlayedData = {
+    title: songPlayed?.title, videoId: playedPlaylist? songPlayed?.videoId : songPlayed?.id, songImg: playedPlaylist? songPlayed?.songImg : songPlayed?.thumbnail.url,
+    channelName: playedPlaylist? songPlayed?.channelName : songPlayed?.channel.name, channelImg: playedPlaylist? songPlayed?.channelImg : songPlayed?.channel.icon,
      duration: songPlayed?.duration ,duration_formatted: songPlayed?.duration_formatted}
 
 const addSongToPlaylist = (playlist) => {
@@ -33,21 +35,25 @@ const addSongToPlaylist = (playlist) => {
   }
 }
   return (
-     <div className={styles.popup}>
-      <IoIosArrowDown  size={115} onClick={() => setShowAddToPlaylistPopup(false)}/>
-      <span>Add to playlist</span>
+        
+    token && ( <div className={styles.popup}>
+      <div>
+        <IoIosArrowDown  size={60} onClick={() => setShowAddToPlaylistPopup(false)}/>
+        <span>Add to playlist</span>
+      </div>
                   <CreatePlaylist songPlayedData={songPlayedData} addSong={true}/>
         <ul>
            {playlists?.filter(playlist => playlist.isFavorite === false).map((playlist, i) => {
             return (
               <li key={i} onClick={() => addSongToPlaylist(playlist)}>
-                <img src={playlist?.songsId[0]?.songImg} alt={playlist?.name} />
+               {playlist?.songsId[0]?.songImg? <img src={playlist?.songsId[0]?.songImg} alt={playlist?.name} />
+               : <div><BsMusicNote size={25} /><span>Chexi</span></div>}
                 <span>{playlist?.name.substring(0, 20)}</span>
               </li>
             );
           })}
         </ul>
-      </div>)
+      </div>))
 }
 export default AddToPlaylist;
 

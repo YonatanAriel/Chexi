@@ -7,21 +7,21 @@ import PlaylistCard from "../../components/PlaylistCard";
 import Playlist from "../../components/playlist";
 import PlaylistsContext from "../../contexts/Playlists";
 import ShowPopups from "../../contexts/ShowPopups";
+import Token from "../../contexts/Token";
 
 function Playlists() {
   const {showCreatePlaylistPopup, setShowCreatePlaylistPopup} = useContext(ShowPopups)
-  const {songs} = useContext(HandlePlayingSongContext)
+  const {songs, handleSongsId} = useContext(HandlePlayingSongContext)
   const {playlists, setPlaylists, renderPlaylistsPage, setRenderPlaylistsPage, currentPlaylistData, setCurrentPlaylistData} = useContext(PlaylistsContext)
   const [showSongs, setShowSongs] = useState(false)
   const [filteredPlaylists, setFilteredPlaylists] = useState()
-  useEffect(() => {
+  const {token} = useContext(Token)
+    useEffect(() => {
     setFilteredPlaylists(playlists?.filter((playlist) => playlist.isFavorite === false))
   },[playlists])
- useEffect(() => {
- console.log(playlists)},[])
 
 
-  return <> {showSongs? (<Playlist  title={currentPlaylistData.name} songs={currentPlaylistData.songsId} />)
+  return <> {showSongs? (<Playlist title={currentPlaylistData.name} songs={handleSongsId(currentPlaylistData.songsId, true)} />)
     :
         ( <>{showCreatePlaylistPopup && <NewPlaylistOrArtist />}
       <div className={styles.PlaylistsContainer}>
@@ -32,7 +32,7 @@ function Playlists() {
           </div>
         </div>
         <div>
-          {filteredPlaylists?.map((playlist, i) => {
+          {token && filteredPlaylists?.map((playlist, i) => {
             return  <PlaylistCard setShowSongs={setShowSongs} key={i} playlist={playlist}/>
             })}
         </div>

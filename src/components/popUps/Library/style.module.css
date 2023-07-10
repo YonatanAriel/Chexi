@@ -22,6 +22,8 @@
 }
 .libraryContainer a:hover {
     color: wheat;
+    /*need to delete one*/
+    color: white;
 }
 .libraryContainer span{
     margin-left: 0.8vw;

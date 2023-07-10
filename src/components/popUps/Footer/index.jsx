@@ -1,7 +1,7 @@
 import styles from "./style.module.css";
 import YouTube from "react-youtube";
 // import HandleYoutube from "../HandleYoutube/index";
-import React, { useContext, useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import {
   FaRegHeart,
   FaHeart,
@@ -25,6 +25,7 @@ import AddToPlaylist from "../AddToPlaylist";
 import { IoIosArrowUp, IoIosArrowDown } from "react-icons/io";
 import HandleFavoriteSong from "../../HandleFavoriteSong";
 import ShowPopups from "../../../contexts/ShowPopups";
+import Playlists from "../../../contexts/Playlists";
 
 // , isSongPlaying , setIsSongPlaying
 function Footer({
@@ -36,6 +37,7 @@ function Footer({
   // const playerRef = useRef(null);
   const playerRef = useRef(null);
   const [fullScreenVideo, setFullScreenVideo] = useState(false);
+  const {playedPlaylist} = useContext(Playlists)
   // const [elapsedSeconds, setElapsedSeconds] = useState(0)
   // const [elapsedMinutes, setElapsedMinutes] = useState(0);
   // const [elapsedHours, setElapsedHours] = useState(0);
@@ -44,6 +46,7 @@ function Footer({
   const [minutes, setMinutes] = useState(0);
   const [seconds, setSeconds] = useState(0);
   const {showAddToPlaylistPopup, setShowAddToPlaylistPopup} = useContext(ShowPopups)
+  // const history = useHistory();
 
 
   // useEffect(() => {
@@ -54,7 +57,8 @@ function Footer({
   //   setSeconds(prev => prev + 1)
   // },[currentSeconds])
   const [songProgress, setSongProgress] = useState(0);
-  // useEffect(() => console.log(newCurrentTime),[newCurrentTime])
+  useEffect(() => console.log(playedPlaylist, " 8 " , songPlayed),[songPlayed])
+
   const handlePlayerStateChange = (e) => {
     if (e.data === window.YT.PlayerState.PLAYING) {
       setInterval(() => {
@@ -182,12 +186,12 @@ function Footer({
                 ? "block"
                 : "none",
           }}
-          videoId={songPlayed.id}
+          videoId={playedPlaylist? songPlayed?.videoId : songPlayed?.id}
           opts={opts}
           autoplay
           onReady={(e) => (playerRef.current = e.target)}
           onEnd={() => {
-            skipBackOrForward("forward");
+           playedPlaylist? skipBackOrForward("forward", playedPlaylist) : skipBackOrForward("forward", songs);
           }}
         />
       </div>
@@ -209,7 +213,10 @@ function Footer({
         <div className={styles.mainDiv}>
           <div className={styles.fullScreenButtons}>
             {location.pathname === "/Video" ? (
-              <Link to={"/"} onClick={() => setFullScreenVideo(true)}>
+              <Link to="/"
+              // to={history.length >= 2 ?  history.goBack() : "/"}
+               onClick={() => {
+                setFullScreenVideo(true)}}>
                 {
                   <BsFillCameraVideoOffFill
                     size={25}
@@ -245,13 +252,12 @@ function Footer({
           {/*songPlayed.thumbnail.url */}
           <div className={styles.artistDetails}>
             <img
-              src={songPlayed?.channel.icon}
+              src={playedPlaylist? (songPlayed?.channelImg) : (songPlayed?.channel?.icon)}
               onError={(e) => {
-                (e.target.src = songPlayed.thumbnail.url),
-                  console.log(e.target.src);
+                (e.target.src = playedPlaylist? songPlayed?.songImg : songPlayed?.thumbnail?.url)
               }}
             />
-            <span>{songPlayed.channel.name}</span>
+            <span>{playedPlaylist? songPlayed?.channelName : songPlayed?.channel?.name}</span>
           </div>
           <div className={styles.centerItemsContainer}>
             <div className={styles.palyingButtonsContainer} >
@@ -262,7 +268,8 @@ function Footer({
               />
                <FaHeart size={18} style={{color:"red"}}/>  */}
               <TbPlayerSkipBackFilled
-                onClick={() => skipBackOrForward("back")}
+                onClick={() => {
+                  playedPlaylist? skipBackOrForward("back", playedPlaylist) : skipBackOrForward("back", songs)}}
                 size={19}
                 className={styles.iconButton}
               />
@@ -281,7 +288,8 @@ function Footer({
                 />
               )}
               <TbPlayerSkipForwardFilled
-                onClick={() => skipBackOrForward("forward")}
+                onClick={() => {
+                   playedPlaylist? skipBackOrForward("forward", playedPlaylist) : skipBackOrForward("forward", songs);}}
                 size={19}
                 className={styles.iconButton}
               />
@@ -310,7 +318,7 @@ function Footer({
                 className={styles.progressInput}
               />
               <span className={styles.progressTime}>
-                {songPlayed.duration_formatted}
+                {songPlayed?.duration_formatted}
               </span>
             </div>
           </div>

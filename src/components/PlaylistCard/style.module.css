@@ -13,10 +13,24 @@
     border-radius: 5px;
     cursor: pointer;
 }
-.playlist img {
+.playlist img,
+.playlist div {
     height:17.56vw;
     width:31.3vw;
     border-radius: 5px;
+}
+.playlist > div:first-child {
+    background-color:black;
+    display: flex;
+    align-items: center;
+    /* justify-content: center; */
+}
+.playlist > div:first-child > span {
+    font-size: 4.5rem;
+    font-weight: 700;
+}
+.playlist svg {
+    margin:0 -38px 10px 19px;
 }
 .playlist span {
     padding: 5px 0;
