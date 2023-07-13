@@ -13,7 +13,6 @@ import axios from "axios";
 import HandlePlayingSongContext from "../../contexts/HandlePlayingSong";
 import Library from "../popUps/Library";
 import VideoContainer from '../../pages/VideoContainer'
-import UserContext from "../../contexts/User"
 import PlaylistsContext from "../../contexts/Playlists";
 import ShowPopupsContext from "../../contexts/ShowPopups";
 import Token from "../../contexts/Token";
@@ -32,8 +31,7 @@ function Layout() {
   const [likedSongsPlaylist, setLikedSongsPlaylist] = useState() 
   const [playedPlaylist, setPlayedPlaylist] = useState()
   const [token, setToken] = useState(localStorage.getItem("token"))
-  const location = useLocation().pathname;
-  const user = {id: "6492191120b18571032ebd93"}
+  const location = useLocation().pathname
   const options = {
     method: 'GET',
     url: 'https://simple-youtube-search.p.rapidapi.com/search',
@@ -46,7 +44,7 @@ function Layout() {
       'X-RapidAPI-Host': 'simple-youtube-search.p.rapidapi.com'
     }
   };
-  // useEffect(() => {axios.get(`http://localhost:1000/playlists/user/${user.id}`)
+
   useEffect(() => {
     if(token){
         axios.get(`http://localhost:1000/playlists/user`, {headers: {
@@ -91,13 +89,11 @@ useEffect(() => {
     .catch((err) => console.log(err));
 }, [userSearch]);
 //token?
-useEffect(() => console.log(songs),[songs])
 
 const handleSongsId = (songs, playPlaylist) => {
   const songsWithId = songs?.map((song, i) => {
     return {...song, index: i}});
     if(playPlaylist){
-      console.log(songsWithId);
       return songsWithId
     }
     setSongs(songsWithId);
@@ -157,7 +153,6 @@ const skipBackOrForward = (backOrForward, songsPlaylist) => {
     <>
     <div className={styles.appContainer}>
       <Token.Provider value={{token, setToken}}>
-      <UserContext.Provider value={user}>
       {!["/Login", "/SignUp"].includes(location) && <Header backgroundVideo={backgroundVideo} isLibraryOpen={isLibraryOpen} setIsLibraryOpen={setIsLibraryOpen} setUserSearch={setUserSearch}/>}
       <HandlePlayingSongContext.Provider value={{songs,  songPlayed,setSongPlayed, isSongPlaying, setIsSongPlaying, handleSongsId}}>
       <PlaylistsContext.Provider value={{playlists, setPlaylists, setRenderPlaylistsPage, currentPlaylistData, setCurrentPlaylistData, likedSongsPlaylist, setLikedSongsPlaylist, playedPlaylist, setPlayedPlaylist}}>
@@ -165,20 +160,19 @@ const skipBackOrForward = (backOrForward, songsPlaylist) => {
       <Routes>
         {/*setIsSongPlaying={setIsSongPlaying}*/} 
       <Route index element={<Home  backgroundVideo={backgroundVideo} isLibraryOpen={isLibraryOpen} setUserSearch={setUserSearch}/>} /> 
-        <Route path="/LikedSongs" element={<LikedSongs />} />
-        <Route path="/Playlists" element={<Playlists />} />
-        <Route path="/FavoriteArtists" element={<FavoriteArtists />} />
+        {token && (<Route path="/LikedSongs" element={<LikedSongs />} />)}
+        {token && (<Route path="/Playlists"  element={<Playlists />} />)}
+        {token && (<Route path="/FavoriteArtists" element={<FavoriteArtists setSongs={setSongs} />} />)}
         <Route path="/Login" element={<Login />} />
         <Route path="/SignUp" element={<SignUp />} />
-        <Route path="/Video" element={<VideoContainer  />}/>
+        <Route path="/Video" element={<VideoContainer />}/>
       </Routes>
       {/* isSongPlaying={isSongPlaying} setIsSongPlaying={setIsSongPlaying} */}
       {songPlayed && <Footer  backgroundVideo={backgroundVideo} setBackgroundVideo={setBackgroundVideo} skipBackOrForward={skipBackOrForward}/>}
       </ShowPopupsContext.Provider>
       </PlaylistsContext.Provider>
-      {!["/Login", "/SignUp"].includes(location) && (["/LikedSongs", "/Playlists","/FavoriteArtists"].includes(location) || isLibraryOpen) && <Library backgroundVideo={backgroundVideo}/>}
+      {!["/Login", "/SignUp"].includes(location) && (["/LikedSongs", "/Playlists","/FavoriteArtists"].includes(location) || isLibraryOpen) && <Library  backgroundVideo={backgroundVideo}/>}
       </HandlePlayingSongContext.Provider>
-      </UserContext.Provider>
       </Token.Provider>
       </div>
     </>

@@ -21,7 +21,7 @@ function Playlists() {
   },[playlists])
 
 
-  return <> {showSongs? (<Playlist title={currentPlaylistData.name} songs={handleSongsId(currentPlaylistData.songsId, true)} />)
+  return <> {showSongs? (<Playlist title={currentPlaylistData.name} setShowSongs={setShowSongs} songs={handleSongsId(currentPlaylistData.songsId, true)} />)
     :
         ( <>{showCreatePlaylistPopup && <NewPlaylistOrArtist />}
       <div className={styles.PlaylistsContainer}>
@@ -32,7 +32,7 @@ function Playlists() {
           </div>
         </div>
         <div>
-          {token && filteredPlaylists?.map((playlist, i) => {
+          {filteredPlaylists?.map((playlist, i) => {
             return  <PlaylistCard setShowSongs={setShowSongs} key={i} playlist={playlist}/>
             })}
         </div>

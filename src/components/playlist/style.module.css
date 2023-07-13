@@ -21,6 +21,11 @@
     align-items: center;
     /* position: sticky; */
 }
+.arrowButton {
+    position: absolute;
+    right: 20px;
+    top: 20px;
+}
 .PlayButton {
     margin-top:10px;
     cursor:pointer;

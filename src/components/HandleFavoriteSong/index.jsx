@@ -2,13 +2,11 @@ import { FaRegHeart, FaHeart } from "react-icons/fa";
 import styles from "./style.module.css";
 import { useContext, useEffect, useState } from "react";
 import HandlePlayingSongContext from "../../contexts/HandlePlayingSong";
-import User from "../../contexts/User";
 import axios from "axios";
 import Playlists from "../../contexts/Playlists";
 import Token from "../../contexts/Token";
 
 function HandleFavoriteSong() {
-  const user = useContext(User);
   const { songPlayed } = useContext(HandlePlayingSongContext);
   const { playlists, likedSongsPlaylist, setLikedSongsPlaylist, playedPlaylist } = useContext(Playlists);
   const [isFavorite, setIsFavorite] = useState();

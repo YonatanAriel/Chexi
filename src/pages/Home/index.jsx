@@ -16,19 +16,19 @@ function Home({
   const { isSongPlaying, setIsSongPlaying, songPlayed, setSongPlayed, songs } = useContext(
     HandlePlayingSongContext
   );
-  const {setPlayedPlaylist} = useContext(Playlists)
+  const {setPlayedPlaylist, playedPlaylist} = useContext(Playlists)
   const [imagesErrorCount, setImagesErrorCount] = useState(0);
   const [songDivHeight, setSongDivHeight] = useState("50.3vh");
   const [imgHeight, setImgHeight] = useState("15vw");
   const [loadedImages, setLoadedImages] = useState(0);
   const [loadRemainingImgs, setloadRemainingImgs] = useState(false);
+  const condition = songPlayed && songPlayed[playedPlaylist? "videoId" : "id"]
   const handleLoadingImgs = () => {
     setLoadedImages((prev) => prev + 1);
   };
   useEffect(() => {
     loadedImages === 10 && setloadRemainingImgs(true), [loadedImages];
   });
-  useEffect(() => console.log(songs),[songs])
 
   useEffect(() => {
     setImagesErrorCount(0);
@@ -61,7 +61,7 @@ function Home({
               className={`${styles.song} `}
               style={{
                 height: songDivHeight,
-                cursor: songPlayed !== song && "pointer",
+                cursor: condition !== song.id && "pointer"
               }}
               onClick={() => {
                 setPlayedPlaylist(null), setSongPlayed(song), setIsSongPlaying(true);
@@ -85,7 +85,7 @@ function Home({
                   alt={song.title}
                   onLoad={i < 10 ? handleLoadingImgs : undefined}
                 />
-                {songPlayed == song && isSongPlaying ? (
+                {condition === song.id && isSongPlaying ? (
                   <div className={styles.songButtonOrAnima}>
                     <WaveSpinner size={95} />
                   </div>

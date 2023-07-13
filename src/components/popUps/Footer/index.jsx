@@ -57,7 +57,6 @@ function Footer({
   //   setSeconds(prev => prev + 1)
   // },[currentSeconds])
   const [songProgress, setSongProgress] = useState(0);
-  useEffect(() => console.log(playedPlaylist, " 8 " , songPlayed),[songPlayed])
 
   const handlePlayerStateChange = (e) => {
     if (e.data === window.YT.PlayerState.PLAYING) {
@@ -104,15 +103,15 @@ function Footer({
   //         }
   //       }, 1000);
   //       if(e.data === window.YT.PlayerState.ENDED){
-  //               setMinutes(0)
-  //               setSeconds(0)
-  //       }
-  //     }
-  //   }
+    //               setMinutes(0)
+    //               setSeconds(0)
+    //       }
+    //     }
+    //   }
+    
+    const location = useLocation();
 
   const opts = {
-    // height: '',
-    // width: '',
     playerVars: {
       autoplay: 1,
       fs: 1,
@@ -123,8 +122,8 @@ function Footer({
       rel: 0,
       // origin: 'http://localhost:5174'
     },
-  };
-  const location = useLocation();
+  }
+
   const handlePause = () => {
     setIsSongPlaying(false);
   };
@@ -161,6 +160,8 @@ function Footer({
     setVolume(50);
   };
   //
+  useEffect(() => console.log(songPlayed),[songPlayed])
+
 
   return (
     <>
@@ -216,7 +217,8 @@ function Footer({
               <Link to="/"
               // to={history.length >= 2 ?  history.goBack() : "/"}
                onClick={() => {
-                setFullScreenVideo(true)}}>
+                setFullScreenVideo(true)
+              }}>
                 {
                   <BsFillCameraVideoOffFill
                     size={25}
