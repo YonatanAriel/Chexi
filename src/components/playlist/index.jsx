@@ -7,6 +7,7 @@ import Token from "../../contexts/Token";
 import Playlists from "../../contexts/Playlists";
 import GoBackButton from "../GoBackButton";
 import { useLocation } from "react-router-dom";
+import Loading from "../Loading";
 
 function Playlist({ title, songs, setShowSongs, setSongs }) {
   const {songPlayed, setSongPlayed, handleSongsId, setIsSongPlaying} = useContext(HandlePlayingSongContext)
@@ -14,19 +15,19 @@ function Playlist({ title, songs, setShowSongs, setSongs }) {
   const {currentPlaylistData, setPlayedPlaylist} = useContext(Playlists)
   const location = useLocation().pathname
   const handlePlayPlaylist = (index) => {
-    setSongPlayed(songs[index]);
-    setIsSongPlaying(true)
-    if(location === "/FavoriteArtists"){
-      setSongs(songs)
-      setPlayedPlaylist(null)
-    }
-    else{
-      setPlayedPlaylist(songs);
-    }
-    console.log(songPlayed)
+    if(songs?.length > 0){
+      setSongPlayed(songs[index]);
+      setIsSongPlaying(true)
+      if(location === "/FavoriteArtists"){
+        setSongs(songs)
+      }
+      else{
+        setPlayedPlaylist(songs);
+      }
   }
+}
     return <>
-    (
+    
         <div className={styles.mainDiv}>
           <div className={styles.arrowButton}>
           {location !== "/LikedSongs" && <GoBackButton setShowSongs={setShowSongs} />}
@@ -36,11 +37,12 @@ function Playlist({ title, songs, setShowSongs, setSongs }) {
         <span>{title}</span>
       </div>
       <div className={styles.songsContainer}>
-         {songs && songs?.map((song, i) => (
+         {songs? songs?.map((song, i) => (
           <Song handlePlayPlaylist={handlePlayPlaylist} song={song} index={i + 1} key={song._id} />
-        ))}
+        )) :
+        <Loading />}
       </div>
-    </div>) 
+    </div>
 </>
 }
 export default Playlist;

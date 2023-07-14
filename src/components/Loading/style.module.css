@@ -1,0 +1,12 @@
+.loading {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    top:60px
+}
+.playlistsLoading {
+    position: absolute; 
+    right: 0; 
+    width: 100%;
+}

@@ -5,26 +5,32 @@ import Playlists from "../../contexts/Playlists";
 import axios from "axios";
 import Token from "../../contexts/Token";
 import HandlePlayingSongContext from "../../contexts/HandlePlayingSong";
+import api from "../../apiCalls/apiCalls"
 
 function LikedSongs() {
   const {playlists, likedSongsPlaylist, setLikedSongsPlaylist} = useContext(Playlists)
-  const [likedSongs, setLikdSongs] = useState()
+  const [likedSongs, setLikedSongs] = useState()
   const {token} = useContext(Token)
   const {handleSongsId} = useContext(HandlePlayingSongContext)
   useEffect(() => {
-        axios.get("http://localhost:1000/playlists/likedsongs", 
-        {headers: {
-          Authorization: `Bearer ${token}`
-        }
-        })
-        .then((res) => {
-          console.log(res.data.songsId);
-          setLikdSongs(handleSongsId(res.data.songsId, true));
-        })
+    async function getLikesSongsPlaylist(){
+     const res = await api.get("playlists/likedsongs")
+     setLikedSongs(handleSongsId(res?.songsId, true));
+    }
+    getLikesSongsPlaylist()
+
+        // axios.get("http://localhost:1000/playlists/likedsongs", 
+        // {headers: {
+        //   Authorization: `Bearer ${token}`
+        // }
+        // })
+        // .then((res) => {
+        //   console.log(res.data.songsId);
+        //   setLikedSongs(handleSongsId(res.data.songsId, true));
+        // })
     },[])
-   useEffect(()=> console.log(likedSongs),[likedSongs])
   useEffect(() => {
-      setLikdSongs(handleSongsId(likedSongsPlaylist?.songsId, true))
+      setLikedSongs(handleSongsId(likedSongsPlaylist?.songsId, true))
      }
   ,[likedSongsPlaylist])
   return (

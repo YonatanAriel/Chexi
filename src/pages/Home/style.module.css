@@ -101,12 +101,3 @@ h3 {
     text-shadow: 0.3px 0.3px 2px rgb(0, 0, 0),
             -0.3px -0.3px 2px rgb(0, 0, 0)
 }
-.loading {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height:calc(100vh - 60px) ;
-    position: absolute;
-    bottom: 0;
-    right: 0;
-}

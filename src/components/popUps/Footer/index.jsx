@@ -120,6 +120,7 @@ function Footer({
       modestbranding: 1,
       showinfo: 0,
       rel: 0,
+      Loop: 1
       // origin: 'http://localhost:5174'
     },
   }
@@ -160,7 +161,6 @@ function Footer({
     setVolume(50);
   };
   //
-  useEffect(() => console.log(songPlayed),[songPlayed])
 
 
   return (
@@ -297,7 +297,7 @@ function Footer({
               />
               <div className={styles.AddToPlaylist}>
                 <BsPlusCircle
-                  onClick={() => setShowAddToPlaylistPopup((prev) => !prev)}
+                  onClick={() => {if(localStorage.token) setShowAddToPlaylistPopup((prev) => !prev)}}
                   size={18}
                   className={`${styles.iconButton} ${styles.addToPlaylistButton}`}
                 />

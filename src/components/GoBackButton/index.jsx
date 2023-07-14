@@ -7,7 +7,7 @@ function GoBackButton({setShowSongs}) {
     const handleGoBack = () => {
       console.log(loaction);
       if(loaction === "/FavoriteArtists") {
-        setShowSongs(prev => ({...prev ,showArtistSongs:false}))
+        setShowSongs(prev => ({...prev ,showArtistSongs:false, artistName: null}))
       }
       else setShowSongs(false)
     }

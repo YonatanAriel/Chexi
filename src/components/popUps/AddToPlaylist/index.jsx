@@ -8,6 +8,7 @@ import ShowPopups from "../../../contexts/ShowPopups";
 import {IoIosArrowDown} from "react-icons/io"
 import { BsMusicNote } from "react-icons/bs";
 import Token from "../../../contexts/Token";
+import api from "../../../apiCalls/apiCalls"
 
 function AddToPlaylist() {
   const { playlists, setRenderPlaylistsPage, playedPlaylist } = useContext(Playlists)
@@ -19,20 +20,21 @@ function AddToPlaylist() {
     channelName: playedPlaylist? songPlayed?.channelName : songPlayed?.channel.name, channelImg: playedPlaylist? songPlayed?.channelImg : songPlayed?.channel.icon,
      duration: songPlayed?.duration ,duration_formatted: songPlayed?.duration_formatted}
 
-const addSongToPlaylist = (playlist) => {
-  if(token){
+const addSongToPlaylist = async (playlist) => {
     setShowAddToPlaylistPopup(false);
-    axios.post(`http://localhost:1000/playlists/addsong/${playlist._id}`, songPlayedData,
-    {headers: {
-      Authorization: `Bearer ${token}`
-    }
-    })
-    .then((res) => {
-    console.log(res);
+    await api.post(`playlists/addsong/${playlist._id}`, songPlayedData)
     setRenderPlaylistsPage(prev => !prev)
-    })
-    .catch(err => console.log(err))
-  }
+
+    // axios.post(`http://localhost:1000/playlists/addsong/${playlist._id}`, songPlayedData,
+    // {headers: {
+    //   Authorization: `Bearer ${token}`
+    // }
+    // })
+    // .then((res) => {
+    // console.log(res);
+    // setRenderPlaylistsPage(prev => !prev)
+    // })
+    // .catch(err => console.log(err))
 }
   return (
         

@@ -5,7 +5,9 @@ import Playlist from "../../components/playlist";
 import NewPlaylistOrArtist from "../../components/popUps/newPlaylistOrArtist";
 import HandlePlayingSongContext from "../../contexts/HandlePlayingSong";
 import axios from "axios";
+import api from "../../apiCalls/apiCalls"
 import Token from "../../contexts/Token";
+import Loading from "../../components/Loading";
 
 function FavoriteArtists({setSongs}) {
   const [showPopup, setShowPopup] = useState(false);
@@ -33,18 +35,24 @@ function FavoriteArtists({setSongs}) {
   };
 
   useEffect(() => {
-    axios
-      .get("http://localhost:1000/users/getfavoritartists", {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      })
-      .then((res) => setArtists(res.data))
-      .catch((err) => console.log(err));
+    async function fetchDta() {
+      const res = await api.get("users/getfavoritartists")
+      setArtists(res)
+    }
+    fetchDta()
+
+    // axios
+    //   .get("http://localhost:1000/users/getfavoritartists", {
+    //     headers: {
+    //       Authorization: `Bearer ${token}`,
+    //     },
+    //   })
+    //   .then((res) => setArtists(res.data))
+    //   .catch((err) => console.log(err));
   }, [showPopup]);
 
-  const handleArtisrClick = async (artistName) => {
-    setCurrentArtist((prev) => ({ ...prev, artistName: artistName, showArtistSongs: true,}));
+  const handleArtistClick = async (artistName) => {
+    setCurrentArtist((prev) => ({ ...prev, artistName: artistName, songs: null, showArtistSongs: true}));
   };
   useEffect(() => {
     const getSongs = async () => {
@@ -53,22 +61,22 @@ function FavoriteArtists({setSongs}) {
         const songsWithId = handleSongsId(res.data.results, true);
         setCurrentArtist((prev) => ({
           ...prev,
-          songs: songsWithId,
+          songs: songsWithId
         }));
         console.log(res);
       } catch (err) {
         console.log(err);
       }
     };
-    getSongs()
+    if(currentArtist.artistName) getSongs()
   }
   , [currentArtist.artistName]);
 
-  useEffect(() => console.log(currentArtist), [currentArtist]);
   return (
     <>
       {currentArtist.showArtistSongs && (
         <Playlist
+        setCurrentArtist={setCurrentArtist}
         setSongs={setSongs}
         setShowSongs={setCurrentArtist}
           title={currentArtist?.artistName}
@@ -95,10 +103,10 @@ function FavoriteArtists({setSongs}) {
             </div>
           </div>
           <div className={styles.artistsContainer}>
-            {artists?.map((artist, i) => {
+            {artists? (artists.map((artist, i) => {
               return (
                 <div
-                  onClick={() => handleArtisrClick(artist)}
+                  onClick={() => handleArtistClick(artist)}
                   key={i}
                   className={styles.artist}
                 >
@@ -107,7 +115,7 @@ function FavoriteArtists({setSongs}) {
                   <span>{artist}</span>
                 </div>
               );
-            })}
+            })) : <div style={{width: "80vw"}}><Loading /></div> }
           </div>
         </div>
       </div>

@@ -6,6 +6,7 @@ import HandlePlayingSongContext from "../../contexts/HandlePlayingSong";
 import { FireworkSpinner, WaveSpinner } from "react-spinners-kit";
 import Playlist from "../../components/playlist";
 import Playlists from "../../contexts/Playlists";
+import Loading from "../../components/Loading";
 
 // ,setIsSongPlaying
 
@@ -16,6 +17,7 @@ function Home({
   const { isSongPlaying, setIsSongPlaying, songPlayed, setSongPlayed, songs } = useContext(
     HandlePlayingSongContext
   );
+  const searchSongs = JSON.parse(localStorage.getItem("searchSongs"))
   const {setPlayedPlaylist, playedPlaylist} = useContext(Playlists)
   const [imagesErrorCount, setImagesErrorCount] = useState(0);
   const [songDivHeight, setSongDivHeight] = useState("50.3vh");
@@ -55,7 +57,7 @@ function Home({
         className={styles.mainDiv}
       >
         {songs?.length > 0 ? (
-          songs.map((song, i) => (
+          searchSongs.map((song, i) => (
             // ${backgroundVideo && styles.backgroundVideo}
             <div
               className={`${styles.song} `}
@@ -104,12 +106,7 @@ function Home({
             </div> /*song.channel.icon? song.channel.icon : song.thumbnail.url*/
           ))
         ) : (
-          <div
-            className={styles.loading}
-            style={{ width: isLibraryOpen ? "78.5vw" : "100vw" }}
-          >
-            <FireworkSpinner color="wheat" size={200} />
-          </div>
+          <Loading />
         )}
       </div>
     </>

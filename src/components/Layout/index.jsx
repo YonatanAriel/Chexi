@@ -16,6 +16,7 @@ import VideoContainer from '../../pages/VideoContainer'
 import PlaylistsContext from "../../contexts/Playlists";
 import ShowPopupsContext from "../../contexts/ShowPopups";
 import Token from "../../contexts/Token";
+import api from "../../apiCalls/apiCalls"
 
 function Layout() {
   const [isSongPlaying, setIsSongPlaying] = useState()
@@ -44,18 +45,26 @@ function Layout() {
       'X-RapidAPI-Host': 'simple-youtube-search.p.rapidapi.com'
     }
   };
-
-  useEffect(() => {
-    if(token){
-        axios.get(`http://localhost:1000/playlists/user`, {headers: {
-        Authorization: `Bearer ${token}`
+  useEffect( () => {
+    async function fetchData() {
+      if(token){
+          const res = await api.get("playlists/user")
+                  console.log(res);
+                  setPlaylists(res)
+          return 
       }
-      })
-      .then(res =>{
-        setPlaylists(res.data)
-        console.log(res.data);
-        })
-        .catch(err => console.log(err))}
+    }
+    fetchData()
+    //     axios.get(`http://localhost:1000/playlists/user`, {headers: {
+    //     Authorization: `Bearer ${token}`
+    //   }
+    //   })
+    //   .then(res =>{
+    //     setPlaylists(res.data)
+    //     console.log(res.data);
+    //     })
+    //     .catch(err => console.log(err))
+  
   }, [renderPlaylistsPage, token])
 
     useEffect(() => {
@@ -88,7 +97,6 @@ useEffect(() => {
     })
     .catch((err) => console.log(err));
 }, [userSearch]);
-//token?
 
 const handleSongsId = (songs, playPlaylist) => {
   const songsWithId = songs?.map((song, i) => {
@@ -96,8 +104,10 @@ const handleSongsId = (songs, playPlaylist) => {
     if(playPlaylist){
       return songsWithId
     }
+    localStorage.setItem("searchSongs",JSON.stringify(songsWithId))
     setSongs(songsWithId);
 }
+useEffect(() => console.log(songs),[songs])
 
 const skipBackOrForward = (backOrForward, songsPlaylist) => {
   const songsList = songsPlaylist;
@@ -153,16 +163,18 @@ const skipBackOrForward = (backOrForward, songsPlaylist) => {
     <>
     <div className={styles.appContainer}>
       <Token.Provider value={{token, setToken}}>
+      <PlaylistsContext.Provider value={{playlists, setPlaylists, setRenderPlaylistsPage, currentPlaylistData, setCurrentPlaylistData, likedSongsPlaylist, setLikedSongsPlaylist, playedPlaylist, setPlayedPlaylist}}>
       {!["/Login", "/SignUp"].includes(location) && <Header backgroundVideo={backgroundVideo} isLibraryOpen={isLibraryOpen} setIsLibraryOpen={setIsLibraryOpen} setUserSearch={setUserSearch}/>}
       <HandlePlayingSongContext.Provider value={{songs,  songPlayed,setSongPlayed, isSongPlaying, setIsSongPlaying, handleSongsId}}>
-      <PlaylistsContext.Provider value={{playlists, setPlaylists, setRenderPlaylistsPage, currentPlaylistData, setCurrentPlaylistData, likedSongsPlaylist, setLikedSongsPlaylist, playedPlaylist, setPlayedPlaylist}}>
         <ShowPopupsContext.Provider value={{showCreatePlaylistPopup, setShowCreatePlaylistPopup, showAddToPlaylistPopup, setShowAddToPlaylistPopup}}>
       <Routes>
         {/*setIsSongPlaying={setIsSongPlaying}*/} 
       <Route index element={<Home  backgroundVideo={backgroundVideo} isLibraryOpen={isLibraryOpen} setUserSearch={setUserSearch}/>} /> 
-        {token && (<Route path="/LikedSongs" element={<LikedSongs />} />)}
-        {token && (<Route path="/Playlists"  element={<Playlists />} />)}
-        {token && (<Route path="/FavoriteArtists" element={<FavoriteArtists setSongs={setSongs} />} />)}
+        {token && ( <>
+          <Route path="/LikedSongs" element={<LikedSongs />} />
+          <Route path="/Playlists"  element={<Playlists />} />
+          <Route path="/FavoriteArtists" element={<FavoriteArtists setSongs={setSongs}/>} />
+            </>)}
         <Route path="/Login" element={<Login />} />
         <Route path="/SignUp" element={<SignUp />} />
         <Route path="/Video" element={<VideoContainer />}/>
@@ -170,9 +182,9 @@ const skipBackOrForward = (backOrForward, songsPlaylist) => {
       {/* isSongPlaying={isSongPlaying} setIsSongPlaying={setIsSongPlaying} */}
       {songPlayed && <Footer  backgroundVideo={backgroundVideo} setBackgroundVideo={setBackgroundVideo} skipBackOrForward={skipBackOrForward}/>}
       </ShowPopupsContext.Provider>
-      </PlaylistsContext.Provider>
       {!["/Login", "/SignUp"].includes(location) && (["/LikedSongs", "/Playlists","/FavoriteArtists"].includes(location) || isLibraryOpen) && <Library  backgroundVideo={backgroundVideo}/>}
       </HandlePlayingSongContext.Provider>
+      </PlaylistsContext.Provider>
       </Token.Provider>
       </div>
     </>

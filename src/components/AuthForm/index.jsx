@@ -4,6 +4,7 @@ import axios from "axios";
 import { BsMusicNote } from "react-icons/bs";
 import { Link, useNavigate } from "react-router-dom";
 import Token from "../../contexts/Token";
+import api from "../../apiCalls/apiCalls"
 
 function AuthForm({title}) {
   const [data, setData] = useState({ userName: "", password: "" });
@@ -48,41 +49,75 @@ function AuthForm({title}) {
     userName: "emma_smith",
     password: "password123",
   };
-  const handleSubmit = (e) => {
+  const tempUserData2 = {
+    userName: "nan",
+    password: "password123",
+  };
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (data.userName.trim().length >= 3) {
       if (validatePassword(data.password)) {
         if (title === "Login") {
-          axios
-            .post("http://localhost:1000/users/login", tempUserData)
-            .then((res) => {
-              localStorage.setItem("token", res.data);
-              setToken(res.data)
-              navigate("/")
-            })
-            .catch((err) => {
-              console.log(err);
-              if (err?.response?.data === "User not exist") {
-                setUserNameErrors("Wrong user name");
+          try{
+            const loginToken = await api.post(`users/login`, tempUserData)
+                localStorage.setItem("token", loginToken);
+                setToken(loginToken)
+                navigate("/")
+          }
+          catch(err){
+                          console.log(err);
+              if (err?.response?.data === "User not exist" || err?.response?.data === "password mismatch") {
+                setUserNameErrors("Wrong user name or password");
             }
-            else if (err?.response?.data === "password mismatch")
-            setPasswordErrors((prev) => [...prev, "Wrong password"]);
-        });
+          }
+
+
+        //   axios
+        //     .post("http://localhost:1000/users/login", tempUserData)
+        //     .then((res) => {
+        //       localStorage.setItem("token", res.data);
+        //       setToken(res.data)
+        //       navigate("/")
+        //     })
+        //     .catch((err) => {
+        //       console.log(err);
+        //       if (err?.response?.data === "User not exist") {
+        //         setUserNameErrors("Wrong user name");
+        //     }
+        //     else if (err?.response?.data === "password mismatch")
+        //     setPasswordErrors((prev) => [...prev, "Wrong password"]);
+        // });
     }
     else if(title === "Register"){
-        axios.post("http://localhost:1000/users/register", data)
-        .then(res => {
-          console.log(res.data)
-          localStorage.setItem("token", res.data)
-          setToken(res.data)
-          navigate("/")})
-        .catch(err => {
-            if(err?.response?.data === "User already exist"){
-                setUserNameErrors("This user name is already taken. Please choose a new one")
+      try{
+        const registerToken = await api.post("users/register", data)
+          localStorage.setItem("token", registerToken)
+          setToken(registerToken)
+          navigate("/")
+          console.log(registerToken);
+      }
+      catch(err){
+                    if(err?.response?.data === "User already exist"){
+                setUserNameErrors("This user name is not available. Please choose a new one")
             }
             console.log(err)
             console.log(userNameErrors)
-                })
+      }
+
+        // axios.post("http://localhost:1000/users/register", data)
+        // .then(res => {
+        //   console.log(res.data)
+        //   localStorage.setItem("token", res.data)
+        //   setToken(res.data)
+        //   navigate("/")})
+        // .catch(err => {
+        //     if(err?.response?.data === "User already exist"){
+        //         setUserNameErrors("This user name is not available. Please choose a new one")
+        //     }
+        //     console.log(err)
+        //     console.log(userNameErrors)
+        //         })
         }
       }
     } else {
