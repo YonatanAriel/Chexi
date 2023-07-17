@@ -35,11 +35,11 @@ function FavoriteArtists({setSongs}) {
   };
 
   useEffect(() => {
-    async function fetchDta() {
+    async function fetchData() {
       const res = await api.get("users/getfavoritartists")
       setArtists(res)
     }
-    fetchDta()
+    fetchData()
 
     // axios
     //   .get("http://localhost:1000/users/getfavoritartists", {
@@ -106,16 +106,15 @@ function FavoriteArtists({setSongs}) {
             {artists? (artists.map((artist, i) => {
               return (
                 <div
-                  onClick={() => handleArtistClick(artist)}
+                  onClick={() => handleArtistClick(artist.name)}
                   key={i}
                   className={styles.artist}
                 >
-                  <div></div>
-                  {/* <img src={} alt={artists[i]} /> */}
-                  <span>{artist}</span>
+                  <img src={artist.img} />
+                  <span>{artist.name}</span>
                 </div>
               );
-            })) : <div style={{width: "80vw"}}><Loading /></div> }
+            })) : <div  style={{width: "80vw"}} ><Loading /></div> }
           </div>
         </div>
       </div>

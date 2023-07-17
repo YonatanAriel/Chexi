@@ -14,7 +14,7 @@ function Home({
   isLibraryOpen,
   backgroundVideo,
 }) {
-  const { isSongPlaying, setIsSongPlaying, songPlayed, setSongPlayed, songs } = useContext(
+  const { isSongPlaying, setIsSongPlaying, songPlayed, setSongPlayed, songs, setSongs } = useContext(
     HandlePlayingSongContext
   );
   const searchSongs = JSON.parse(localStorage.getItem("searchSongs"))
@@ -66,7 +66,7 @@ function Home({
                 cursor: condition !== song.id && "pointer"
               }}
               onClick={() => {
-                setPlayedPlaylist(null), setSongPlayed(song), setIsSongPlaying(true);
+                setPlayedPlaylist(null), setSongPlayed(song), setIsSongPlaying(true), setSongs(searchSongs);
               }}
               key={i}
             >

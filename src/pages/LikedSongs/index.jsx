@@ -9,7 +9,7 @@ import api from "../../apiCalls/apiCalls"
 
 function LikedSongs() {
   const {playlists, likedSongsPlaylist, setLikedSongsPlaylist} = useContext(Playlists)
-  const [likedSongs, setLikedSongs] = useState()
+  const [likedSongs, setLikedSongs] = useState([])
   const {token} = useContext(Token)
   const {handleSongsId} = useContext(HandlePlayingSongContext)
   useEffect(() => {

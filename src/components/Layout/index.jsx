@@ -102,15 +102,16 @@ const handleSongsId = (songs, playPlaylist) => {
   const songsWithId = songs?.map((song, i) => {
     return {...song, index: i}});
     if(playPlaylist){
-      return songsWithId
+      return songsWithId? songsWithId : []
     }
+    console.log("localS");
     localStorage.setItem("searchSongs",JSON.stringify(songsWithId))
     setSongs(songsWithId);
 }
-useEffect(() => console.log(songs),[songs])
+useEffect(() => console.log(songPlayed),[songPlayed])
 
-const skipBackOrForward = (backOrForward, songsPlaylist) => {
-  const songsList = songsPlaylist;
+const skipBackOrForward = (backOrForward, songsList) => {
+console.log(songsList);
   if(songsList && songsList.length > 0){
     let newSong;
     let newIndex;
@@ -165,7 +166,7 @@ const skipBackOrForward = (backOrForward, songsPlaylist) => {
       <Token.Provider value={{token, setToken}}>
       <PlaylistsContext.Provider value={{playlists, setPlaylists, setRenderPlaylistsPage, currentPlaylistData, setCurrentPlaylistData, likedSongsPlaylist, setLikedSongsPlaylist, playedPlaylist, setPlayedPlaylist}}>
       {!["/Login", "/SignUp"].includes(location) && <Header backgroundVideo={backgroundVideo} isLibraryOpen={isLibraryOpen} setIsLibraryOpen={setIsLibraryOpen} setUserSearch={setUserSearch}/>}
-      <HandlePlayingSongContext.Provider value={{songs,  songPlayed,setSongPlayed, isSongPlaying, setIsSongPlaying, handleSongsId}}>
+      <HandlePlayingSongContext.Provider value={{songs, setSongs, songPlayed,setSongPlayed, isSongPlaying, setIsSongPlaying, handleSongsId}}>
         <ShowPopupsContext.Provider value={{showCreatePlaylistPopup, setShowCreatePlaylistPopup, showAddToPlaylistPopup, setShowAddToPlaylistPopup}}>
       <Routes>
         {/*setIsSongPlaying={setIsSongPlaying}*/} 

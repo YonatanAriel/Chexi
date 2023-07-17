@@ -1,11 +1,6 @@
 import axios from 'axios'
-
-axios.defaults.baseURL = "http://localhost:1000/"
-//store it in env?
-
-
-//This is a generic API function. Here you can make axios calls by simply writing api.post or the method of your choosing
-//Be sure to check which parameters each method requests 
+const BASE_URL = import.meta.env.VITE_BASE_URL
+axios.defaults.baseURL = BASE_URL
 
 const api = {
   get: async (url) => {
@@ -25,7 +20,7 @@ async function apiCalls(method, url, data) {
   try {
     const res = await axios({
       headers: {
-        'Authorization': localStorage.token ? `Bearer ${localStorage.token}` : ''
+        'Authorization': localStorage.token && `Bearer ${localStorage.token}` 
       },
       method,
       url,

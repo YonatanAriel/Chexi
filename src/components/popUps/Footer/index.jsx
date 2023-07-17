@@ -253,7 +253,8 @@ function Footer({
           </div>
           {/*songPlayed.thumbnail.url */}
           <div className={styles.artistDetails}>
-            <img
+            <img 
+            className={isSongPlaying? styles.spinImg : ""}
               src={playedPlaylist? (songPlayed?.channelImg) : (songPlayed?.channel?.icon)}
               onError={(e) => {
                 (e.target.src = playedPlaylist? songPlayed?.songImg : songPlayed?.thumbnail?.url)

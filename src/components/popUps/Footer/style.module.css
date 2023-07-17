@@ -139,6 +139,18 @@ input[type=range] {
     border-radius: 50%;
     margin-right: 6px;
 }
+.spinImg {
+    animation: spinImg 3.5s linear infinite;
+  }
+  
+  @keyframes spinImg {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
 .artistDetails span {
     font-weight: 600;
     margin: auto 0;

@@ -48,18 +48,6 @@ button {
   transition: border-color 0.25s;
 }
 
-/* @media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-
-  }
-  a:hover {
-    color: red;
-  }
-  button {
-    background-color: #f9f9f9;
-  }
-} */
 img {
   -webkit-user-drag: none; /* Safari/Chrome */
   -khtml-user-drag: none; /* Konqueror */

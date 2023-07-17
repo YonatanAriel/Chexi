@@ -22,7 +22,6 @@ function Playlists() {
     setFilteredPlaylists(playlists?.filter((playlist) => playlist.isFavorite === false))
   },[playlists])
 
-useEffect(() => console.log(filteredPlaylists),[filteredPlaylists])
   return <> {showSongs? (<Playlist title={currentPlaylistData.name} setShowSongs={setShowSongs} songs={handleSongsId(currentPlaylistData.songsId, true)} />)
     :
         ( <>{showCreatePlaylistPopup && <NewPlaylistOrArtist />}

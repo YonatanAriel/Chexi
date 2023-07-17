@@ -60,7 +60,7 @@ function AuthForm({title}) {
       if (validatePassword(data.password)) {
         if (title === "Login") {
           try{
-            const loginToken = await api.post(`users/login`, tempUserData)
+            const loginToken = await api.post(`users/login`, data)
                 localStorage.setItem("token", loginToken);
                 setToken(loginToken)
                 navigate("/")
