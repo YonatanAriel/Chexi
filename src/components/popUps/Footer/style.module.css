@@ -34,8 +34,9 @@ body {
     position: fixed;
     right:4vw;
     bottom: 13vh;
-    width: 5vw;
-    height: 3.8vh;
+    /* width: 5vw; */
+    width: 77px;
+    height: 25px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -45,10 +46,13 @@ body {
     color:wheat;
     z-index: 2;
     cursor: pointer;
+    animation: fadeIn 2.3s;
 }
 .arrowUpButton {
     animation: flash 2s infinite alternate;
     bottom: 0;
+    height: 45px;
+    width: 100px;
 }
 @keyframes flash {
     0% {
@@ -80,6 +84,16 @@ body {
     backdrop-filter: blur(20px); 
     text-shadow: 0.1px 0.1px 2px rgb(0, 0, 0),
     -0.1px -0.1px 2px rgb(0, 0, 0);
+    animation: fadeIn 2.3s;
+}
+@keyframes fadeIn {
+  0%{
+    opacity: 0;
+  }
+  100%{
+    opacity: 1;
+  }
+  
 }
 .iconButton {
     cursor: pointer;
@@ -140,7 +154,7 @@ input[type=range] {
     margin-right: 6px;
 }
 .spinImg {
-    animation: spinImg 3.5s linear infinite;
+    animation: spinImg 3.6s linear infinite;
   }
   
   @keyframes spinImg {
@@ -148,7 +162,7 @@ input[type=range] {
       transform: rotate(0deg);
     }
     100% {
-      transform: rotate(360deg);
+        transform: rotate(360deg);
     }
   }
 .artistDetails span {

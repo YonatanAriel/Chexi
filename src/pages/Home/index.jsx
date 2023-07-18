@@ -51,10 +51,8 @@ function Home({
 
   return (
     <>
-      {/* {width: isLibraryOpen? "78.5vw" : "98.5vw"} */}
       <div
-        style={{ width: isLibraryOpen ? "80vw" : "100vw" }}
-        className={styles.mainDiv}
+        className={`${styles.mainDiv} ${isLibraryOpen? styles.decreaseMainDivWidth : ""}`}
       >
         {songs?.length > 0 ? (
           searchSongs.map((song, i) => (

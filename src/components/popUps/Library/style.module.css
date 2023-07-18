@@ -15,14 +15,22 @@
     gap: 4.5vh;
     font-size: 1.1rem;
     /* letter-spacing:0.05rem ; */
+    animation: entryAnimation 2.3s;
+}
+@keyframes entryAnimation {
+    from {
+        width: 0;
+      }
+      to {
+        width: 20vw;
+      }
 }
 .libraryContainer a {
     transition: all 0.3s ease;
     /* font-weight: 10; */
+    overflow: hidden;
 }
 .libraryContainer a:hover {
-    color: wheat;
-    /*need to delete one*/
     color: white;
 }
 .libraryContainer span{

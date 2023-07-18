@@ -18,6 +18,10 @@
     /* gap: 2.1% 1%; */
     overflow-y: scroll;
 }
+.decreaseMainDivWidth {
+    width: 80vw;
+    transition: width 2.3s ease-in-out;
+}
 .song {
     backdrop-filter: blur(20px);
     width: 17vw;    

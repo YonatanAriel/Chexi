@@ -205,9 +205,9 @@ function Footer({
         onClick={() => setShowFooter((prev) => !prev)}
       >
         {showFooter ? (
-          <IoIosArrowDown className={styles.blurIcon} size={41} />
+          <IoIosArrowDown size={41} />
         ) : (
-          <IoIosArrowUp className={styles.blurIcon} size={41} />
+          <IoIosArrowUp size={64} />
         )}
       </div>
       {showFooter && (
