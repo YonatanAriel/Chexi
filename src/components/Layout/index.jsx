@@ -108,10 +108,8 @@ const handleSongsId = (songs, playPlaylist) => {
     localStorage.setItem("searchSongs",JSON.stringify(songsWithId))
     setSongs(songsWithId);
 }
-useEffect(() => console.log(songPlayed),[songPlayed])
 
 const skipBackOrForward = (backOrForward, songsList) => {
-console.log(songsList);
   if(songsList && songsList.length > 0){
     let newSong;
     let newIndex;
@@ -165,7 +163,7 @@ console.log(songsList);
     <div className={styles.appContainer}>
       <Token.Provider value={{token, setToken}}>
       <PlaylistsContext.Provider value={{playlists, setPlaylists, setRenderPlaylistsPage, currentPlaylistData, setCurrentPlaylistData, likedSongsPlaylist, setLikedSongsPlaylist, playedPlaylist, setPlayedPlaylist}}>
-      <HandlePlayingSongContext.Provider value={{songs, setSongs, songPlayed,setSongPlayed, isSongPlaying, setIsSongPlaying, handleSongsId}}>
+      <HandlePlayingSongContext.Provider value={{songs, setSongs, songPlayed,setSongPlayed, isSongPlaying, setIsSongPlaying, handleSongsId, skipBackOrForward}}>
       {!["/Login", "/SignUp"].includes(location) && <Header backgroundVideo={backgroundVideo} isLibraryOpen={isLibraryOpen} setIsLibraryOpen={setIsLibraryOpen} setUserSearch={setUserSearch}/>}
         <ShowPopupsContext.Provider value={{showCreatePlaylistPopup, setShowCreatePlaylistPopup, showAddToPlaylistPopup, setShowAddToPlaylistPopup}}>
       <Routes>
@@ -181,7 +179,7 @@ console.log(songsList);
         <Route path="/Video" element={<VideoContainer />}/>
       </Routes>
       {/* isSongPlaying={isSongPlaying} setIsSongPlaying={setIsSongPlaying} */}
-      {songPlayed && <Footer  backgroundVideo={backgroundVideo} setBackgroundVideo={setBackgroundVideo} skipBackOrForward={skipBackOrForward}/>}
+      {songPlayed && <Footer  backgroundVideo={backgroundVideo} setBackgroundVideo={setBackgroundVideo} />}
       </ShowPopupsContext.Provider>
       {!["/Login", "/SignUp"].includes(location) && (["/LikedSongs", "/Playlists","/FavoriteArtists"].includes(location) || isLibraryOpen) && <Library  backgroundVideo={backgroundVideo}/>}
       </HandlePlayingSongContext.Provider>

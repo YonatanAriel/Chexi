@@ -144,7 +144,6 @@ function HandleFavoriteSong() {
           setIsFavorite(false);
           const removedSong = await api.post(`playlists/deletesong/${likedSongsPlaylistId}`, 
 { id: likedSongsPlaylist.songsId.find((song) => song.videoId === songPlayedData.videoId)?._id})
-                        console.log(removedSong);
               setLikedSongsPlaylist((prev) => ({
                 ...prev,
                 songsId: prev.songsId.filter(

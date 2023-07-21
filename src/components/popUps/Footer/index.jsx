@@ -29,11 +29,10 @@ import Playlists from "../../../contexts/Playlists";
 
 // , isSongPlaying , setIsSongPlaying
 function Footer({
-  skipBackOrForward,
   backgroundVideo,
   setBackgroundVideo,
 }) {
-  const { isSongPlaying, setIsSongPlaying, songs, songPlayed} = useContext(HandlePlayingSongContext);
+  const { isSongPlaying, setIsSongPlaying, songs, songPlayed, skipBackOrForward} = useContext(HandlePlayingSongContext);
   // const playerRef = useRef(null);
   const playerRef = useRef(null);
   const [fullScreenVideo, setFullScreenVideo] = useState(false);

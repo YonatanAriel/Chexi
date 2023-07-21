@@ -149,7 +149,8 @@ input[type=range] {
 }
 .artistDetails img {
     width: 4.3vw;
-    height: 4.3vw;
+    width: 68px;
+    height: 68px;
     border-radius: 50%;
     margin-right: 6px;
 }

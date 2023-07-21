@@ -42,10 +42,11 @@
     /* margin-top: -2vh; */
     letter-spacing: 0.12rem;
     font-weight: 730;
-    /* border-left: solid 4px red; */
+    /* padding-left: 10px; */
+    /* outline: solid 4px red; */
 }
 .active ::before{
-    content:"";
+    /* content:"";
     left:-43px;
     position: absolute;
     border-radius: 12px;
@@ -53,5 +54,6 @@
     height: 33px;
     background-color:wheat;
     bottom: 0px;
-    margin-bottom: -0.25em;
+    margin-right: 20px;
+    margin-bottom: -0.25em; */
 }

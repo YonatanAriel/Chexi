@@ -15,6 +15,7 @@ function LikedSongs() {
   useEffect(() => {
     async function getLikesSongsPlaylist(){
      const res = await api.get("playlists/likedsongs")
+     setLikedSongsPlaylist(res)
      setLikedSongs(handleSongsId(res?.songsId, true));
     }
     getLikesSongsPlaylist()

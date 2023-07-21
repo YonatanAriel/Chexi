@@ -17,7 +17,10 @@ function Home({
   const { isSongPlaying, setIsSongPlaying, songPlayed, setSongPlayed, songs, setSongs } = useContext(
     HandlePlayingSongContext
   );
-  const searchSongs = JSON.parse(localStorage.getItem("searchSongs"))
+  // const LStorageSearchSongs = localStorage.getItem("searchSongs")
+  const [searchSongs, setSearchSongs] = useState()
+  //  useState(LStorageSearchSongs && JSON.parse(LStorageSearchSongs))
+  // useState(JSON.parse(localStorage.getItem("searchSongs") ?? []))
   const {setPlayedPlaylist, playedPlaylist} = useContext(Playlists)
   const [imagesErrorCount, setImagesErrorCount] = useState(0);
   const [songDivHeight, setSongDivHeight] = useState("50.3vh");
@@ -25,6 +28,7 @@ function Home({
   const [loadedImages, setLoadedImages] = useState(0);
   const [loadRemainingImgs, setloadRemainingImgs] = useState(false);
   const condition = songPlayed && songPlayed[playedPlaylist? "videoId" : "id"]
+  useEffect(() => setSearchSongs(JSON.parse(localStorage.getItem("searchSongs"))),[songs])
   const handleLoadingImgs = () => {
     setLoadedImages((prev) => prev + 1);
   };
@@ -55,7 +59,7 @@ function Home({
         className={`${styles.mainDiv} ${isLibraryOpen? styles.decreaseMainDivWidth : ""}`}
       >
         {songs?.length > 0 ? (
-          searchSongs.map((song, i) => (
+          searchSongs?.map((song, i) => (
             // ${backgroundVideo && styles.backgroundVideo}
             <div
               className={`${styles.song} `}

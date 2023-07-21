@@ -13,15 +13,26 @@
     backdrop-filter: blur(30px);
     /* z-index: 1; */
 }
-.songButtons {
-    display: none;
-}
+/* .title {
+    width: 64%;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  } */
 .mainDiv:hover .songButtons {
     display: block;
     /* color: red; */
 }
-.mainDiv:hover .numberAndButtonsContainer > div:first-child {
+/* .mainDiv:hover .numberAndButtonsContainer > div:first-child { */
+.mainDiv:hover .numberAndButtonsContainer > .songNumber {
     display: none;
+}
+.playButton {
+    cursor: pointer;
+    display: none;
+}
+.mainDiv:hover .playButton {
+    display: block;
 }
 .imgContainer {
     position: relative;
@@ -46,6 +57,14 @@
 .numberAndButtonsContainer > div:first-child,
 .numberAndButtonsContainer .songButtons{
     width: 1.7em;
+}
+.delete{
+    position: absolute;
+    right: 70px;
+    cursor: pointer;
+}
+.delete:hover {
+    color: red;
 }
 .mainDiv > span:last-child {
     position: absolute;

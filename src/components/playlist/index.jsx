@@ -2,7 +2,7 @@ import Song from "../Song";
 import styles from "./style.module.css"
 import { BsFillBalloonHeartFill, BsPlayCircleFill } from "react-icons/bs";
 import HandlePlayingSongContext from "../../contexts/HandlePlayingSong";
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useMemo } from "react";
 import Token from "../../contexts/Token";
 import Playlists from "../../contexts/Playlists";
 import GoBackButton from "../GoBackButton";
@@ -10,10 +10,11 @@ import { useLocation } from "react-router-dom";
 import Loading from "../Loading";
 
 function Playlist({ title, songs, setShowSongs, setSongs }) {
-  const {songPlayed, setSongPlayed, handleSongsId, setIsSongPlaying} = useContext(HandlePlayingSongContext)
+  const {songPlayed, setSongPlayed, handleSongsId, setIsSongPlaying, skipBackOrForward} = useContext(HandlePlayingSongContext)
   const {token} = useContext(Token)
-  const {currentPlaylistData, setPlayedPlaylist} = useContext(Playlists)
+  const {currentPlaylistData, playedPlaylist, setPlayedPlaylist} = useContext(Playlists)
   const location = useLocation().pathname
+  
   const handlePlayPlaylist = (index) => {
     if(songs?.length > 0){
       setSongPlayed(songs[index]);
@@ -26,6 +27,16 @@ function Playlist({ title, songs, setShowSongs, setSongs }) {
       }
   }
 }
+useEffect(() => {console.log(songs)},[playedPlaylist, songs])
+const handleDeleteFromPlaylist = (condition, song) => {
+  // if(playedPlaylist && condition) {
+  //   const currentSongIndex = songs.findIndex((playlistSong) => playlistSong._id === song._id);
+  //   console.log(currentSongIndex);
+  //   setSongPlayed()
+  // }
+      // setPlayedPlaylist((prev) => prev.filter((prevSong) => prevSong._id !== song._id))
+}
+
     return <>
     
         <div className={styles.mainDiv}>
@@ -38,7 +49,10 @@ function Playlist({ title, songs, setShowSongs, setSongs }) {
       </div>
       <div className={styles.songsContainer}>
          {songs? songs?.map((song, i) => (
-          <Song handlePlayPlaylist={handlePlayPlaylist} song={song} index={i + 1} key={song._id} />
+          <Song songs={songs}
+          handleDeleteFromPlaylist={handleDeleteFromPlaylist} 
+          // key={songIds[i]}
+          handlePlayPlaylist={handlePlayPlaylist} song={song} index={i + 1} key={song.videoId}  />
         )) :
         <Loading />}
       </div>
