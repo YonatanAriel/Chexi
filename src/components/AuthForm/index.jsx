@@ -6,7 +6,7 @@ import { Link, useNavigate } from "react-router-dom";
 import Token from "../../contexts/Token";
 import api from "../../apiCalls/apiCalls"
 
-function AuthForm({title}) {
+function AuthForm({title, setUserSearch}) {
   const [data, setData] = useState({ userName: "", password: "" });
   const [passwordErrors, setPasswordErrors] = useState([]);
   const [userNameErrors, setUserNameErrors] = useState([]);
@@ -62,6 +62,7 @@ function AuthForm({title}) {
           try{
             const loginToken = await api.post(`users/login`, tempUserData)
                 localStorage.setItem("token", loginToken);
+                setUserSearch("Dua Lipa")
                 setToken(loginToken)
                 navigate("/")
           }
@@ -94,6 +95,7 @@ function AuthForm({title}) {
         const registerToken = await api.post("users/register", data)
           localStorage.setItem("token", registerToken)
           setToken(registerToken)
+          setUserSearch("Dua lipa")
           navigate("/")
           console.log(registerToken);
       }

@@ -57,3 +57,13 @@
     margin-right: 20px;
     margin-bottom: -0.25em; */
 }
+.contact {
+    /* background-color: rgb(217, 255, 0); */
+    position: absolute;
+    bottom: 20px;
+    left:40px;
+    max-width: 100%;
+    width: 20vw;
+    /* height: 100px; */
+    z-index: 1;
+}

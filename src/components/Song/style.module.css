@@ -6,9 +6,9 @@
     gap: 2%;
     align-items: center;
     padding: 0 20px;
+    color: wheat;
     /* width: 100%; */
     /* marginbottom:60px ; */
-    color: wheat;
     position: relative;
     backdrop-filter: blur(30px);
     /* z-index: 1; */

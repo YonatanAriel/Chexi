@@ -17,15 +17,15 @@ function Header({setUserSearch,isLibraryOpen, setIsLibraryOpen, backgroundVideo}
   const changeStyleForLibrary = ["/LikedSongs", "/Playlists","/FavoriteArtists"].includes(location) || isLibraryOpen;
   const {token, setToken} = useContext(Token)
   const {setSongs, setSongPlayed} = useContext(HandlePlayingSongContext)
-  const {setLikedSongsPlaylist} = useContext(Playlists)
+  const {setPlaylists, setLikedSongsPlaylist} = useContext(Playlists)
 return ( <>
 {/* style={{padding: changeStyleForLibrary && !backgroundVideo && "6vh 0 0 1.5vw"}} */}
       <div   className={`${styles.logoBackground} ${changeStyleForLibrary && !backgroundVideo? styles.IncreaseLogoPadding : ""}`} ><BsMusicNote style={{marginBottom:"8px"/*marginBottom:"1.5vh"*/}} size={55}/><span className={styles.logoText}>Chexi</span></div>
       {/* style={{backgroundColor: backgroundVideo && "black"}} */}
       <div  className={`${styles.mainDiv} ${changeStyleForLibrary? styles.libraryOpenMainDiv : ""}`} >
         <div className={styles.home_library_search}>
-         <Link className={styles.home} to="./"><AiFillHome /*className={styles.red}*/ /><span>Home</span></Link>
-         {!(["/LikedSongs", "/Playlists", "/FavoriteArtists"].includes(location)) && <a onClick={() => setIsLibraryOpen((prev) => !prev)}><IoLibrary style={{margin:"0 0.1vw -0.2vh 0"}}/>Library</a>}   
+         <Link className={styles.home} to="./"><AiFillHome /*className={styles.red}*/ style={{marginBottom: "-1px"}} size={17}/><span>Home</span></Link>
+         {!(["/LikedSongs", "/Playlists", "/FavoriteArtists"].includes(location)) && <a onClick={() => setIsLibraryOpen((prev) => !prev)}><IoLibrary size={17} style={{margin:"0 0.1vw -0.2vh 0"}}/>Library</a>}   
           <Search setUserSearch={setUserSearch} />
         </div>
         <div className={styles.signAndLogDIv}>
@@ -33,7 +33,9 @@ return ( <>
            localStorage.setItem("token", null)
            setSongs(null), setSongPlayed(null)
            setLikedSongsPlaylist(null)
-        setToken(null)}} ><HiLogout size={19} style={{marginBottom:"-0.6vh"}}/><span >Log out</span></Link>)
+           setPlaylists(null)
+        setToken(null)
+      }} ><HiLogout size={19} style={{marginBottom:"-0.6vh"}}/><span >Log out</span></Link>)
          : <Link to="./Login"><HiLogin size={19} style={{marginBottom:"-0.6vh"}}/><span >Log In</span></Link>}
          {!token && <Link to="./SignUp"><MdAssignmentInd  style={{marginBottom:"-0.3vh"}}/><span >Sign Up</span></Link>}
         </div>

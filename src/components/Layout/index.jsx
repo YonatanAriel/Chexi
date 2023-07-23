@@ -16,7 +16,7 @@ import VideoContainer from '../../pages/VideoContainer'
 import PlaylistsContext from "../../contexts/Playlists";
 import ShowPopupsContext from "../../contexts/ShowPopups";
 import Token from "../../contexts/Token";
-import api from "../../apiCalls/apiCalls"
+import api from "../../apiCalls/apiCalls";
 
 function Layout() {
   const [isSongPlaying, setIsSongPlaying] = useState()
@@ -32,7 +32,13 @@ function Layout() {
   const [likedSongsPlaylist, setLikedSongsPlaylist] = useState() 
   const [playedPlaylist, setPlayedPlaylist] = useState()
   const [token, setToken] = useState(localStorage.getItem("token"))
+  const [songs, setSongs] = useState([]);
+  const [fetchSongsRetryCount, setFetchSongsRetryCount] = useState(0);
+  const maxFetchSongsRetryCount = 4; 
+
+
   const location = useLocation().pathname
+  const openLibraryCondition = !["/Login", "/SignUp"].includes(location) && (["/LikedSongs", "/Playlists","/FavoriteArtists"].includes(location) || isLibraryOpen)
   const options = {
     method: 'GET',
     url: 'https://simple-youtube-search.p.rapidapi.com/search',
@@ -48,24 +54,20 @@ function Layout() {
   useEffect( () => {
     async function fetchData() {
       if(token){
+        try{
           const res = await api.get("playlists/user")
                   console.log(res);
                   setPlaylists(res)
-          return 
+                  return 
+        }
+        catch(err){
+          console.log(err);
+        }
       }
     }
     fetchData()
-    //     axios.get(`http://localhost:1000/playlists/user`, {headers: {
-    //     Authorization: `Bearer ${token}`
-    //   }
-    //   })
-    //   .then(res =>{
-    //     setPlaylists(res.data)
-    //     console.log(res.data);
-    //     })
-    //     .catch(err => console.log(err))
-  
   }, [renderPlaylistsPage, token])
+  
 
     useEffect(() => {
       if(currentPlaylistData){
@@ -74,29 +76,35 @@ function Layout() {
       }
     },[playlists])
 
-//,showCreatePlaylistPopup, showAddToPlaylistPopup
-
-
-//   const options2 = {
-//   method: 'GET',
-//   url: 'https://deezerdevs-deezer.p.rapidapi.com/search',
-//   params: {q: userSearch},
-//   headers: {
-//     'X-RapidAPI-Key': '8be7d08215msh45d28e3d9c633e3p109efajsn0dad38837480',
-//     'X-RapidAPI-Host': 'deezerdevs-deezer.p.rapidapi.com'
-//   }
-// };
-const [songs, setSongs] = useState([]);
+  
 useEffect(() => {
-  axios
-    .request(options)
-    .then((res) => {
-      // setSongs(res.data.results);
-      handleSongsId(res.data.results)
-      console.log(res.data.results,"222");
-    })
-    .catch((err) => console.log(err));
-}, [userSearch]);
+  async function fetchData() {
+      // axios
+  //   .request(options)
+  //   .then((res) => {
+  //     handleSongsId(res.data.results)
+  //     console.log(res.data.results,"222");
+  //   })
+  //   .catch((err) => console.log(err));
+
+    try {
+      console.log("jjjjj");
+      const res = await axios.request(options);
+      handleSongsId(res.data.results);
+      console.log(res.data.results, "222");
+      setFetchSongsRetryCount(0); // Reset the retry count on successful response
+    } catch (err) {
+      console.log(err);
+      if (fetchSongsRetryCount < maxFetchSongsRetryCount) {
+        // Retry the request after a short delay
+        setTimeout(() => {
+          setFetchSongsRetryCount((prevfetchSongsRetryCount) => prevfetchSongsRetryCount + 1);
+        }, 1000);
+      } 
+    }
+  }
+  fetchData()
+}, [userSearch, fetchSongsRetryCount]);
 
 const handleSongsId = (songs, playPlaylist) => {
   const songsWithId = songs?.map((song, i) => {
@@ -132,30 +140,22 @@ const skipBackOrForward = (backOrForward, songsList) => {
     newSong = songsList.find((song) => song.index === newIndex);
     setSongPlayed(newSong);
   }
-  // if(songs && songs.length > 0){
-  //   let newSong;
-  //   let newIndex;
-  //   if(backOrForward === "forward"){
-  //     if(songPlayed.index === songs.length - 1){
-  //       newIndex = 0;
-  //     }
-  //     else{
-  //       newIndex  = songPlayed.index + 1;
-  //     }
-  //   }
-  //   else if(backOrForward === "back"){
-  //     if(songPlayed.index === 0){
-  //       newIndex = songs.length - 1;
-  //     }
-  //     else{
-  //       newIndex = songPlayed.index - 1;
-  //     }
-  //   }
-  //   newSong = songs.find((song) => song.index === newIndex);
-  //   setSongPlayed(newSong);
-  // }
 
  }
+
+//  const renderRoutes = routes.map(({ path, element, requiresToken, props }) => {
+//   const tokenRequired = requiresToken && !localStorage.getItem("token");
+//   if (tokenRequired) {
+//     return null;
+//   }
+//   return (
+//     <Route
+//       key={path}
+//       path={path}
+//       element={requiresToken ? React.cloneElement(element, props) : element}
+//     />
+//   );
+// });
 
 
   return (
@@ -167,21 +167,20 @@ const skipBackOrForward = (backOrForward, songsList) => {
       {!["/Login", "/SignUp"].includes(location) && <Header backgroundVideo={backgroundVideo} isLibraryOpen={isLibraryOpen} setIsLibraryOpen={setIsLibraryOpen} setUserSearch={setUserSearch}/>}
         <ShowPopupsContext.Provider value={{showCreatePlaylistPopup, setShowCreatePlaylistPopup, showAddToPlaylistPopup, setShowAddToPlaylistPopup}}>
       <Routes>
-        {/*setIsSongPlaying={setIsSongPlaying}*/} 
       <Route index element={<Home  backgroundVideo={backgroundVideo} isLibraryOpen={isLibraryOpen} setUserSearch={setUserSearch}/>} /> 
         {token && ( <>
           <Route path="/LikedSongs" element={<LikedSongs />} />
           <Route path="/Playlists"  element={<Playlists />} />
           <Route path="/FavoriteArtists" element={<FavoriteArtists setSongs={setSongs}/>} />
             </>)}
-        <Route path="/Login" element={<Login />} />
-        <Route path="/SignUp" element={<SignUp />} />
-        <Route path="/Video" element={<VideoContainer />}/>
-      </Routes>
+        <Route path="/Login" element={<Login setUserSearch={setUserSearch} />} />
+        <Route path="/SignUp" element={<SignUp setUserSearch={setUserSearch} />} />
+        <Route path="/Video" element={<VideoContainer />}/> 
+       </Routes>
       {/* isSongPlaying={isSongPlaying} setIsSongPlaying={setIsSongPlaying} */}
       {songPlayed && <Footer  backgroundVideo={backgroundVideo} setBackgroundVideo={setBackgroundVideo} />}
       </ShowPopupsContext.Provider>
-      {!["/Login", "/SignUp"].includes(location) && (["/LikedSongs", "/Playlists","/FavoriteArtists"].includes(location) || isLibraryOpen) && <Library  backgroundVideo={backgroundVideo}/>}
+      {openLibraryCondition && <Library  backgroundVideo={backgroundVideo}/>}
       </HandlePlayingSongContext.Provider>
       </PlaylistsContext.Provider>
       </Token.Provider>

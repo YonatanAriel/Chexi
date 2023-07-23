@@ -3,6 +3,7 @@ import {FaHeart} from 'react-icons/fa';
 import {RiPlayListFill, RiPlayList2Fill} from 'react-icons/ri'
 import { NavLink } from 'react-router-dom';
 import {BsPersonHearts} from 'react-icons/bs'
+import CopyEmail from '../../CopyEmail';
 
 export default function Library({backgroundVideo}){
     return <>
@@ -11,5 +12,6 @@ export default function Library({backgroundVideo}){
           <NavLink to="./Playlists" className={({isActive}) => isActive? styles.active : undefined}><RiPlayListFill size={17} style={{marginBottom:"-0.3vh"}} /><span>Playlists</span></NavLink>
           <NavLink to="./FavoriteArtists" className={({isActive}) => isActive? styles.active : undefined}><BsPersonHearts style={{marginBottom:"-0.3vh"}} /><span>Favorite Artists</span></NavLink>
     </div>
+    <div className={styles.contact}><CopyEmail /></div>
            </>
 }

@@ -7,20 +7,26 @@ import PlaylistCard from "../../components/PlaylistCard";
 import Playlist from "../../components/playlist";
 import PlaylistsContext from "../../contexts/Playlists";
 import ShowPopups from "../../contexts/ShowPopups";
-import Token from "../../contexts/Token";
 import Loading from "../../components/Loading";
 
 function Playlists() {
   const {showCreatePlaylistPopup, setShowCreatePlaylistPopup} = useContext(ShowPopups)
   const {songs, handleSongsId} = useContext(HandlePlayingSongContext)
-  const {playlists, setPlaylists, renderPlaylistsPage, setRenderPlaylistsPage, currentPlaylistData, setCurrentPlaylistData} = useContext(PlaylistsContext)
+  const {playedPlaylist, playlists, setPlaylists, renderPlaylistsPage, setRenderPlaylistsPage, currentPlaylistData, setCurrentPlaylistData} = useContext(PlaylistsContext)
   const [showSongs, setShowSongs] = useState(false)
   const [filteredPlaylists, setFilteredPlaylists] = useState()
-  const {token} = useContext(Token)
+  // const [currentPlaylistSongs, setCurrentPlaylistSongs] = useState()
   useEffect(() => setRenderPlaylistsPage(prev => !prev), [])
     useEffect(() => {
     setFilteredPlaylists(playlists?.filter((playlist) => playlist.isFavorite === false))
   },[playlists])
+
+  // useEffect(() => {
+  //   if(currentPlaylistData?.songsId){
+  //     setCurrentPlaylistSongs(handleSongsId(currentPlaylistData.songsId, true))
+  //   }
+  // },[currentPlaylistData?.songsId])
+
 
   return <> {showSongs? (<Playlist title={currentPlaylistData.name} setShowSongs={setShowSongs} songs={handleSongsId(currentPlaylistData.songsId, true)} />)
     :

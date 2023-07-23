@@ -18,7 +18,7 @@
   box-sizing: border-box;
 }
 a {
-  font-weight: 500;
+  font-weight: 600;
   text-decoration: inherit;
   color: wheat;
 }
@@ -29,6 +29,7 @@ body {
   min-width: 320px;
   min-height: 100vh;
   user-select: none;
+  color: wheat;
 }
 
 h1 {

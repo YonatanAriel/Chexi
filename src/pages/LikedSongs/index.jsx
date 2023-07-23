@@ -3,15 +3,13 @@ import Playlist from "../../components/playlist";
 import { useContext, useEffect, useState } from "react";
 import Playlists from "../../contexts/Playlists";
 import axios from "axios";
-import Token from "../../contexts/Token";
 import HandlePlayingSongContext from "../../contexts/HandlePlayingSong";
 import api from "../../apiCalls/apiCalls"
 
 function LikedSongs() {
-  const {playlists, likedSongsPlaylist, setLikedSongsPlaylist} = useContext(Playlists)
+  const {playlists, likedSongsPlaylist, setLikedSongsPlaylist, playedPlaylist, setPlayedPlaylist} = useContext(Playlists)
   const [likedSongs, setLikedSongs] = useState([])
-  const {token} = useContext(Token)
-  const {handleSongsId} = useContext(HandlePlayingSongContext)
+  const {songPlayed, handleSongsId, setSongPlayed} = useContext(HandlePlayingSongContext)
   useEffect(() => {
     async function getLikesSongsPlaylist(){
      const res = await api.get("playlists/likedsongs")
@@ -30,8 +28,19 @@ function LikedSongs() {
         //   setLikedSongs(handleSongsId(res.data.songsId, true));
         // })
     },[])
+
   useEffect(() => {
-      setLikedSongs(handleSongsId(likedSongsPlaylist?.songsId, true))
+    const newSongs = handleSongsId(likedSongsPlaylist?.songsId, true)
+    const isLikedSongPlaylistPlayed = JSON.stringify(likedSongs) === JSON.stringify(playedPlaylist);
+    if(isLikedSongPlaylistPlayed && likedSongs.length > 0){
+      if(playedPlaylist.length > newSongs.length){
+      const playedSongIndex = playedPlaylist?.findIndex(song => song._id === songPlayed?._id)
+      const newSongToPlay = (playedSongIndex === newSongs.length)? newSongs[0] : newSongs[playedSongIndex]
+      setSongPlayed(newSongToPlay)
+      }
+      setPlayedPlaylist(newSongs)
+    }
+      setLikedSongs(newSongs)
      }
   ,[likedSongsPlaylist])
   return (

@@ -3,10 +3,10 @@ import { BsMusicNote } from "react-icons/bs";
 import { Link } from "react-router-dom";
 import AuthForm from "../../components/AuthForm"
 
-function Login() {
+function Login({setUserSearch}) {
   return (
     <>
-    <AuthForm title={"Login"}/>
+    <AuthForm setUserSearch={setUserSearch} title={"Login"}/>
     </>
   );
 }

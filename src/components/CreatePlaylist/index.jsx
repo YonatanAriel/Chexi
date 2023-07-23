@@ -4,7 +4,7 @@ import { HiPlus } from "react-icons/hi";
 import axios from "axios";
 import ShowPopups from "../../contexts/ShowPopups";
 import Playlists from "../../contexts/Playlists";
-import Token from "../../contexts/Token";
+// import Token from "../../contexts/Token";
 import api from "../../apiCalls/apiCalls"
 
 function CreatePlaylist({ placeHolder, addSong, songPlayedData }) {
@@ -16,7 +16,7 @@ function CreatePlaylist({ placeHolder, addSong, songPlayedData }) {
   const [playlistId, setPlaylistId] = useState("");
   const [inputValue, setInputValue] = useState();
   const { setRenderPlaylistsPage } = useContext(Playlists);
-  const {token} = useContext(Token)
+  // const {token} = useContext(Token)
 
   useEffect(() => {
     async function addSongToPlaylist (){
@@ -75,6 +75,7 @@ function CreatePlaylist({ placeHolder, addSong, songPlayedData }) {
         className={styles.createPlaylistInput}
         placeholder={placeHolder ? placeHolder : " Create new playlist"}
         onChange={(e) => setInputValue(e.target.value)}
+        onKeyDown={(e) => {if(e.key === 'Enter'){handleButtonClick()}}}
       />
       <button className={styles.addPlaylistButton} onClick={handleButtonClick}>
         <HiPlus size={25} />

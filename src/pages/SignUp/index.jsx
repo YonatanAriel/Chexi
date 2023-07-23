@@ -1,8 +1,8 @@
 import React from 'react'
 import AuthForm from '../../components/AuthForm'
-function SignUp() {
+function SignUp({setUserSearch}) {
   return ( <>
-  <AuthForm title={"Register"} />
+  <AuthForm setUserSearch={setUserSearch} title={"Register"} />
   </>
          )
 }

@@ -14,6 +14,7 @@
     /* width: 450px; */
     width: 35vw;
     position: relative;
+
   }
   .searchField {
     width: 75%;
@@ -22,6 +23,8 @@
     border-radius: 100px;
     outline: none;
     color: black;
+    /* background-color: wheat; */
+
   }
   .searchButton {
     background: transparent;
@@ -37,5 +40,20 @@
     width: 20px;
     height: 20px;
     object-fit: cover;
+  }
+  .searchButton img.spinning {
+    animation: searchSpin 2s;
+  }
+  /* .searchButton img:active {
+    animation: searchSpin 2s forwards;
+  } */
+  @keyframes searchSpin {
+    0% {
+      transform: rotate(0);
+
+    }
+    to {
+      transform: rotate(360deg);
+    }
   }
 

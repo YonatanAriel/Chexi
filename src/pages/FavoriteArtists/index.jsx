@@ -6,7 +6,6 @@ import NewPlaylistOrArtist from "../../components/popUps/newPlaylistOrArtist";
 import HandlePlayingSongContext from "../../contexts/HandlePlayingSong";
 import axios from "axios";
 import api from "../../apiCalls/apiCalls"
-import Token from "../../contexts/Token";
 import Loading from "../../components/Loading";
 
 function FavoriteArtists({setSongs}) {
@@ -14,7 +13,6 @@ function FavoriteArtists({setSongs}) {
   const { songs, songPlayed, handleSongsId } = useContext(
     HandlePlayingSongContext
   );
-  const { token } = useContext(Token);
   const [artists, setArtists] = useState();
   const [currentArtist, setCurrentArtist] = useState({
     artistName: "",

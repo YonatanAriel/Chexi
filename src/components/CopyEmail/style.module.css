@@ -1,0 +1,46 @@
+
+.container {
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    gap:7px;
+    /* align-items: center; */
+
+}
+.emailContainer {
+    display: flex;
+    flex-direction: row;
+}
+.email {
+        padding: 5px;
+        user-select: text;
+        cursor: pointer;
+}
+.container a {
+  color: inherit;
+  text-decoration: none;
+  max-width: fit-content;
+}
+
+.container a {
+  background:
+   none
+    ,
+    linear-gradient(
+      to right,
+      rgba(255, 0, 0, 1),
+      rgba(255, 0, 180, 1),
+      rgba(0, 100, 200, 1)
+  );
+  background-size: 100% 3px, 0 3px;
+  background-position: 100% 100%, 0 100%;
+  background-repeat: no-repeat;
+  transition: background-size 400ms;
+}
+
+.container a:hover {
+  background-size: 0 3px, 100% 3px;
+}
+.linkedinLink {
+    /* margin-left: 20px; */
+}

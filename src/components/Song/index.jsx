@@ -10,7 +10,7 @@ import { useLocation } from "react-router-dom";
 import api from "../../apiCalls/apiCalls";
 // handleDeleteFromPlaylist
 function Song({ song, index, handlePlayPlaylist, handleDeleteFromPlaylist, songs}) {
-  const { isSongPlaying, setIsSongPlaying, songPlayed, setSongPlayed } = useContext(
+  const { isSongPlaying, setIsSongPlaying, songPlayed, setSongPlayed, handleSongsId} = useContext(
     HandlePlayingSongContext
   );
   const {
@@ -32,16 +32,6 @@ function Song({ song, index, handlePlayPlaylist, handleDeleteFromPlaylist, songs
     (songPlayed && songPlayed[id.firstId]) === song[id.secondId];
 
   const deleteSongFromPlaylist = () => {
-    const isCurrentPlaylistPlaying = handleDeleteFromPlaylist(condition, song)
-    
-    // console.log(isCurrentPlaylistPlaying);
-    // if(isCurrentPlaylistPlaying)
-    if(playedPlaylist == songs){
-
-      const g = setPlayedPlaylist((prev) => prev.filter((prevSong) => prevSong._id !== song._id))
-      console.log(g);
-    }
-
     const playlistToUpdate = location === "/Playlists" ? currentPlaylistData : likedSongsPlaylist;
     
     const updatedPlaylist = {
@@ -50,6 +40,19 @@ function Song({ song, index, handlePlayPlaylist, handleDeleteFromPlaylist, songs
         (playlistSong) => playlistSong._id !== song._id
         ),
       };
+
+    if(location === "/Playlists"){
+      const newSongs = handleSongsId(updatedPlaylist.songsId, true)
+      const playedPlaylistWithoutIndexes = playedPlaylist.map(({ index, ...rest }) => rest);
+      const isCurrentPlaylistPlayed = JSON.stringify(playedPlaylistWithoutIndexes) === JSON.stringify(currentPlaylistData?.songsId)
+      if(isCurrentPlaylistPlayed && playedPlaylist.length > 0){
+        const playedSongIndex = playedPlaylist?.findIndex(song => song._id === songPlayed?._id)
+        const newSongToPlay = (playedSongIndex === newSongs.length)? newSongs[0] : newSongs[playedSongIndex]
+        setSongPlayed(newSongToPlay)
+        setPlayedPlaylist(newSongs)
+      }
+    }
+    
       playlistToUpdate === currentPlaylistData
       ? (setCurrentPlaylistData(updatedPlaylist),
       setPlaylists((prev) => {

@@ -3,6 +3,7 @@
     width: 80vw;
     height: calc(100vh - 60px);
     /* position: absolute; */
+    color: wheat;
     top: 60px;
     left: 20vw;
     background: linear-gradient(to bottom, rgba(0, 0, 0, 0.24) 0.005%, black);
@@ -20,7 +21,6 @@
     /* background-color:aqua; */
     height: 28%;
     width: 100%;
-    color: wheat;
     display: flex;
     align-items: center;
     justify-content: center;

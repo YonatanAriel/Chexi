@@ -3,15 +3,13 @@ import styles from "./style.module.css"
 import { BsFillBalloonHeartFill, BsPlayCircleFill } from "react-icons/bs";
 import HandlePlayingSongContext from "../../contexts/HandlePlayingSong";
 import { useContext, useEffect, useMemo } from "react";
-import Token from "../../contexts/Token";
 import Playlists from "../../contexts/Playlists";
 import GoBackButton from "../GoBackButton";
 import { useLocation } from "react-router-dom";
 import Loading from "../Loading";
 
 function Playlist({ title, songs, setShowSongs, setSongs }) {
-  const {songPlayed, setSongPlayed, handleSongsId, setIsSongPlaying, skipBackOrForward} = useContext(HandlePlayingSongContext)
-  const {token} = useContext(Token)
+  const {songPlayed, setSongPlayed, handleSongsId, setIsSongPlaying} = useContext(HandlePlayingSongContext)
   const {currentPlaylistData, playedPlaylist, setPlayedPlaylist} = useContext(Playlists)
   const location = useLocation().pathname
   
@@ -21,13 +19,22 @@ function Playlist({ title, songs, setShowSongs, setSongs }) {
       setIsSongPlaying(true)
       if(location === "/FavoriteArtists"){
         setSongs(songs)
+        //** */
+        setPlayedPlaylist(null)
       }
       else{
         setPlayedPlaylist(songs);
       }
   }
 }
-useEffect(() => {console.log(songs)},[playedPlaylist, songs])
+// useEffect(() => {console.log(songs)},[ songs])
+// useEffect(() => {console.log(playedPlaylist)},[playedPlaylist])
+// useEffect(() => {
+//   if(playedPlaylist == songs){
+//     setSongs
+//   }
+// },[songs])
+
 const handleDeleteFromPlaylist = (condition, song) => {
   // if(playedPlaylist && condition) {
   //   const currentSongIndex = songs.findIndex((playlistSong) => playlistSong._id === song._id);

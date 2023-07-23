@@ -15,6 +15,7 @@
     align-items: center;
     flex-wrap: wrap;
     gap: 10px;
+    color: wheat;
     /* gap: 2.1% 1%; */
     overflow-y: scroll;
 }
@@ -35,7 +36,6 @@
     /* flex-grow: 1; */
     max-width: 17vw;
     z-index: 1;
-    color: wheat;
     white-space: pre-wrap;
     overflow-wrap: break-word;
     word-break: break-word;

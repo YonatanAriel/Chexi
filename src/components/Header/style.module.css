@@ -74,6 +74,9 @@
   div span {
     margin-left: 0.1vw;
   }
+  .home {
+    /* margin-bottom: -5px; */
+  }
   /* .signAndlogDiv {
     margin-left: -10vw;
   } */

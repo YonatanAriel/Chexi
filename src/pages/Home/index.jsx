@@ -28,7 +28,17 @@ function Home({
   const [loadedImages, setLoadedImages] = useState(0);
   const [loadRemainingImgs, setloadRemainingImgs] = useState(false);
   const condition = songPlayed && songPlayed[playedPlaylist? "videoId" : "id"]
-  useEffect(() => setSearchSongs(JSON.parse(localStorage.getItem("searchSongs"))),[songs])
+  useEffect(() =>  {
+    const storedSearchSongs = localStorage.getItem("searchSongs");
+    if (storedSearchSongs) {
+      try {
+        setSearchSongs(JSON.parse(storedSearchSongs));
+      } catch (error) {
+        // setSearchSongs([]); 
+      }
+    }  }
+    // localStorage?.getItem("searchSongs") != undefined && setSearchSongs(JSON.parse(localStorage?.getItem("searchSongs")))}
+    ,[songs])
   const handleLoadingImgs = () => {
     setLoadedImages((prev) => prev + 1);
   };

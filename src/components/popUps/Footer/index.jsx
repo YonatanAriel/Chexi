@@ -17,7 +17,7 @@ import {
 import { ImVolumeMute2, ImVolumeHigh } from "react-icons/im";
 import HandlePlayingSongContext from "../../../contexts/HandlePlayingSong";
 import { BsCameraVideoFill, BsFillCameraVideoOffFill } from "react-icons/bs";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { BsPlusCircle, BsPlusCircleFill } from "react-icons/bs";
 import { TiArrowSortedDown, TiArrowSortedUp } from "react-icons/ti";
 //GrSemantics (arrow up)
@@ -26,12 +26,14 @@ import { IoIosArrowUp, IoIosArrowDown } from "react-icons/io";
 import HandleFavoriteSong from "../../HandleFavoriteSong";
 import ShowPopups from "../../../contexts/ShowPopups";
 import Playlists from "../../../contexts/Playlists";
+import Token from "../../../contexts/Token";
 
 // , isSongPlaying , setIsSongPlaying
 function Footer({
   backgroundVideo,
   setBackgroundVideo,
 }) {
+  const {token} = useContext(Token)
   const { isSongPlaying, setIsSongPlaying, songs, songPlayed, skipBackOrForward} = useContext(HandlePlayingSongContext);
   // const playerRef = useRef(null);
   const playerRef = useRef(null);
@@ -45,6 +47,7 @@ function Footer({
   const [minutes, setMinutes] = useState(0);
   const [seconds, setSeconds] = useState(0);
   const {showAddToPlaylistPopup, setShowAddToPlaylistPopup} = useContext(ShowPopups)
+  const navigate = useNavigate()
   // const history = useHistory();
 
 
@@ -132,23 +135,21 @@ function Footer({
     setIsSongPlaying(true);
   };
 
+const [isPlayerReady, setIsPlayerReady] = useState()
   useEffect(() => {
-    if (playerRef.current) {
-      if (isSongPlaying) {
-        playerRef.current.playVideo();
-      } else {
-        playerRef.current.pauseVideo();
-      }
-      if (playerRef.current) {
-        playerRef.current.setVolume(volume);
-      }
-    }
+    if (playerRef?.current) {
+            playerRef.current?.playVideo();
+          } else {
+            playerRef.current?.pauseVideo();
+          }
+          if (playerRef?.current) {
+            playerRef.current?.setVolume(volume);
+          }
   }, [isSongPlaying, volume]);
 
   const handleBackgrundVideo = () => {
     setBackgroundVideo((prev) => !prev);
   };
-
   const handleVolumeChange = (e) => {
     const newVolume = Number(e.target.value);
     setVolume(newVolume);
@@ -160,7 +161,9 @@ function Footer({
     setVolume(50);
   };
   //
-
+  useEffect(() => {
+    console.log("playerRef.current: ", playerRef.current);
+  }, [playerRef]);
 
   return (
     <>
@@ -213,10 +216,11 @@ function Footer({
         <div className={styles.mainDiv}>
           <div className={styles.fullScreenButtons}>
             {location.pathname === "/Video" ? (
-              <Link to="/"
-              // to={history.length >= 2 ?  history.goBack() : "/"}
+              <Link 
                onClick={() => {
                 setFullScreenVideo(true)
+                navigate(-1)
+                
               }}>
                 {
                   <BsFillCameraVideoOffFill
@@ -297,7 +301,7 @@ function Footer({
               />
               <div className={styles.AddToPlaylist}>
                 <BsPlusCircle
-                  onClick={() => {if(localStorage.token) setShowAddToPlaylistPopup((prev) => !prev)}}
+                  onClick={() => {if(token) setShowAddToPlaylistPopup((prev) => !prev)}}
                   size={18}
                   className={`${styles.iconButton} ${styles.addToPlaylistButton}`}
                 />
