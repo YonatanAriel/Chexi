@@ -79,10 +79,17 @@ function HandleFavoriteSong() {
     //   })
     //   .catch((err) => console.log(err));
   }, [likedSongsPlaylistId]);
-
+  const [isAnimationInProgress, setIsAnimationInProgress] = useState(false);
+  const [isHeartCliked, setIsHeartCliked] = useState(false)
   const handleHeartClick = async (addOrRemove) => {
+    if (isAnimationInProgress) return;
+    setIsAnimationInProgress(true);
+    setIsHeartCliked(true)
+    let animationDuration = 1000;
+    
     //to add or remove song from liked songs, and create liked songs playlist if its not exist
       if (addOrRemove === "add") {
+        animationDuration = 600;
         if (!likedSongsPlaylistId) {
           const likedSongsPlaylistRes = await api.post("playlists/addplaylist", {
             name: "My favorite songs",
@@ -178,6 +185,10 @@ function HandleFavoriteSong() {
           //   .catch((err) => console.log(err));
         }
     }
+    setTimeout(() => {
+      setIsAnimationInProgress(false);
+      setIsHeartCliked(false)
+    }, animationDuration);
   };
   //need to delete / is Active: false if the song if its already exist in db
   useEffect(() => {
@@ -229,14 +240,19 @@ function HandleFavoriteSong() {
       ) ? (
         <FaHeart
           size={18}
+          className={`${isAnimationInProgress ? styles.disabledHeart : ""}
+           ${isHeartCliked? styles.pulseHeart : ""}`}
           style={{ color: "red", cursor: "pointer" }}
           onClick={() => handleHeartClick("remove")}
         />
       ) : (
         <FaRegHeart
           size={18}
-          className={styles.heart}
+          className={`${styles.heart}
+          ${isAnimationInProgress ? styles.disabledHeart : ""}
+           ${isHeartCliked? styles.emptyHeart : ""} `}
           onClick={() => handleHeartClick("add")}
+          // isHeartCliked
         />
       )}
     </>

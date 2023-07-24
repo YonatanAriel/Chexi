@@ -2,7 +2,7 @@ import { useRef } from "react";
 import styles from "./style.module.css";
 import { MdOutlineContentCopy } from "react-icons/md";
 
-const CopyEmail = () => {
+const ContactDetails = () => {
   const emailRef = useRef(null);
 
   const handleCopy = () => {
@@ -17,18 +17,20 @@ const CopyEmail = () => {
 
   return ( <>
     <div className={styles.container}>
-      <h2>Contact me</h2>
+      <h2>Contact Me</h2>
       <div className={styles.emailContainer}>
       <div onClick={handleCopy}>
-          <MdOutlineContentCopy style={{marginBottom: "-8px", cursor:"pointer"}}/>
+          <MdOutlineContentCopy style={{margin: "0 4px -3px 0", cursor:"pointer"}}/>
         </div>
+        <div className={styles.emailLink}>
         <a
           className={styles.email}
-          href="mailto:yonatanriel@gamil.com"
+          href="mailto:yonatanriel@gmail.com"
           ref={emailRef}
         >
           yonatanriel@gamil.com
         </a>
+        </div>
       </div>
       <a
       className={styles.linkedinLink}
@@ -42,4 +44,4 @@ const CopyEmail = () => {
   );
 };
 
-export default CopyEmail;
+export default ContactDetails;

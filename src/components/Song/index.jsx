@@ -42,8 +42,8 @@ function Song({ song, index, handlePlayPlaylist, handleDeleteFromPlaylist, songs
       };
 
     if(location === "/Playlists"){
-      const newSongs = handleSongsId(updatedPlaylist.songsId, true)
-      const playedPlaylistWithoutIndexes = playedPlaylist.map(({ index, ...rest }) => rest);
+      const newSongs = handleSongsId(updatedPlaylist?.songsId, true)
+      const playedPlaylistWithoutIndexes = playedPlaylist?.map(({ index, ...rest }) => rest);
       const isCurrentPlaylistPlayed = JSON.stringify(playedPlaylistWithoutIndexes) === JSON.stringify(currentPlaylistData?.songsId)
       if(isCurrentPlaylistPlayed && playedPlaylist.length > 0){
         const playedSongIndex = playedPlaylist?.findIndex(song => song._id === songPlayed?._id)

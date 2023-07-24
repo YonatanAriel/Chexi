@@ -12,6 +12,7 @@
     display: flex;
     flex-direction: column;
     padding-left: 3vw;
+
     gap: 4.5vh;
     font-size: 1.1rem;
     /* letter-spacing:0.05rem ; */
@@ -19,16 +20,16 @@
 }
 @keyframes entryAnimation {
     from {
+        overflow: hidden;
         width: 0;
       }
       to {
         width: 20vw;
+        overflow: visible;
       }
 }
 .libraryContainer a {
-    transition: all 0.3s ease;
-    /* font-weight: 10; */
-    overflow: hidden;
+    transition: all 0.4s ease;
 }
 .libraryContainer a:hover {
     color: white;
@@ -46,24 +47,37 @@
     /* outline: solid 4px red; */
 }
 .active ::before{
-    /* content:"";
+    content:"";
     left:-43px;
+    z-index: 1000;
     position: absolute;
     border-radius: 12px;
-    width: 5px;
+    width: 5.5px;
     height: 33px;
     background-color:wheat;
     bottom: 0px;
     margin-right: 20px;
-    margin-bottom: -0.25em; */
+    margin-bottom: -0.25em;
+    animation: moveIn 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55) forwards; 
 }
 .contact {
-    /* background-color: rgb(217, 255, 0); */
     position: absolute;
     bottom: 20px;
     left:40px;
     max-width: 100%;
     width: 20vw;
-    /* height: 100px; */
     z-index: 1;
+    animation: entryAnimation 3s;
 }
+
+@keyframes moveIn {
+    0% {
+        transform: translateX(-13px); 
+        opacity: 0; 
+    }
+    100% {
+        transform: translateX(0); 
+        opacity: 1; 
+    }
+}
+

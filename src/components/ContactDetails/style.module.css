@@ -1,20 +1,14 @@
 
 .container {
-    overflow: hidden;
+    /* overflow: hidden; */
     display: flex;
     flex-direction: column;
     gap:7px;
-    /* align-items: center; */
-
 }
 .emailContainer {
     display: flex;
     flex-direction: row;
-}
-.email {
-        padding: 5px;
-        user-select: text;
-        cursor: pointer;
+    gap:"20px";
 }
 .container a {
   color: inherit;
@@ -41,6 +35,15 @@
 .container a:hover {
   background-size: 0 3px, 100% 3px;
 }
-.linkedinLink {
-    /* margin-left: 20px; */
+.container h2 {
+    animation: pulseAnimation 2s ease-in-out infinite;
+    transform-origin:left;
 }
+  @keyframes pulseAnimation {
+    0%, 100%{
+      transform: scale(1);
+    }
+    50% {
+      transform: scale(1.02);
+    }
+  }
