@@ -1,44 +1,46 @@
-import Header from "../Header";
-import Home from "../../pages/Home";
-import Footer from "../popUps/Footer";
-import { Route, Routes, useLocation } from "react-router-dom";
-import Login from "../../pages/Login";
-import SignUp from "../../pages/SignUp";
-import LikedSongs from "../../pages/LikedSongs";
-import Playlists from "../../pages/Playlists"
-import FavoriteArtists from '../../pages/FavoriteArtists'
 import styles from "./style.module.css";
-import { useEffect, useState } from "react";
+import { useEffect, useState, lazy, Suspense } from "react";
+import { Route, Routes, useLocation } from "react-router-dom";
 import axios from "axios";
-import HandlePlayingSongContext from "../../contexts/HandlePlayingSong";
-import Library from "../popUps/Library";
-import VideoContainer from '../../pages/VideoContainer'
-import PlaylistsContext from "../../contexts/Playlists";
-import ShowPopupsContext from "../../contexts/ShowPopups";
 import Token from "../../contexts/Token";
 import api from "../../apiCalls/apiCalls";
+import HandlePlayingSongContext from "../../contexts/HandlePlayingSong";
+import PlaylistsContext from "../../contexts/Playlists";
+import ShowPopupsContext from "../../contexts/ShowPopups";
+
+import Header from "../Header";
+import Footer from "../popUps/Footer";
+import Library from "../popUps/Library";
+const Home = lazy(() => import("../../pages/Home"))
+const Login = lazy(() => import("../../pages/Login"))
+const SignUp = lazy(() => import("../../pages/SignUp"))
+const Playlists = lazy(() => import("../../pages/Playlists"))
+const LikedSongs = lazy(() => import("../../pages/LikedSongs"))
+const VideoContainer = lazy(() => import("../../pages/VideoContainer"))
+const FavoriteArtists = lazy(() => import("../../pages/FavoriteArtists"))
 
 function Layout() {
+  const [songs, setSongs] = useState([]);
+  const [fetchSongsRetryCount, setFetchSongsRetryCount] = useState(0);
   const [isSongPlaying, setIsSongPlaying] = useState()
   const [songPlayed, setSongPlayed] = useState()
-  const [userSearch, setUserSearch] = useState("dua lipa")
-  const [isLibraryOpen, setIsLibraryOpen] = useState(false)
-  const [backgroundVideo, setBackgroundVideo] = useState(false)
+
   const [playlists, setPlaylists] = useState()
   const [currentPlaylistData, setCurrentPlaylistData] = useState()
-  const [showCreatePlaylistPopup, setShowCreatePlaylistPopup] = useState(false)
-  const [showAddToPlaylistPopup, setShowAddToPlaylistPopup] = useState(false);
   const [renderPlaylistsPage, setRenderPlaylistsPage] = useState(false)
   const [likedSongsPlaylist, setLikedSongsPlaylist] = useState() 
   const [playedPlaylist, setPlayedPlaylist] = useState()
-  const [token, setToken] = useState(localStorage.getItem("token"))
-  const [songs, setSongs] = useState([]);
-  const [fetchSongsRetryCount, setFetchSongsRetryCount] = useState(0);
+  
+  const [showCreatePlaylistPopup, setShowCreatePlaylistPopup] = useState(false)
+  const [showAddToPlaylistPopup, setShowAddToPlaylistPopup] = useState(false);
+  const [userSearch, setUserSearch] = useState("dua lipa")
+  const [isLibraryOpen, setIsLibraryOpen] = useState(false)
+  const [backgroundVideo, setBackgroundVideo] = useState(false)
+  const [token, setToken] = useState(localStorage.getItem("token") === "null" ? null : localStorage.token)
   const maxFetchSongsRetryCount = 4; 
-
-
   const location = useLocation().pathname
   const openLibraryCondition = !["/Login", "/SignUp"].includes(location) && (["/LikedSongs", "/Playlists","/FavoriteArtists"].includes(location) || isLibraryOpen)
+
   const options = {
     method: 'GET',
     url: 'https://simple-youtube-search.p.rapidapi.com/search',
@@ -51,6 +53,7 @@ function Layout() {
       'X-RapidAPI-Host': 'simple-youtube-search.p.rapidapi.com'
     }
   };
+
   useEffect( () => {
     async function fetchData() {
       if(token){
@@ -72,31 +75,21 @@ function Layout() {
     useEffect(() => {
       if(currentPlaylistData){
       const updatedCurrentPlaylistData = playlists?.find((playlist) => playlist._id === currentPlaylistData?._id);
-      setCurrentPlaylistData(updatedCurrentPlaylistData) //to render Playlist component when the user add new song
+      setCurrentPlaylistData(updatedCurrentPlaylistData) 
       }
     },[playlists])
 
   
 useEffect(() => {
   async function fetchData() {
-      // axios
-  //   .request(options)
-  //   .then((res) => {
-  //     handleSongsId(res.data.results)
-  //     console.log(res.data.results,"222");
-  //   })
-  //   .catch((err) => console.log(err));
-
     try {
-      console.log("jjjjj");
       const res = await axios.request(options);
       handleSongsId(res.data.results);
       console.log(res.data.results, "222");
-      setFetchSongsRetryCount(0); // Reset the retry count on successful response
+      setFetchSongsRetryCount(0); 
     } catch (err) {
       console.log(err);
       if (fetchSongsRetryCount < maxFetchSongsRetryCount) {
-        // Retry the request after a short delay
         setTimeout(() => {
           setFetchSongsRetryCount((prevfetchSongsRetryCount) => prevfetchSongsRetryCount + 1);
         }, 1000);
@@ -143,21 +136,6 @@ const skipBackOrForward = (backOrForward, songsList) => {
 
  }
 
-//  const renderRoutes = routes.map(({ path, element, requiresToken, props }) => {
-//   const tokenRequired = requiresToken && !localStorage.getItem("token");
-//   if (tokenRequired) {
-//     return null;
-//   }
-//   return (
-//     <Route
-//       key={path}
-//       path={path}
-//       element={requiresToken ? React.cloneElement(element, props) : element}
-//     />
-//   );
-// });
-
-
   return (
     <>
     <div className={styles.appContainer}>
@@ -166,24 +144,25 @@ const skipBackOrForward = (backOrForward, songsList) => {
       <HandlePlayingSongContext.Provider value={{songs, setSongs, songPlayed,setSongPlayed, isSongPlaying, setIsSongPlaying, handleSongsId, skipBackOrForward}}>
       {!["/Login", "/SignUp"].includes(location) && <Header backgroundVideo={backgroundVideo} isLibraryOpen={isLibraryOpen} setIsLibraryOpen={setIsLibraryOpen} setUserSearch={setUserSearch}/>}
         <ShowPopupsContext.Provider value={{showCreatePlaylistPopup, setShowCreatePlaylistPopup, showAddToPlaylistPopup, setShowAddToPlaylistPopup}}>
-      <Routes>
-      <Route index element={<Home  backgroundVideo={backgroundVideo} isLibraryOpen={isLibraryOpen} setUserSearch={setUserSearch}/>} /> 
-        {token && ( <>
-          <Route path="/LikedSongs" element={<LikedSongs />} />
-          <Route path="/Playlists"  element={<Playlists />} />
-          <Route path="/FavoriteArtists" element={<FavoriteArtists setSongs={setSongs}/>} />
-            </>)}
-        <Route path="/Login" element={<Login setUserSearch={setUserSearch} />} />
-        <Route path="/SignUp" element={<SignUp setUserSearch={setUserSearch} />} />
-        <Route path="/Video" element={<VideoContainer />}/> 
-       </Routes>
-      {/* isSongPlaying={isSongPlaying} setIsSongPlaying={setIsSongPlaying} */}
-      {songPlayed && <Footer  backgroundVideo={backgroundVideo} setBackgroundVideo={setBackgroundVideo} />}
-      </ShowPopupsContext.Provider>
-      {openLibraryCondition && <Library  backgroundVideo={backgroundVideo}/>}
-      </HandlePlayingSongContext.Provider>
-      </PlaylistsContext.Provider>
-      </Token.Provider>
+      <Suspense >
+        <Routes>
+           <Route index element={<Home  backgroundVideo={backgroundVideo} isLibraryOpen={isLibraryOpen} setUserSearch={setUserSearch}/>} /> 
+            {token && ( <>
+              <Route path="/LikedSongs" element={<LikedSongs />} />
+              <Route path="/Playlists"  element={<Playlists />} />
+              <Route path="/FavoriteArtists" element={<FavoriteArtists setSongs={setSongs}/>} />
+                </>)}
+            <Route path="/Login" element={<Login setUserSearch={setUserSearch} />} />
+            <Route path="/SignUp" element={<SignUp setUserSearch={setUserSearch} />} />
+            <Route path="/Video" element={<VideoContainer />}/> 
+        </Routes>
+       </Suspense>
+        {songPlayed && <Footer backgroundVideo={backgroundVideo} setBackgroundVideo={setBackgroundVideo} />}
+        </ShowPopupsContext.Provider>
+        {openLibraryCondition && <Library  backgroundVideo={backgroundVideo}/>}
+        </HandlePlayingSongContext.Provider>
+        </PlaylistsContext.Provider>
+        </Token.Provider>
       </div>
     </>
   );

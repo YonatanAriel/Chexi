@@ -1,7 +1,7 @@
-import { useContext, useEffect, useState } from "react"
 import styles from "./style.module.css"
-import Playlists from "../../contexts/Playlists";
+import { useContext, useEffect, useState } from "react"
 import { BsMusicNote } from "react-icons/bs";
+import Playlists from "../../contexts/Playlists";
 
 function PlaylistCard({ playlist, setShowSongs }) {
   const {setCurrentPlaylistData} = useContext(Playlists)

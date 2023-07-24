@@ -1,15 +1,17 @@
+import styles from "./style.module.css";
 import { useContext } from "react";
 import AddArtist from "../../AddArtist";
 import CreatePlaylist from "../../CreatePlaylist";
-import styles from "./style.module.css";
 import ShowPopups from "../../../contexts/ShowPopups";
 
 function NewPlaylistOrArtist({ setShowPopup, page }) {
 
   const {showCreatePlaylistPopup, setShowCreatePlaylistPopup} = useContext(ShowPopups)
+
   const handlePopupClick = (e) => {
     e.stopPropagation();
   };
+
   const handleClick = () => {
    if(showCreatePlaylistPopup){
      setShowCreatePlaylistPopup(false)
@@ -17,6 +19,7 @@ function NewPlaylistOrArtist({ setShowPopup, page }) {
    } 
   setShowPopup && setShowPopup(false)
   }
+
   return (
     <div className={styles.popup} onClick={handleClick}>
       <div onClick={handlePopupClick}>       

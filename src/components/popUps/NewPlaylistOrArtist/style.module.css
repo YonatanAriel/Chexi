@@ -1,27 +1,27 @@
 .popup {
-    position: absolute;
-    top: 0;
-    left: 0;
-    min-width: 100vw;
-    min-height: 100vh;
-    z-index: 20;
-    backdrop-filter: blur(70px);
-    display: grid;
-    place-items: center;
+  position: absolute;
+  top: 0;
+  left: 0;
+  min-width: 100vw;
+  min-height: 100vh;
+  z-index: 20;
+  backdrop-filter: blur(70px);
+  display: grid;
+  place-items: center;
 }
 .popup > div:first-child {
-    position: absolute;
-    width: 30vw;
-    height: 30vw;
-    background: linear-gradient(to bottom,black, rgba(0, 0, 0, 0.4), black);
-    z-index: 21;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border-radius: 10px;
+  position: absolute;
+  width: 30vw;
+  height: 30vw;
+  background: linear-gradient(to bottom, black, rgba(0, 0, 0, 0.4), black);
+  z-index: 21;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 10px;
 }
 .createPlaylist {
-    display: flex;
-    justify-content: center;
-    width: 87%;
+  display: flex;
+  justify-content: center;
+  width: 87%;
 }

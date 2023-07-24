@@ -1,26 +1,18 @@
-import { BsPlayCircleFill } from "react-icons/bs";
 import styles from "./style.module.css";
-import { GiLouvrePyramid } from "react-icons/gi";
-import { lazy, useContext, useEffect, useState } from "react";
+import { BsPlayCircleFill } from "react-icons/bs";
+import { useContext, useEffect, useState } from "react";
 import HandlePlayingSongContext from "../../contexts/HandlePlayingSong";
-import { FireworkSpinner, WaveSpinner } from "react-spinners-kit";
-import Playlist from "../../components/playlist";
+import {  WaveSpinner } from "react-spinners-kit";
 import Playlists from "../../contexts/Playlists";
 import Loading from "../../components/Loading";
 
-// ,setIsSongPlaying
 
-function Home({
-  isLibraryOpen,
-  backgroundVideo,
-}) {
+function Home({isLibraryOpen}) {
+
   const { isSongPlaying, setIsSongPlaying, songPlayed, setSongPlayed, songs, setSongs } = useContext(
     HandlePlayingSongContext
   );
-  // const LStorageSearchSongs = localStorage.getItem("searchSongs")
   const [searchSongs, setSearchSongs] = useState()
-  //  useState(LStorageSearchSongs && JSON.parse(LStorageSearchSongs))
-  // useState(JSON.parse(localStorage.getItem("searchSongs") ?? []))
   const {setPlayedPlaylist, playedPlaylist} = useContext(Playlists)
   const [imagesErrorCount, setImagesErrorCount] = useState(0);
   const [songDivHeight, setSongDivHeight] = useState("50.3vh");
@@ -28,20 +20,21 @@ function Home({
   const [loadedImages, setLoadedImages] = useState(0);
   const [loadRemainingImgs, setloadRemainingImgs] = useState(false);
   const condition = songPlayed && songPlayed[playedPlaylist? "videoId" : "id"]
+
   useEffect(() =>  {
     const storedSearchSongs = localStorage.getItem("searchSongs");
     if (storedSearchSongs) {
       try {
         setSearchSongs(JSON.parse(storedSearchSongs));
       } catch (error) {
-        // setSearchSongs([]); 
       }
     }  }
-    // localStorage?.getItem("searchSongs") != undefined && setSearchSongs(JSON.parse(localStorage?.getItem("searchSongs")))}
     ,[songs])
+
   const handleLoadingImgs = () => {
     setLoadedImages((prev) => prev + 1);
   };
+
   useEffect(() => {
     loadedImages === 10 && setloadRemainingImgs(true), [loadedImages];
   });
@@ -58,10 +51,6 @@ function Home({
       setImgHeight("15vw");
     }
   }, [imagesErrorCount, songs?.length, songs]);
-  //  const songDiv = e.target.parentNode.parentNode;
-  // if(imagesErrorCount === songs.length){
-  //  e.target.style.height = "8.415vw", songDiv.style.height = '36vh'}
-  //  }
 
   return (
     <>
@@ -70,7 +59,6 @@ function Home({
       >
         {songs?.length > 0 ? (
           searchSongs?.map((song, i) => (
-            // ${backgroundVideo && styles.backgroundVideo}
             <div
               className={`${styles.song} `}
               style={{
@@ -83,7 +71,6 @@ function Home({
               key={i}
             >
               <div className={styles.imgAndButton}>
-                {/* song.channel.icon */}
                 <img
                   key={song?.thumbnail?.id}
                   className={styles.songImg}
@@ -115,7 +102,7 @@ function Home({
                   .trim()
                   .slice(0, 50)}
               </h3>
-            </div> /*song.channel.icon? song.channel.icon : song.thumbnail.url*/
+            </div> 
           ))
         ) : (
           <Loading />
@@ -126,5 +113,3 @@ function Home({
 }
 
 export default Home;
-// .channel.icon / thumbnail.url
-//song.title.split(/[\(\[]/)[0].trim().slice(0,65).replace(/ ?- ?/g, "\n")

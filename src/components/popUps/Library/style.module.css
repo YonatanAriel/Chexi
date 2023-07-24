@@ -1,83 +1,75 @@
-.libraryContainer{
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 20vw;
-    height: 100vh;
-    background-color: rgb(0, 0, 0);
-    /* background-color: rgba(0, 0, 0, 0.549); */
-    backdrop-filter: blur(20px);
-    z-index: 1;
-    padding-top: 20vh;
-    display: flex;
-    flex-direction: column;
-    padding-left: 3vw;
-
-    gap: 4.5vh;
-    font-size: 1.1rem;
-    /* letter-spacing:0.05rem ; */
-    animation: entryAnimation 2.3s;
+.libraryContainer {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 20vw;
+  height: 100vh;
+  background-color: rgb(0, 0, 0);
+  backdrop-filter: blur(20px);
+  z-index: 1;
+  padding-top: 20vh;
+  display: flex;
+  flex-direction: column;
+  padding-left: 3vw;
+  gap: 4.5vh;
+  font-size: 1.1rem;
+  animation: entryAnimation 2.3s;
 }
 @keyframes entryAnimation {
-    from {
-        overflow: hidden;
-        width: 0;
-      }
-      to {
-        width: 20vw;
-        overflow: visible;
-      }
+  from {
+    overflow: hidden;
+    width: 0;
+  }
+  to {
+    width: 20vw;
+    overflow: visible;
+  }
 }
 .libraryContainer a {
-    transition: all 0.4s ease;
+  transition: all 0.4s ease;
 }
 .libraryContainer a:hover {
-    color: white;
+  color: white;
 }
-.libraryContainer span{
-    margin-left: 0.8vw;
-    position: relative;
+.libraryContainer span {
+  margin-left: 0.8vw;
+  position: relative;
 }
 .active {
-    /* font-size: 1.1em; */
-    /* margin-top: -2vh; */
-    letter-spacing: 0.12rem;
-    font-weight: 730;
-    /* padding-left: 10px; */
-    /* outline: solid 4px red; */
+  letter-spacing: 0.12rem;
+  font-weight: 730;
 }
-.active ::before{
-    content:"";
-    left:-43px;
-    z-index: 1000;
-    position: absolute;
-    border-radius: 12px;
-    width: 5.5px;
-    height: 33px;
-    background-color:wheat;
-    bottom: 0px;
-    margin-right: 20px;
-    margin-bottom: -0.25em;
-    animation: moveIn 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55) forwards; 
+.active ::before {
+  content: "";
+  left: -43px;
+  z-index: 1000;
+  position: absolute;
+  border-radius: 12px;
+  width: 5.5px;
+  height: 33px;
+  background-color: wheat;
+  bottom: 0px;
+  margin-right: 20px;
+  margin-bottom: -0.25em;
+  animation: moveIn 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55) forwards;
 }
 .contact {
-    position: absolute;
-    bottom: 20px;
-    left:40px;
-    max-width: 100%;
-    width: 20vw;
-    z-index: 1;
-    animation: entryAnimation 3s;
+  position: absolute;
+  bottom: 20px;
+  left: 40px;
+  max-width: 100%;
+  width: 20vw;
+  z-index: 1;
+  animation: entryAnimation 3s;
 }
 
 @keyframes moveIn {
-    0% {
-        transform: translateX(-13px); 
-        opacity: 0; 
-    }
-    100% {
-        transform: translateX(0); 
-        opacity: 1; 
-    }
+  0% {
+    transform: translateX(-13px);
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(0);
+    opacity: 1;
+  }
 }
-

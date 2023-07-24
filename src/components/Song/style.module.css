@@ -7,23 +7,12 @@
     align-items: center;
     padding: 0 20px;
     color: wheat;
-    /* width: 100%; */
-    /* marginbottom:60px ; */
     position: relative;
     backdrop-filter: blur(30px);
-    /* z-index: 1; */
 }
-/* .title {
-    width: 64%;
-    overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-  } */
 .mainDiv:hover .songButtons {
     display: block;
-    /* color: red; */
 }
-/* .mainDiv:hover .numberAndButtonsContainer > div:first-child { */
 .mainDiv:hover .numberAndButtonsContainer > .songNumber {
     display: none;
 }
@@ -36,7 +25,6 @@
 }
 .imgContainer {
     position: relative;
-    /* background-color:aqua; */
     max-height: 44.8px;
 }
 .imgContainer > div {
@@ -52,7 +40,6 @@
     width: 80px;
     height: 44.8px;
     border-radius: 5px;
-    /* clip-path:circle(30% at center); */
 }
 .numberAndButtonsContainer > div:first-child,
 .numberAndButtonsContainer .songButtons{

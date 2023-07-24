@@ -1,10 +1,12 @@
-import { useContext, useRef, useState } from "react";
 import styles from "./style.module.css"
+import { useRef, useState } from "react";
 import { HiPlus } from "react-icons/hi";
 import api from "../../apiCalls/apiCalls"
 import axios from 'axios'
 
 function AddArtist({setShowPopup}) {
+  const [fetchArtistImgRetryCount, setFetchArtistImgRetryCount] = useState(0);
+  const maxFetchArtistImgRetryCount = 3;
   const inputRef = useRef(null)
   const options = {
     method: "GET",
@@ -17,30 +19,7 @@ function AddArtist({setShowPopup}) {
       "X-RapidAPI-Host": "simple-youtube-search.p.rapidapi.com",
     },
   };
-  // const getArtistImg = async (artistName) => { 
-  //   try {
-  //     options.params.query = artistName
-  //     const res = await axios.request(options);
-  //     const img = res.data.results[0].channel.icon
-  //     return img
-  //   } catch (err) {
-  //     console.log(err);
-  //   }
-  // };
-
-
-  // const HandleAddArtist = async () => {
-  //     const artistName = inputRef.current.value
-  //   if(artistName.trim()){
-  //     setShowPopup(false)
-  //     const artistImg = await getArtistImg(artistName)
-  //     await api.post("users/addfavoriteartist", {artistName: artistName, artistImg: artistImg})
-  //     setShowPopup(null)
-  //       }
-  // }
   
-  const [fetchArtistImgRetryCount, setFetchArtistImgRetryCount] = useState(0);
-  const maxFetchArtistImgRetryCount = 3;
 
   const getArtistImg = async (artistName) => {
     try {
@@ -52,10 +31,9 @@ function AddArtist({setShowPopup}) {
     } catch (err) {
       console.log(err);
       if (fetchArtistImgRetryCount < maxFetchArtistImgRetryCount) {
-        // Retry the request after a short delay
-        setTimeout(() => {
-          setFetchArtistImgRetryCount((prevFetchArtistImgRetryCount) => prevFetchArtistImgRetryCount + 1);
-        }, 1000);
+          setTimeout(() => {
+            setFetchArtistImgRetryCount((prevFetchArtistImgRetryCount) => prevFetchArtistImgRetryCount + 1);
+          }, 1000);
       }
     }
   };
@@ -65,9 +43,7 @@ function AddArtist({setShowPopup}) {
     if (artistName.trim()) {
       setShowPopup(false);
       let artistImg = await getArtistImg(artistName);
-      
-      // Retry until we get a valid artistImg
-      while (!artistImg && fetchArtistImgRetryCount < maxFetchArtistImgRetryCount) {
+            while (!artistImg && fetchArtistImgRetryCount < maxFetchArtistImgRetryCount) {
         artistImg = await getArtistImg(artistName);
       }
 
@@ -76,23 +52,22 @@ function AddArtist({setShowPopup}) {
       } else {
         console.log("Max retry count reached. Unable to fetch artist image.");
       }
-
       setShowPopup(null);
     }
   };
 
   return (
     <div className={styles.addNewArtistPopup}>
-    <input
-      type="text"
-      ref={inputRef} 
-      className={styles.popupInput}
-      placeholder="What is the artist name?"
-      onKeyDown={(e) => {if(e.key === 'Enter'){HandleAddArtist()}}}
-    />
-    <button onClick={HandleAddArtist} className={styles.popupButton}>
-      <HiPlus size={25} />
-    </button>
+      <input
+        type="text"
+        ref={inputRef} 
+        className={styles.popupInput}
+        placeholder="What is the artist name?"
+        onKeyDown={(e) => {if(e.key === 'Enter'){HandleAddArtist()}}}
+      />
+      <button onClick={HandleAddArtist} className={styles.popupButton}>
+        <HiPlus size={25} />
+      </button>
   </div>
 
   )

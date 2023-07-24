@@ -1,8 +1,7 @@
-import { FaRegHeart, FaHeart } from "react-icons/fa";
 import styles from "./style.module.css";
+import { FaRegHeart, FaHeart } from "react-icons/fa";
 import { useContext, useEffect, useState } from "react";
 import HandlePlayingSongContext from "../../contexts/HandlePlayingSong";
-import axios from "axios";
 import Playlists from "../../contexts/Playlists";
 import Token from "../../contexts/Token";
 import api from "../../apiCalls/apiCalls";
@@ -19,12 +18,10 @@ function HandleFavoriteSong() {
   const [likedSongsPlaylistId, setLikedSongsPlaylistId] = useState(
     playlists?.find((playlist) => playlist.isFavorite === true)?._id
   );
-  const [getLikedSongsPlaylist, setGetLikesSongsPlaylist] = useState(false);
   const [songPlayedData, setSongPlayedData] = useState();
   const { token } = useContext(Token);
-  // {title: songPlayed?.title, videoId: songPlayed?.id, songImg: songPlayed?.thumbnail.url,
-  // channelName: songPlayed?.channel.name, channelImg: songPlayed?.channel.icon,
-  // duration: songPlayed?.duration ,duration_formatted: songPlayed?.duration_formatted, _id:null})
+  const [isAnimationInProgress, setIsAnimationInProgress] = useState(false);
+  const [isHeartCliked, setIsHeartCliked] = useState({red: false, empty: false})
 
   useEffect(() => {
     setSongPlayedData((prev) => ({
@@ -44,6 +41,7 @@ function HandleFavoriteSong() {
       duration_formatted: songPlayed?.duration_formatted,
     }));
   }, [songPlayed]);
+
   useEffect(() => {
     if (
       token &&
@@ -59,7 +57,6 @@ function HandleFavoriteSong() {
   }, [songPlayedData, likedSongsPlaylist]);
 
   useEffect(() => {
-    //to get the liked songs playlist
     async function getLikesSongsPlaylist() {
       if (token) {
         const res = await api.get("playlists/likedsongs");
@@ -67,86 +64,38 @@ function HandleFavoriteSong() {
       }
     }
     getLikesSongsPlaylist();
-    // axios
-    //   .get("http://localhost:1000/playlists/likedsongs", {
-    //     headers: {
-    //       authorization: `Bearer ${token}`,
-    //     },
-    //   })
-    //   .then((res) => {
-    //     console.log(res.data);
-    //     setLikedSongsPlaylist(res.data);
-    //   })
-    //   .catch((err) => console.log(err));
   }, [likedSongsPlaylistId]);
-  const [isAnimationInProgress, setIsAnimationInProgress] = useState(false);
-  const [isHeartCliked, setIsHeartCliked] = useState(false)
+
+
   const handleHeartClick = async (addOrRemove) => {
     if (isAnimationInProgress) return;
-    setIsAnimationInProgress(true);
-    setIsHeartCliked(true)
     let animationDuration = 1000;
+    setIsAnimationInProgress(true);
     
-    //to add or remove song from liked songs, and create liked songs playlist if its not exist
-      if (addOrRemove === "add") {
-        animationDuration = 600;
+    if (addOrRemove === "add") {
+        setIsHeartCliked((prev) =>  ({...prev, empty: true }))
+        animationDuration = 600
         if (!likedSongsPlaylistId) {
           const likedSongsPlaylistRes = await api.post("playlists/addplaylist", {
             name: "My favorite songs",
             isFavorite: true,
           });
           setLikedSongsPlaylistId(likedSongsPlaylistRes._id);
-          console.log(likedSongsPlaylistRes);
 
-          // await axios
-          //   .post(
-          //     "http://localhost:1000/playlists/addplaylist",
-          //     { name: "My favorite songs", isFavorite: true },
-          //     {
-          //       headers: {
-          //         authorization: `Bearer ${token}`,
-          //       },
-          //     }
-          //   )
-          //   .then((res) => {
-          //     setLikedSongsPlaylistId(res.data._id);
-          //     console.log(res.data);
-          //   })
-          //   .catch((err) => console.log(err));
         } else {
           if (!isFavorite) {
             setIsFavorite(true);
-           const newFavoriteSongId = await api.post(`playlists/addsong/${likedSongsPlaylistId}`, songPlayedData)
-           console.log(newFavoriteSongId);
+            const newFavoriteSongId = await api.post(`playlists/addsong/${likedSongsPlaylistId}`, songPlayedData)
                 if (!likedSongsPlaylist.songsId.includes(newFavoriteSongId)) {
                   setLikedSongsPlaylist((prev) => ({
                     ...prev,
                     songsId: [...prev.songsId, newFavoriteSongId],
                   }));
                 }
-  
-            // axios
-            //   .post(`http://localhost:1000/playlists/addsong/${likedSongsPlaylistId}`,
-            //     songPlayedData,
-            //     {
-            //       headers: {
-            //         authorization: `Bearer ${token}`,
-            //       },
-            //     }
-            //   )
-            //   .then((res) => {
-            //     console.log(res.data);
-            //     if (!likedSongsPlaylist.songsId.includes(res.data)) {
-            //       setLikedSongsPlaylist((prev) => ({
-            //         ...prev,
-            //         songsId: [...prev.songsId, res.data],
-            //       }));
-            //     }
-            //   })
-            //   .catch((err) => console.log(err)); 
           }
         }
       } else {
+        setIsHeartCliked((prev) =>  ({...prev, red: true }))
         if (isFavorite) {
           setIsFavorite(false);
           const removedSong = await api.post(`playlists/deletesong/${likedSongsPlaylistId}`, 
@@ -158,41 +107,15 @@ function HandleFavoriteSong() {
                 ),
               }));
 
-          
-          // axios
-          //   .post(
-          //     `http://localhost:1000/playlists/deletesong/${likedSongsPlaylistId}`,
-          //     {
-          //       id: likedSongsPlaylist.songsId.find(
-          //         (song) => song.videoId === songPlayedData.videoId
-          //       )?._id,
-          //     },
-          //     {
-          //       headers: {
-          //         authorization: `Bearer ${token}`,
-          //       },
-          //     }
-          //   )
-          //   .then((res) => {
-          //     console.log(res.data);
-          //     setLikedSongsPlaylist((prev) => ({
-          //       ...prev,
-          //       songsId: prev.songsId.filter(
-          //         (song) => song._id !== res.data.songId
-          //       ),
-          //     }));
-          //   })
-          //   .catch((err) => console.log(err));
-        }
+          }
     }
     setTimeout(() => {
       setIsAnimationInProgress(false);
-      setIsHeartCliked(false)
+      setIsHeartCliked({red: false, empty: false})
     }, animationDuration);
   };
-  //need to delete / is Active: false if the song if its already exist in db
+
   useEffect(() => {
-    //to add the song to the playlist if it right now was created
     async function addSongToPlaylist(){
       if (!isFavorite && likedSongsPlaylistId) {
         setIsFavorite(true);
@@ -201,38 +124,16 @@ function HandleFavoriteSong() {
               setLikedSongsPlaylist((prev) => ({
                 ...prev,
                 songsId: [newFavoriteSongId]
-                // [...prev.songsId, newFavoriteSongId],
               }));
             }
 
           }
         }
         addSongToPlaylist()
-        // axios
-        //   .post(
-        //     `http://localhost:1000/playlists/addsong/${likedSongsPlaylistId}`,
-        //     songPlayedData,
-        //     {
-        //       headers: {
-        //         authorization: `Bearer ${token}`,
-        //       },
-        //     }
-        //   )
-        //   .then((res) => {
-        //     console.log(res.data);
-        //     if (!likedSongsPlaylist?.songsId?.includes(res.data)) {
-        //       setLikedSongsPlaylist((prev) => ({
-        //         ...prev,
-        //         songsId: [...prev.songsId, res.data],
-        //       }));
-        //     }
-        //   })
-        //   .catch((err) => console.log(err));
   }, [likedSongsPlaylistId]);
 
   return token ? (
     <>
-      {/* {likedSongsPlaylist?.songsId?.find(song => song?._id?.toString() == songPlayedData?._id?.toString())? */}
       {isFavorite ||
       likedSongsPlaylist?.songsId?.find(
         (song) =>
@@ -241,7 +142,8 @@ function HandleFavoriteSong() {
         <FaHeart
           size={18}
           className={`${isAnimationInProgress ? styles.disabledHeart : ""}
-           ${isHeartCliked? styles.pulseHeart : ""}`}
+          ${isHeartCliked.empty? styles.pulseHeart : ""}
+            `}
           style={{ color: "red", cursor: "pointer" }}
           onClick={() => handleHeartClick("remove")}
         />
@@ -250,9 +152,9 @@ function HandleFavoriteSong() {
           size={18}
           className={`${styles.heart}
           ${isAnimationInProgress ? styles.disabledHeart : ""}
-           ${isHeartCliked? styles.emptyHeart : ""} `}
+          ${isHeartCliked.red? styles.emptyHeart : ""}
+          `}
           onClick={() => handleHeartClick("add")}
-          // isHeartCliked
         />
       )}
     </>

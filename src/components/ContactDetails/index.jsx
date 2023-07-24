@@ -19,17 +19,17 @@ const ContactDetails = () => {
     <div className={styles.container}>
       <h2>Contact Me</h2>
       <div className={styles.emailContainer}>
-      <div onClick={handleCopy}>
+      <div  onClick={handleCopy}>
           <MdOutlineContentCopy style={{margin: "0 4px -3px 0", cursor:"pointer"}}/>
         </div>
         <div className={styles.emailLink}>
-        <a
-          className={styles.email}
-          href="mailto:yonatanriel@gmail.com"
-          ref={emailRef}
-        >
-          yonatanriel@gamil.com
-        </a>
+          <a
+            className={styles.email}
+            href="mailto:yonatanriel@gmail.com"
+            ref={emailRef}
+          >
+            yonatanriel@gamil.com
+          </a>
         </div>
       </div>
       <a
@@ -38,7 +38,6 @@ const ContactDetails = () => {
       >
         Linkedin
       </a>
-
     </div>
     </>
   );

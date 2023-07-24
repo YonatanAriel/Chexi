@@ -1,102 +1,74 @@
-/* screen width - 1366px */
 .mainDiv {
   backdrop-filter: blur(2px);
-    position: fixed;
-    z-index: 10;
-    top:0;
-    /* left: 12vw; */
-    /* left: 164px; */
-    /* background-color: rgba(0, 0, 0,0.4); */
-    background-color: rgba(0, 0, 0, 0.6);
-    /* background-color: rgba(0, 0, 0,1); */
-    height: 60px;
-    /* height: 9vh; */
-    /* width: 1202px; */
-    /* width: 88vw; */
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    column-gap:3.5vw;
-    border-radius:0 0 4px 2px;
-    color: wheat;
-    left: 164px;
-    width: calc(100vw - 164px);
-    /* width: 88vw; */
-    transition: none;
-  }
-.libraryOpenMainDiv{
+  position: fixed;
+  z-index: 10;
+  top: 0;
+  background-color: rgba(0, 0, 0, 0.6);
+  height: 60px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  column-gap: 3.5vw;
+  border-radius: 0 0 4px 2px;
+  color: wheat;
+  left: 164px;
+  width: calc(100vw - 164px);
+  transition: none;
+}
+.libraryOpenMainDiv {
   border-bottom-left-radius: 0;
   left: 20vw;
   width: 80vw;
   transition: all 2.3s ease-in-out;
 }
-  .logoBackground {
-    backdrop-filter: blur(2px);
-    position: fixed;
-    z-index: 10;
-    top: 0;
-    left: 0;
-    /* width: 12vw; */
-    width: 164px;
-    /* height: 12vh; */
-    height:80px ;
-    background-color: rgba(0, 0, 0, 0.6);
-    border-radius: 0 0 12px 0;
-    color:wheat;
-    display: flex;
-    align-items: center;
-    flex-shrink: 0;
-    transition: none;
-  }
-  .IncreaseLogoPadding {
-    padding: 6vh 0 0 1.5vw;
-    transition: padding 2.3s ease-in-out;
-  }
-  .logoText {
-    margin-left: -22px;
-    /* margin-left :-1.6vw; */
-    font-weight: 700;
-    /* font-size: 6.1vh; */
-    font-size: 39px;
-    color:wheat;
-  }
+.logoBackground {
+  backdrop-filter: blur(2px);
+  position: fixed;
+  z-index: 10;
+  top: 0;
+  left: 0;
+  width: 164px;
+  height: 80px;
+  background-color: rgba(0, 0, 0, 0.6);
+  border-radius: 0 0 12px 0;
+  color: wheat;
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+  transition: none;
+}
+.IncreaseLogoPadding {
+  padding: 6vh 0 0 1.5vw;
+  transition: padding 2.3s ease-in-out;
+}
+.logoText {
+  margin-left: -22px;
+  font-weight: 700;
+  font-size: 39px;
+  color: wheat;
+}
 .mainDiv a {
   flex-shrink: 0;
   cursor: pointer;
-  
 }
 .mainDiv a:hover {
-  /* transform: scale(0.97); */
-  /* color: rgb(255, 218, 150); */
   color: white;
-  /* color: rgb(255, 0, 28); */
 }
-  div span {
-    margin-left: 0.1vw;
-  }
-  .home {
-    /* margin-bottom: -5px; */
-  }
-  /* .signAndlogDiv {
-    margin-left: -10vw;
-  } */
-  .home_library_search {
-    position: absolute;
-    display: flex;
-    gap: 4vw;
-    align-items: center;
-    left:4vw;
-  }
-  .signAndLogDIv {
-    position: absolute;
-    right: 5vw;
-    display: flex;
-    gap:4vw;
-  }
-   /* @media screen and (max-width:700px){
-    .disappearItemsWhenScreenShrink{
-      display: none;
-    }
-  }  */
-
- 
+div span {
+  margin-left: 0.1vw;
+}
+.home {
+}
+.home_library_search {
+  position: absolute;
+  display: flex;
+  gap: 4vw;
+  align-items: center;
+  left: 4vw;
+}
+.signAndLogDIv {
+  position: absolute;
+  right: 5vw;
+  display: flex;
+  gap: 4vw;
+}

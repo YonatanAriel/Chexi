@@ -1,107 +1,90 @@
-
 .mainDiv {
-    position: fixed;
-    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.24) 0.005%, black);
-    /* height: 100vh; */
-    width: 100vw;
-    top: 0;
-    right: 0;
-    height: 100%;
-    padding-bottom: 18vh; 
-    padding-top: 15vh;
-    /* padding-top: 100px; */
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 10px;
-    color: wheat;
-    /* gap: 2.1% 1%; */
-    overflow-y: scroll;
+  position: fixed;
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.24) 0.005%, black);
+  width: 100vw;
+  top: 0;
+  right: 0;
+  height: 100%;
+  padding-bottom: 18vh;
+  padding-top: 15vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  color: wheat;
+  overflow-y: scroll;
 }
 .decreaseMainDivWidth {
-    width: 80vw;
-    transition: width 2.3s ease-in-out;
+  width: 80vw;
+  transition: width 2.3s ease-in-out;
 }
 .song {
-    backdrop-filter: blur(20px);
-    width: 17vw;    
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-    background-color: rgba(255, 255, 255, 0.03);
-    /* background-color: hsla(0, 0%, 100%, 0.03); */
-    border-radius: 5px;
-    /* flex-grow: 1; */
-    max-width: 17vw;
-    z-index: 1;
-    white-space: pre-wrap;
-    overflow-wrap: break-word;
-    word-break: break-word;
-    padding: 0 10px 15px;
-    box-sizing: border-box;
-    /* height: 50.3vh; */
+  backdrop-filter: blur(20px);
+  width: 17vw;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  background-color: rgba(255, 255, 255, 0.03);
+  border-radius: 5px;
+  max-width: 17vw;
+  z-index: 1;
+  white-space: pre-wrap;
+  overflow-wrap: break-word;
+  word-break: break-word;
+  padding: 0 10px 15px;
+  box-sizing: border-box;
 }
-.backgroundVideo{
-    background-color: black;
-} 
+.backgroundVideo {
+  background-color: black;
+}
 .song:hover {
-    /* scale(1.02) */
-    /* transform:  rotateY(360deg); */
-    background-color: rgba(255, 255, 255, 0.06);
-    box-shadow: 0.01px 0.01px 60px rgb(0, 0, 0),
-    -0.01px -0.01px 60px rgb(0, 0, 0);
-
-    /* transform: scale(0.98); */
+  background-color: rgba(255, 255, 255, 0.06);
+  box-shadow: 0.01px 0.01px 60px rgb(0, 0, 0), -0.01px -0.01px 60px rgb(0, 0, 0);
 }
 .imgAndButton {
-    position: relative;
+  position: relative;
 }
 .songImg {
-    transition: all 0.5s ease;
-    /* height: 15vw;
-    width: 15vw; */
-    width: 100%;
-    z-index: -5;
-    margin: 2vh 0 1vh;
-    border-radius: 5px;
-    object-fit: cover;
+  transition: all 0.5s ease;
+  width: 100%;
+  z-index: -5;
+  margin: 2vh 0 1vh;
+  border-radius: 5px;
+  object-fit: cover;
 }
 .song:hover .songImg {
-    transform: scale(1.01) ;
-    box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px ;    
-    /* box-shadow: 0.001px 0.001px 5px rgb(59, 59, 59),
-     -0.001px -0.001px 5px rgba(0, 0, 0, 0.364); */
+  transform: scale(1.01);
+  box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px,
+    rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px;
 }
 .ArtistName {
-    margin: 1vh 0 1.5vh;
-} 
+  margin: 1vh 0 1.5vh;
+}
 .songButtonOrAnima {
   position: absolute;
-  /* bottom: 1.9vh; */
   bottom: 1.8vh;
   left: 0;
   right: 0;
   overflow: hidden;
-  border-radius:0 0 5px 5px;
-  max-height: 70%; 
+  border-radius: 0 0 5px 5px;
+  max-height: 70%;
 }
 .songButton {
-    position: absolute;
-    top: 50%;
-    left: 50%; 
-    transform: translate(-50%, -50%); 
-    display: none;
-    color: red;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: none;
+  color: red;
 }
-.song:hover .songButton{
-    display: block;
+.song:hover .songButton {
+  display: block;
 }
 h3 {
-    max-height: 83px;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    text-shadow: 0.3px 0.3px 2px rgb(0, 0, 0),
-            -0.3px -0.3px 2px rgb(0, 0, 0)
+  max-height: 83px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-shadow: 0.3px 0.3px 2px rgb(0, 0, 0), -0.3px -0.3px 2px rgb(0, 0, 0);
 }

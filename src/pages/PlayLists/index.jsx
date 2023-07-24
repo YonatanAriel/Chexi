@@ -1,6 +1,6 @@
 import styles from "./style.module.css";
-import { IoIosAddCircle, IoMdAddCircleOutline } from "react-icons/io";
 import { useContext, useEffect, useState } from "react";
+import { IoMdAddCircleOutline } from "react-icons/io";
 import NewPlaylistOrArtist from "../../components/popUps/newPlaylistOrArtist";
 import HandlePlayingSongContext from "../../contexts/HandlePlayingSong";
 import PlaylistCard from "../../components/PlaylistCard";
@@ -10,23 +10,17 @@ import ShowPopups from "../../contexts/ShowPopups";
 import Loading from "../../components/Loading";
 
 function Playlists() {
+  const {handleSongsId} = useContext(HandlePlayingSongContext)
   const {showCreatePlaylistPopup, setShowCreatePlaylistPopup} = useContext(ShowPopups)
-  const {songs, handleSongsId} = useContext(HandlePlayingSongContext)
-  const {playedPlaylist, playlists, setPlaylists, renderPlaylistsPage, setRenderPlaylistsPage, currentPlaylistData, setCurrentPlaylistData} = useContext(PlaylistsContext)
+  const { playlists, setRenderPlaylistsPage, currentPlaylistData } = useContext(PlaylistsContext)
   const [showSongs, setShowSongs] = useState(false)
   const [filteredPlaylists, setFilteredPlaylists] = useState()
-  // const [currentPlaylistSongs, setCurrentPlaylistSongs] = useState()
+
   useEffect(() => setRenderPlaylistsPage(prev => !prev), [])
-    useEffect(() => {
+
+  useEffect(() => {
     setFilteredPlaylists(playlists?.filter((playlist) => playlist.isFavorite === false))
   },[playlists])
-
-  // useEffect(() => {
-  //   if(currentPlaylistData?.songsId){
-  //     setCurrentPlaylistSongs(handleSongsId(currentPlaylistData.songsId, true))
-  //   }
-  // },[currentPlaylistData?.songsId])
-
 
   return <> {showSongs? (<Playlist title={currentPlaylistData.name} setShowSongs={setShowSongs} songs={handleSongsId(currentPlaylistData.songsId, true)} />)
     :

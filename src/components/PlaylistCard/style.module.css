@@ -1,39 +1,38 @@
 .playlist {
-    background-color: rgba(255, 255, 255, 0.03);
-    backdrop-filter: blur(20px);
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    color:wheat;
-    font-size: 1.7rem;
-    font-weight: 500;
-    letter-spacing: 0.05rem;
-    align-items: center;
-    padding: 15px 15px 5px 15px;
-    border-radius: 5px;
-    cursor: pointer;
+  background-color: rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(20px);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  color: wheat;
+  font-size: 1.7rem;
+  font-weight: 500;
+  letter-spacing: 0.05rem;
+  align-items: center;
+  padding: 15px 15px 5px 15px;
+  border-radius: 5px;
+  cursor: pointer;
 }
 .playlist img,
 .playlist div {
-    height:17.56vw;
-    width:31.3vw;
-    border-radius: 5px;
+  height: 17.56vw;
+  width: 31.3vw;
+  border-radius: 5px;
 }
 .playlist > div:first-child {
-    background-color:black;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  background-color: black;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 .playlist > div:first-child > span {
-    font-size: 4.5rem;
-    font-weight: 700;
-    margin: 0 0 0 -19px;
+  font-size: 4.5rem;
+  font-weight: 700;
+  margin: 0 0 0 -19px;
 }
 .playlist svg {
-    margin: 0 -19px 10px -15px;
+  margin: 0 -19px 10px -15px;
 }
 .playlist span {
-    padding: 5px 0;
+  padding: 5px 0;
 }
- 

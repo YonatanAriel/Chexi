@@ -1,18 +1,19 @@
-import { useContext, useEffect, useState } from "react";
 import styles from "./style.module.css";
-import axios from "axios";
+import { useContext, useEffect, useState } from "react";
 import { BsMusicNote } from "react-icons/bs";
 import { Link, useNavigate } from "react-router-dom";
 import Token from "../../contexts/Token";
-import api from "../../apiCalls/apiCalls"
+import api from "../../apiCalls/apiCalls";
 
-function AuthForm({title, setUserSearch}) {
+function AuthForm({ title, setUserSearch }) {
   const [data, setData] = useState({ userName: "", password: "" });
   const [passwordErrors, setPasswordErrors] = useState([]);
   const [userNameErrors, setUserNameErrors] = useState([]);
-  const {setToken} = useContext(Token)
-  const navigate = useNavigate()
-    const passwordRegex = /^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,}$/;
+  const { setToken } = useContext(Token);
+  const navigate = useNavigate();
+  const passwordRegex =
+    /^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,}$/;
+
   useEffect(() => {
     setUserNameErrors([]);
     if (data.userName.trim().length < 3 && data.userName.trim().length >= 1) {
@@ -23,9 +24,9 @@ function AuthForm({title, setUserSearch}) {
     }
   }, [data.userName]);
   const handleGuest = () => {
-    localStorage.setItem("token", null)
-    setToken(null)
-  }
+    localStorage.setItem("token", null);
+    setToken(null);
+  };
   const validatePassword = (password) => {
     const errors = [];
     if (!passwordRegex.test(password)) {
@@ -49,77 +50,46 @@ function AuthForm({title, setUserSearch}) {
     userName: "emma_smith",
     password: "password123",
   };
-  const tempUserData2 = {
-    userName: "nan",
-    password: "password123",
-  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (data.userName.trim().length >= 3) {
       if (validatePassword(data.password)) {
         if (title === "Login") {
-          try{
-            const loginToken = await api.post(`users/login`, tempUserData)
-                localStorage.setItem("token", loginToken);
-                setUserSearch("Dua Lipa")
-                setToken(loginToken)
-                navigate("/")
-          }
-          catch(err){
-                          console.log(err);
-              if (err?.response?.data === "User not exist" || err?.response?.data === "password mismatch") {
-                setUserNameErrors("Wrong user name or password");
+          try {
+            const loginToken = await api.post(`users/login`, tempUserData);
+            localStorage.setItem("token", loginToken);
+            setUserSearch("Dua Lipa");
+            setToken(loginToken);
+            navigate("/");
+          } catch (err) {
+            console.log(err);
+            if (
+              err?.response?.data === "User not exist" ||
+              err?.response?.data === "password mismatch"
+            ) {
+              setUserNameErrors("Wrong user name or password");
             }
           }
 
-
-        //   axios
-        //     .post("http://localhost:1000/users/login", tempUserData)
-        //     .then((res) => {
-        //       localStorage.setItem("token", res.data);
-        //       setToken(res.data)
-        //       navigate("/")
-        //     })
-        //     .catch((err) => {
-        //       console.log(err);
-        //       if (err?.response?.data === "User not exist") {
-        //         setUserNameErrors("Wrong user name");
-        //     }
-        //     else if (err?.response?.data === "password mismatch")
-        //     setPasswordErrors((prev) => [...prev, "Wrong password"]);
-        // });
-    }
-    else if(title === "Register"){
-      try{
-        const registerToken = await api.post("users/register", data)
-          localStorage.setItem("token", registerToken)
-          setToken(registerToken)
-          setUserSearch("Dua lipa")
-          navigate("/")
-          console.log(registerToken);
-      }
-      catch(err){
-                    if(err?.response?.data === "User already exist"){
-                setUserNameErrors("This user name is not available. Please choose a new one")
+        } else if (title === "Register") {
+          try {
+            const registerToken = await api.post("users/register", data);
+            localStorage.setItem("token", registerToken);
+            setToken(registerToken);
+            setUserSearch("Dua lipa");
+            navigate("/");
+            console.log(registerToken);
+          } catch (err) {
+            if (err?.response?.data === "User already exist") {
+              setUserNameErrors(
+                "This user name is not available. Please choose a new one"
+              );
             }
-            console.log(err)
-            console.log(userNameErrors)
-      }
+            console.log(err);
+            console.log(userNameErrors);
+          }
 
-        // axios.post("http://localhost:1000/users/register", data)
-        // .then(res => {
-        //   console.log(res.data)
-        //   localStorage.setItem("token", res.data)
-        //   setToken(res.data)
-        //   navigate("/")})
-        // .catch(err => {
-        //     if(err?.response?.data === "User already exist"){
-        //         setUserNameErrors("This user name is not available. Please choose a new one")
-        //     }
-        //     console.log(err)
-        //     console.log(userNameErrors)
-        //         })
         }
       }
     } else {
@@ -146,14 +116,15 @@ function AuthForm({title, setUserSearch}) {
                 id="username"
                 placeholder="user name"
                 autoComplete="username"
-                // value={data.userName}
                 onChange={(e) =>
                   setData((prev) => ({ ...prev, userName: e.target.value }))
                 }
                 className={
                   data.userName.trim().length >= 3
                     ? styles.greenBorder
-                    : (data.userName.trim().length >= 1? styles.redBorder: "")
+                    : data.userName.trim().length >= 1
+                    ? styles.redBorder
+                    : ""
                 }
               />
               {userNameErrors && (
@@ -164,13 +135,15 @@ function AuthForm({title, setUserSearch}) {
               <label htmlFor="password">Password</label>
               <input
                 className={`${
-                  passwordErrors.length > 0 ? styles.redBorder : (data.password.trim().length >= 6? styles.greenBorder : "")
+                  passwordErrors.length > 0
+                    ? styles.redBorder
+                    : data.password.trim().length >= 6
+                    ? styles.greenBorder
+                    : ""
                 }`}
                 id="password"
                 type="password"
                 placeholder="password"
-                // pattern={passwordRegex.toString()}
-                // value={data.password}
                 autoComplete="current-password"
                 onChange={(e) => {
                   setData((prev) => ({ ...prev, password: e.target.value }));
@@ -185,7 +158,9 @@ function AuthForm({title, setUserSearch}) {
             </div>
           </div>
           <button type="submit">{title}</button>
-          <Link to={"/"} onClick={handleGuest}>Or - Continue as a guest</Link>
+          <Link to={"/"} onClick={handleGuest}>
+            Or - Continue as a guest
+          </Link>
         </form>
       </div>
     </>

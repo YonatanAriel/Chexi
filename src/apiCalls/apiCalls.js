@@ -1,4 +1,5 @@
 import axios from 'axios'
+
 const BASE_URL = import.meta.env.VITE_BASE_URL
 axios.defaults.baseURL = BASE_URL
 
@@ -33,11 +34,5 @@ async function apiCalls(method, url, data) {
   }
 }
 
-
-export const setToken = (token) => {
-  // when you do logout pass the parameter as an empty string
-  axios.defaults.headers.common['Authorization'] = `Bearer ${token}` //AUTH_TOKEN
-  
-}
 
 export default api;

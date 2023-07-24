@@ -1,64 +1,46 @@
 import styles from "./style.module.css";
 import YouTube from "react-youtube";
-// import HandleYoutube from "../HandleYoutube/index";
-import { useContext, useEffect, useRef, useState } from "react";
-import {
-  FaRegHeart,
-  FaHeart,
-  FaPlay,
-  FaCompressArrowsAlt,
-  FaExpandArrowsAlt,
-} from "react-icons/fa";
-import {
-  TbPlayerSkipForwardFilled,
-  TbPlayerSkipBackFilled,
-  TbPlayerPauseFilled,
-} from "react-icons/tb";
+import { useContext, useEffect, useRef, useState, lazy, Suspense } from "react";
+import {FaPlay, FaCompressArrowsAlt, FaExpandArrowsAlt } from "react-icons/fa";
+import {TbPlayerSkipForwardFilled, TbPlayerSkipBackFilled, TbPlayerPauseFilled} from "react-icons/tb";
 import { ImVolumeMute2, ImVolumeHigh } from "react-icons/im";
-import HandlePlayingSongContext from "../../../contexts/HandlePlayingSong";
 import { BsCameraVideoFill, BsFillCameraVideoOffFill } from "react-icons/bs";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { BsPlusCircle, BsPlusCircleFill } from "react-icons/bs";
-import { TiArrowSortedDown, TiArrowSortedUp } from "react-icons/ti";
-//GrSemantics (arrow up)
-import AddToPlaylist from "../AddToPlaylist";
+import { BsPlusCircle } from "react-icons/bs";
 import { IoIosArrowUp, IoIosArrowDown } from "react-icons/io";
+import HandlePlayingSongContext from "../../../contexts/HandlePlayingSong";
+import AddToPlaylist from "../AddToPlaylist";
 import HandleFavoriteSong from "../../HandleFavoriteSong";
 import ShowPopups from "../../../contexts/ShowPopups";
 import Playlists from "../../../contexts/Playlists";
 import Token from "../../../contexts/Token";
 
-// , isSongPlaying , setIsSongPlaying
-function Footer({
-  backgroundVideo,
-  setBackgroundVideo,
-}) {
+function Footer({backgroundVideo, setBackgroundVideo,}) {
   const {token} = useContext(Token)
-  const { isSongPlaying, setIsSongPlaying, songs, songPlayed, skipBackOrForward} = useContext(HandlePlayingSongContext);
-  // const playerRef = useRef(null);
-  const playerRef = useRef(null);
-  const [fullScreenVideo, setFullScreenVideo] = useState(false);
   const {playedPlaylist} = useContext(Playlists)
-  // const [elapsedSeconds, setElapsedSeconds] = useState(0)
-  // const [elapsedMinutes, setElapsedMinutes] = useState(0);
-  // const [elapsedHours, setElapsedHours] = useState(0);
+  const {isSongPlaying, setIsSongPlaying, songs, songPlayed, skipBackOrForward} = useContext(HandlePlayingSongContext);
+  const {showAddToPlaylistPopup, setShowAddToPlaylistPopup} = useContext(ShowPopups)
+  const [setFullScreenVideo] = useState(false);
   const [volume, setVolume] = useState(50);
   const [showFooter, setShowFooter] = useState(true);
   const [minutes, setMinutes] = useState(0);
   const [seconds, setSeconds] = useState(0);
-  const {showAddToPlaylistPopup, setShowAddToPlaylistPopup} = useContext(ShowPopups)
-  const navigate = useNavigate()
-  // const history = useHistory();
-
-
-  // useEffect(() => {
-  //   if(seconds === 59){
-  //     setSeconds(0)
-  //     setMinutes(prev => prev + 1)
-  //   }
-  //   setSeconds(prev => prev + 1)
-  // },[currentSeconds])
   const [songProgress, setSongProgress] = useState(0);
+  const navigate = useNavigate()
+  const location = useLocation();
+  const playerRef = useRef(null);
+  const opts = {
+    playerVars: {
+      autoplay: 1,
+      fs: 1,
+      controls: 0,
+      disablekb: 1,
+      modestbranding: 1,
+      showinfo: 0,
+      rel: 0,
+      Loop: 1
+    },
+  }
 
   const handlePlayerStateChange = (e) => {
     if (e.data === window.YT.PlayerState.PLAYING) {
@@ -71,22 +53,19 @@ function Footer({
       const player = e.target;
       const interval = setInterval(() => {
         const newCurrentTime = player.getCurrentTime();
-        // console.log(newCurrentTime)
         const newMinutes = Math.floor(newCurrentTime / 60);
         const newSeconds = Math.floor(newCurrentTime % 60);
         setMinutes(newMinutes);
         setSeconds(newSeconds);
-        // console.log(newCurrentTime)
         if (e.data === window.YT.PlayerState.ENDED) {
           clearInterval(interval);
           setMinutes(0);
           setSeconds(0);
         }
       }, 1000);
-      //  else if (e.data === window.YT.PlayerState.PAUSED) {
-      // }
     }
   };
+
   const handleProgressChange = (e) => {
     const progress = parseInt(e.target.value);
     const duration = playerRef.current.getDuration();
@@ -94,39 +73,7 @@ function Footer({
     playerRef.current.seekTo(seekTime);
     setSongProgress(progress);
   };
-
-  // const handlePlayerStateChange = (e) => {
-  //     if (e.data === window.YT.PlayerState.PLAYING) {
-  //       setInterval(() => {
-  //         setSeconds(prev => prev + 1)
-  //         if(seconds == 59){
-  //           setMinutes(prev => prev + 1)
-  //           setSeconds(0)
-  //         }
-  //       }, 1000);
-  //       if(e.data === window.YT.PlayerState.ENDED){
-    //               setMinutes(0)
-    //               setSeconds(0)
-    //       }
-    //     }
-    //   }
     
-    const location = useLocation();
-
-  const opts = {
-    playerVars: {
-      autoplay: 1,
-      fs: 1,
-      controls: 0,
-      disablekb: 1,
-      modestbranding: 1,
-      showinfo: 0,
-      rel: 0,
-      Loop: 1
-      // origin: 'http://localhost:5174'
-    },
-  }
-
   const handlePause = () => {
     setIsSongPlaying(false);
   };
@@ -135,7 +82,6 @@ function Footer({
     setIsSongPlaying(true);
   };
 
-const [isPlayerReady, setIsPlayerReady] = useState()
   useEffect(() => {
     if (playerRef?.current) {
             playerRef.current?.playVideo();
@@ -150,45 +96,30 @@ const [isPlayerReady, setIsPlayerReady] = useState()
   const handleBackgrundVideo = () => {
     setBackgroundVideo((prev) => !prev);
   };
+
   const handleVolumeChange = (e) => {
     const newVolume = Number(e.target.value);
     setVolume(newVolume);
   };
+
   const handleMute = () => {
     setVolume(0);
   };
+
   const handleUnmute = () => {
     setVolume(50);
   };
-  //
+  
   useEffect(() => {
     console.log("playerRef.current: ", playerRef.current);
   }, [playerRef]);
 
   return (
     <>
-      {/* <HandleYoutube setMinutes={setMinutes} setSeconds={setSeconds} 
-      setSongProgress={setSongProgress} songPlayed={songPlayed} /> */}
-      <div
-        style={{
-          position: "fixed",
-          top: 0,
-          bottom: 0,
-          zIndex: 400,
-          left: "50%",
-          transform: "translateX(-50%)",
-          borderLeft: "1px solid red",
-        }}
-      ></div>
       <div className={styles.videoContainer}>
         <YouTube
           onStateChange={handlePlayerStateChange}
-          style={{
-            display:
-              location.pathname === "/Video" || backgroundVideo
-                ? "block"
-                : "none",
-          }}
+          style={{ display: location.pathname === "/Video" || backgroundVideo? "block" : "none",}}
           videoId={playedPlaylist? songPlayed?.videoId : songPlayed?.id}
           opts={opts}
           autoplay
@@ -198,14 +129,9 @@ const [isPlayerReady, setIsPlayerReady] = useState()
           }}
         />
       </div>
-
-      {/* <TiArrowSortedDown size={50}/> */}
-      <div
-        className={`${styles.arrowButton} ${
-          !showFooter && styles.arrowUpButton
-        }`}
+      <div className={`${styles.arrowButton} ${!showFooter && styles.arrowUpButton}`}
         onClick={() => setShowFooter((prev) => !prev)}
-      >
+        >
         {showFooter ? (
           <IoIosArrowDown size={41} />
         ) : (
@@ -254,7 +180,6 @@ const [isPlayerReady, setIsPlayerReady] = useState()
               />
             )}
           </div>
-          {/*songPlayed.thumbnail.url */}
           <div className={styles.artistDetails}>
             <img 
             className={isSongPlaying? styles.spinImg : ""}
@@ -268,11 +193,6 @@ const [isPlayerReady, setIsPlayerReady] = useState()
           <div className={styles.centerItemsContainer}>
             <div className={styles.palyingButtonsContainer} >
               <HandleFavoriteSong />
-               {/* <FaRegHeart
-                size={18}
-                className={`${styles.iconButton} ${styles.heart}`}
-              />
-               <FaHeart size={18} style={{color:"red"}}/>  */}
               <TbPlayerSkipBackFilled
                 onClick={() => {
                   playedPlaylist? skipBackOrForward("back", playedPlaylist) : skipBackOrForward("back", songs)}}
@@ -305,7 +225,6 @@ const [isPlayerReady, setIsPlayerReady] = useState()
                   size={18}
                   className={`${styles.iconButton} ${styles.addToPlaylistButton}`}
                 />
-                {/* <BsPlusCircleFill size={19} className={styles.iconButton} /> */}
               </div>
             </div>
             <div className={styles.progressContainer}>
@@ -313,7 +232,6 @@ const [isPlayerReady, setIsPlayerReady] = useState()
                 {`${minutes.toString().padStart(2, "0")}:${seconds
                   .toString()
                   .padStart(2, "0")}`}{" "}
-                {/* <span >{(elapsedHours != 0) && (elapsedHours + ":")}{`${elapsedMinutes}:${elapsedSeconds}`}</span> */}
               </div>
               <input
                 type="range"

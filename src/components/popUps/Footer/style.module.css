@@ -1,249 +1,213 @@
 body {
-    overflow-x: hidden;
- /* to not allow x scrolling when the video play from footer component */
+  overflow-x: hidden;
 }
 .videoContainer {
-    position: fixed;
-    top: 0;
-    right: 0;
-    left: 0;
-    bottom: 0;
-    transform: scale(1.2);
-    z-index: -1;
-    /* position: absolute;
-    top:-19vh;
-    left:-50px;
-    height: 130vh; */
-
-    display: flex;
-    align-items: center; 
-    pointer-events: none;
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  transform: scale(1.2);
+  z-index: -1;
+  display: flex;
+  align-items: center;
+  pointer-events: none;
 }
-.videoContainer iframe{
-    position: sticky;
-    border: none;
-    width:105vw;
-    height: 150vh;
-    /* display: none; */
+.videoContainer iframe {
+  position: sticky;
+  border: none;
+  width: 105vw;
+  height: 150vh;
 }
 .youtube-player-container .ytp-chrome-top,
 .youtube-player-container .ytp-gradient-bottom {
   display: none;
 }
 .arrowButton {
-    position: fixed;
-    right:4vw;
-    bottom: 13vh;
-    /* width: 5vw; */
-    width: 77px;
-    height: 25px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 10px 10px 0 0;
-    background-color: rgba(255, 255, 255, 0.05);
-    backdrop-filter: blur(20px); 
-    color:wheat;
-    z-index: 2;
-    cursor: pointer;
-    animation: fadeIn 2.3s;
+  position: fixed;
+  right: 4vw;
+  bottom: 13vh;
+  width: 77px;
+  height: 25px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px 10px 0 0;
+  background-color: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(20px);
+  color: wheat;
+  z-index: 2;
+  cursor: pointer;
+  animation: fadeIn 2.3s;
 }
 .arrowUpButton {
-    animation: flash 2s infinite alternate;
-    bottom: 0;
-    height: 45px;
-    width: 100px;
+  animation: flash 2s infinite alternate;
+  bottom: 0;
+  height: 45px;
+  width: 100px;
 }
 @keyframes flash {
-    0% {
-      opacity: 1;
-    }
-    50% {
-      opacity: 0;
-    }
-    100% {
-      opacity: 1;
-    }
-  }
-.mainDiv{
-    position: fixed;
-    bottom:0;
-    background-color: rgba(255, 255, 255, 0.05);
-    height: 13vh;
-    width: 100vw;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border-radius: 30px 30px 0 0;
-    /* margin: 0 0.75vw; */
-    /* left: 0.15vw; */
-    /* color: rgb(255, 1, 1); */
-    color: wheat;
-    z-index: 2;
-    column-gap: 3vw;
-    backdrop-filter: blur(20px); 
-    text-shadow: 0.1px 0.1px 2px rgb(0, 0, 0),
-    -0.1px -0.1px 2px rgb(0, 0, 0);
-    animation: fadeIn 2.3s;
-}
-@keyframes fadeIn {
-  0%{
-    opacity: 0;
-  }
-  100%{
+  0% {
     opacity: 1;
   }
-  
+  50% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+.mainDiv {
+  position: fixed;
+  bottom: 0;
+  background-color: rgba(255, 255, 255, 0.05);
+  height: 13vh;
+  width: 100vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 30px 30px 0 0;
+  color: wheat;
+  z-index: 2;
+  column-gap: 3vw;
+  backdrop-filter: blur(20px);
+  text-shadow: 0.1px 0.1px 2px rgb(0, 0, 0), -0.1px -0.1px 2px rgb(0, 0, 0);
+  animation: fadeIn 2.3s;
+}
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
 }
 .iconButton {
-    cursor: pointer;
-    /* size: 30; */
+  cursor: pointer;
 }
-input[type=range] {
-    /* height: 22px; */
-    /* margin: 10px 0; */
-    /* width: 100%; */
-    -webkit-appearance: none;
-    background: none;
-  }
-  input[type=range]:focus {
-    outline: none;
-  }
-  input[type=range]::-webkit-slider-runnable-track {
-    /* width: 100%; */
-    height: 5px;
-    border-radius: 5px;
-    background-color: wheat;
-  }
-  input[type=range]::-webkit-slider-thumb {
-    height: 15px;
-    width: 15px;
-    border-radius: 50%;
-    /* background: #FF0000; */
-    background: wheat;
-    -webkit-appearance: none;
-    margin-top: -5px;
-  }
+input[type="range"] {
+  -webkit-appearance: none;
+  background: none;
+}
+input[type="range"]:focus {
+  outline: none;
+}
+input[type="range"]::-webkit-slider-runnable-track {
+  height: 5px;
+  border-radius: 5px;
+  background-color: wheat;
+}
+input[type="range"]::-webkit-slider-thumb {
+  height: 15px;
+  width: 15px;
+  border-radius: 50%;
+  background: wheat;
+  -webkit-appearance: none;
+  margin-top: -5px;
+}
 .fullScreenButtons {
-    position: absolute;
-    left: 2vw;
-    display: flex;
-    align-items: center;
-    flex-direction: column;
-    justify-content: center;
-    gap: 0.3vh;
+  position: absolute;
+  left: 2vw;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+  gap: 0.3vh;
 }
 .artistDetails {
-    position: absolute;
-    left: 5vw;
-    height: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width:150px;
-    max-width: 150px;
-    min-width: 150px;
-    max-height: 11vh;
-    /* background-color: aqua; */
-    /* overflow: hidden; */
+  position: absolute;
+  left: 5vw;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 150px;
+  max-width: 150px;
+  min-width: 150px;
+  max-height: 11vh;
 }
 .artistDetails img {
-    width: 4.3vw;
-    width: 68px;
-    height: 68px;
-    border-radius: 50%;
-    margin-right: 6px;
+  width: 4.3vw;
+  width: 68px;
+  height: 68px;
+  border-radius: 50%;
+  margin-right: 6px;
 }
 .spinImg {
-    animation: spinImg 3.6s linear infinite;
+  animation: spinImg 3.6s linear infinite;
+}
+
+@keyframes spinImg {
+  0% {
+    transform: rotate(0deg);
   }
-  
-  @keyframes spinImg {
-    0% {
-      transform: rotate(0deg);
-    }
-    100% {
-        transform: rotate(360deg);
-    }
+  100% {
+    transform: rotate(360deg);
   }
+}
 .artistDetails span {
-    font-weight: 600;
-    margin: auto 0;
-    display: -webkit-box;
+  font-weight: 600;
+  margin: auto 0;
+  display: -webkit-box;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 3;
-    overflow: hidden;    
+  overflow: hidden;
 }
 .centerItemsContainer {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    /* background-color: aqua; */
-    width: 45vw;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 45vw;
 }
 .palyingButtonsContainer {
-    position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 21vw;
-    margin: 1vh 1.2vw 1vh 0;
-    gap:14%;
-    /* background-color: #FF0000; */
-}
-.playAndPauseButton {
-    /* margin: 0 3vw; */
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 21vw;
+  margin: 1vh 1.2vw 1vh 0;
+  gap: 14%;
 }
 .AddToPlaylist {
-    position: relative;
+  position: relative;
 }
 .addToPlaylistButton {
-    transition: transform 0.3s ease;
+  transition: transform 0.3s ease;
 }
 .addToPlaylistButton:hover {
-    transform:scale(1.2) rotate(360deg);
-    /* color:red; */
+  transform: scale(1.2) rotate(360deg);
 }
 .progressContainer {
-    display: flex;
+  display: flex;
 }
 .progressTime {
-    width:60px;
-    max-width: 60px;
-    min-width: 60px;
-    /* overflow: hidden; */
-    /* background-color: #FF0000; */
+  width: 60px;
+  max-width: 60px;
+  min-width: 60px;
 }
 .progressInput {
-    width: 24vw;
-    margin: 0 2vw 0 0.8vw;
-    /* pointer-events: none; */
-    cursor: pointer;
+  width: 24vw;
+  margin: 0 2vw 0 0.8vw;
+  cursor: pointer;
 }
 input[type="range"].progressInput::-webkit-slider-thumb {
-    width: 15px;
-    height: 15px;
-    /* margin: 0; */
-    /* border-radius: 0%; */
-    background-color: wheat;
-  }
-  input[type=range].progressInput::-webkit-slider-runnable-track {
-    /* background-color: rgb(255, 255, 255); */
-  }
-  .volume {
-    position: absolute;
-    right: 3vw;
-    display: flex;
-    align-items: center;
+  width: 15px;
+  height: 15px;
+  background-color: wheat;
+}
+.volume {
+  position: absolute;
+  right: 3vw;
+  display: flex;
+  align-items: center;
 }
 .volumeHighButton {
-    cursor: pointer;
+  cursor: pointer;
 }
 .volumeHighButton :hover {
-    color: red;
+  color: red;
 }
 .volumeInput {
-    cursor: pointer;
-    margin-left: 1vw;
+  cursor: pointer;
+  margin-left: 1vw;
 }
-  

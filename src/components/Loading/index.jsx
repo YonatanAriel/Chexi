@@ -1,5 +1,5 @@
-import {FireworkSpinner} from "react-spinners-kit";
 import styles from "./style.module.css"
+import {FireworkSpinner} from "react-spinners-kit";
 import { useLocation } from "react-router-dom";
 
 function Loading() {
@@ -7,7 +7,6 @@ function Loading() {
   return (
     <div
       className={`${styles.loading} ${location === "/Playlists" && styles.playlistsLoading}`}
-    //   width: location === "/" ? "100vw" : "100%"
     >
       <FireworkSpinner color="wheat"  size={200} />
     </div>

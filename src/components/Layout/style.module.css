@@ -1,4 +1,13 @@
 .appContainer{
     min-height: 100vh; 
-    /* background-color: rgba(0, 0, 0, 0.9); */
+}
+.loadingContainer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    top: 60px;
+    right: 0;
+    width: 100%;
+    height: calc(100% - 60px);
 }

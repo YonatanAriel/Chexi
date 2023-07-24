@@ -1,6 +1,6 @@
 import styles from "./style.module.css";
-import { BsFillPersonPlusFill, BsFillPlusCircleFill } from "react-icons/bs";
-import { useContext, useEffect, useState } from "react";
+import { BsFillPersonPlusFill } from "react-icons/bs";
+import { Suspense, useContext, useEffect, useState } from "react";
 import Playlist from "../../components/playlist";
 import NewPlaylistOrArtist from "../../components/popUps/newPlaylistOrArtist";
 import HandlePlayingSongContext from "../../contexts/HandlePlayingSong";
@@ -9,10 +9,8 @@ import api from "../../apiCalls/apiCalls"
 import Loading from "../../components/Loading";
 
 function FavoriteArtists({setSongs}) {
+  const { handleSongsId } = useContext(HandlePlayingSongContext);
   const [showPopup, setShowPopup] = useState(false);
-  const { songs, songPlayed, handleSongsId } = useContext(
-    HandlePlayingSongContext
-  );
   const [artists, setArtists] = useState();
   const [currentArtist, setCurrentArtist] = useState({
     artistName: "",
@@ -39,19 +37,12 @@ function FavoriteArtists({setSongs}) {
     }
     fetchData()
 
-    // axios
-    //   .get("http://localhost:1000/users/getfavoritartists", {
-    //     headers: {
-    //       Authorization: `Bearer ${token}`,
-    //     },
-    //   })
-    //   .then((res) => setArtists(res.data))
-    //   .catch((err) => console.log(err));
   }, [showPopup]);
 
   const handleArtistClick = async (artistName) => {
     setCurrentArtist((prev) => ({ ...prev, artistName: artistName, songs: null, showArtistSongs: true}));
   };
+
   useEffect(() => {
     const getSongs = async () => {
       try {
@@ -73,13 +64,13 @@ function FavoriteArtists({setSongs}) {
   return (
     <>
       {currentArtist.showArtistSongs && (
-        <Playlist
-        setCurrentArtist={setCurrentArtist}
-        setSongs={setSongs}
-        setShowSongs={setCurrentArtist}
-          title={currentArtist?.artistName}
-          songs={currentArtist?.songs && currentArtist.songs}
-        />
+            <Playlist
+          setCurrentArtist={setCurrentArtist}
+          setSongs={setSongs}
+          setShowSongs={setCurrentArtist}
+            title={currentArtist?.artistName}
+            songs={currentArtist?.songs && currentArtist.songs}
+          />
       )}
 
       <div style={{ display: currentArtist.showArtistSongs && "none" }}>

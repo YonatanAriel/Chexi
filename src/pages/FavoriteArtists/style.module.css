@@ -1,63 +1,63 @@
 .FavoriteArtistsContainer {
-    left: 20vw;
-    top:60px ;
-    width: 80vw;
-    height: calc(100vh - 60px);
-    overflow-y: auto;
-    position: fixed;
-    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.24) 0.005%, black);
-    padding: 0 20px;
-    color: wheat;
+  left: 20vw;
+  top: 60px;
+  width: 80vw;
+  height: calc(100vh - 60px);
+  overflow-y: auto;
+  position: fixed;
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.24) 0.005%, black);
+  padding: 0 20px;
+  color: wheat;
 }
 .addNewArtistContainer {
-    display: flex;
-    align-items: center;
-    gap: 20px;
-    padding: 30px;
-    justify-content: center;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding: 30px;
+  justify-content: center;
 }
 .addNewArtistContainer span {
-    font-size: 4.5em;
-    font-weight: 500;
-} 
+  font-size: 4.5em;
+  font-weight: 500;
+}
 .addArtistButton {
-    cursor: pointer;
+  cursor: pointer;
 }
 .artistsContainer {
-    position: absolute;
-    right: 0;
-    width: 100%;
-    display: flex;
-    flex-wrap: wrap;
-    flex-grow: 0;
-    gap: 15px;
-    justify-content: center;
-    padding-bottom: 18vh;
+  position: absolute;
+  right: 0;
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  flex-grow: 0;
+  gap: 15px;
+  justify-content: center;
+  padding-bottom: 18vh;
 }
 .artist {
-    width: fit-content;
-    height:48vh; 
-    min-width: 26%;
-    background-color: rgba(255, 255, 255, 0.03);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    border-radius: 5px;
-    font-size: larger;
-    font-weight: 600;
-    padding: 10px 0 10px 0;
-    backdrop-filter: blur(30px);
-    cursor: pointer;
-    text-align: center;
+  width: fit-content;
+  height: 48vh;
+  min-width: 26%;
+  background-color: rgba(255, 255, 255, 0.03);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border-radius: 5px;
+  font-size: larger;
+  font-weight: 600;
+  padding: 10px 0 10px 0;
+  backdrop-filter: blur(30px);
+  cursor: pointer;
+  text-align: center;
 }
 .artist img {
-    width: 90%;
-    height:80%;
-    border-radius: 5px;
-    margin: 0 0 13px 0;
+  width: 90%;
+  height: 80%;
+  border-radius: 5px;
+  margin: 0 0 13px 0;
 }
-.artist span{
-    max-height: 2rem;
-    overflow-y: auto;
+.artist span {
+  max-height: 2rem;
+  overflow-y: auto;
 }

@@ -1,43 +1,40 @@
 .PlaylistsContainer {
-    position: fixed;
-    width: 80vw;
-    height: calc(100vh - 60px);
-    /* position: absolute; */
-    color: wheat;
-    top: 60px;
-    left: 20vw;
-    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.24) 0.005%, black);
-    /* background-color: aqua; */
-    overflow-y:auto ;
+  position: fixed;
+  width: 80vw;
+  height: calc(100vh - 60px);
+  color: wheat;
+  top: 60px;
+  left: 20vw;
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.24) 0.005%, black);
+  overflow-y: auto;
 }
 .newPlaylistBtn {
-    cursor: pointer;
+  cursor: pointer;
 }
 .PlaylistsContainer > div:first-child {
-    position:absolute ;
-    top: 0px;
-    left: 0vw;
-    padding: 40px;
-    /* background-color:aqua; */
-    height: 28%;
-    width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  position: absolute;
+  top: 0px;
+  left: 0vw;
+  padding: 40px;
+  height: 28%;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 .PlaylistsContainer > div:first-child span {
-    font-size: 4.5em;
-    font-weight: 600;
-    margin-right: 2%;
+  font-size: 4.5em;
+  font-weight: 600;
+  margin-right: 2%;
 }
-.PlaylistsContainer > div:last-child{
-    position: absolute;
-    top: 24%;
-    left:0;
-    width: 100%;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content:center;
-    gap: 10px;
-    padding: 45px 0 18vh 0;
+.PlaylistsContainer > div:last-child {
+  position: absolute;
+  top: 24%;
+  left: 0;
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+  padding: 45px 0 18vh 0;
 }

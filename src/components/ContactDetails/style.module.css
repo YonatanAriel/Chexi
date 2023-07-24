@@ -1,14 +1,15 @@
-
 .container {
-    /* overflow: hidden; */
-    display: flex;
-    flex-direction: column;
-    gap:7px;
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
 }
 .emailContainer {
-    display: flex;
-    flex-direction: row;
-    gap:"20px";
+  display: flex;
+  flex-direction: row;
+  gap: "20px";
+}
+.emailContainer > div:first-child:active {
+  scale: 0.85;
 }
 .container a {
   color: inherit;
@@ -17,15 +18,13 @@
 }
 
 .container a {
-  background:
-   none
-    ,
+  background: none,
     linear-gradient(
       to right,
       rgba(255, 0, 0, 1),
       rgba(255, 0, 180, 1),
       rgba(0, 100, 200, 1)
-  );
+    );
   background-size: 100% 3px, 0 3px;
   background-position: 100% 100%, 0 100%;
   background-repeat: no-repeat;
@@ -36,14 +35,15 @@
   background-size: 0 3px, 100% 3px;
 }
 .container h2 {
-    animation: pulseAnimation 2s ease-in-out infinite;
-    transform-origin:left;
+  animation: pulseAnimation 2s ease-in-out infinite;
+  transform-origin: left;
 }
-  @keyframes pulseAnimation {
-    0%, 100%{
-      transform: scale(1);
-    }
-    50% {
-      transform: scale(1.02);
-    }
+@keyframes pulseAnimation {
+  0%,
+  100% {
+    transform: scale(1);
   }
+  50% {
+    transform: scale(1.02);
+  }
+}
