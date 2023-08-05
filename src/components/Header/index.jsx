@@ -1,4 +1,4 @@
-import styles from "./Style.module.css";
+import styles from "./style.module.css";
 import { useContext } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { HiLogin, HiLogout } from "react-icons/hi";

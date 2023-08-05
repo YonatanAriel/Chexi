@@ -1,7 +1,7 @@
 import styles from "./style.module.css";
 import { useContext, useEffect, useState } from "react";
 import { IoMdAddCircleOutline } from "react-icons/io";
-import NewPlaylistOrArtist from "../../components/popUps/newPlaylistOrArtist";
+import NewPlaylistOrArtist from "../../components/popUps/NewPlaylistOrArtist";
 import HandlePlayingSongContext from "../../contexts/HandlePlayingSong";
 import PlaylistCard from "../../components/PlaylistCard";
 import Playlist from "../../components/playlist";
