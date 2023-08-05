@@ -7,7 +7,6 @@ import api from "../../apiCalls/apiCalls";
 import HandlePlayingSongContext from "../../contexts/HandlePlayingSong";
 import PlaylistsContext from "../../contexts/Playlists";
 import ShowPopupsContext from "../../contexts/ShowPopups";
-
 import Header from "../Header";
 import Footer from "../popUps/Footer";
 import Library from "../popUps/Library";
@@ -37,6 +36,7 @@ function Layout() {
   const [isLibraryOpen, setIsLibraryOpen] = useState(false)
   const [backgroundVideo, setBackgroundVideo] = useState(false)
   const [token, setToken] = useState(localStorage.getItem("token") === "null" ? null : localStorage.token)
+  const [screenWidth, setScreenWidth] = useState(window.innerWidth);
   const maxFetchSongsRetryCount = 4; 
   const location = useLocation().pathname
   const openLibraryCondition = !["/Login", "/SignUp"].includes(location) && (["/LikedSongs", "/Playlists","/FavoriteArtists"].includes(location) || isLibraryOpen)
@@ -54,17 +54,27 @@ function Layout() {
     }
   };
 
+  useEffect(() => {
+    const handleResize = () => {
+      setScreenWidth(window.innerWidth);
+    };
+
+    window.addEventListener('resize', handleResize);
+
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
+
   useEffect( () => {
     async function fetchData() {
       if(token){
         try{
           const res = await api.get("playlists/user")
-                  console.log(res);
                   setPlaylists(res)
                   return 
         }
         catch(err){
-          console.log(err);
         }
       }
     }
@@ -85,10 +95,8 @@ useEffect(() => {
     try {
       const res = await axios.request(options);
       handleSongsId(res.data.results);
-      console.log(res.data.results, "222");
       setFetchSongsRetryCount(0); 
     } catch (err) {
-      console.log(err);
       if (fetchSongsRetryCount < maxFetchSongsRetryCount) {
         setTimeout(() => {
           setFetchSongsRetryCount((prevfetchSongsRetryCount) => prevfetchSongsRetryCount + 1);
@@ -105,7 +113,6 @@ const handleSongsId = (songs, playPlaylist) => {
     if(playPlaylist){
       return songsWithId? songsWithId : []
     }
-    console.log("localS");
     localStorage.setItem("searchSongs",JSON.stringify(songsWithId))
     setSongs(songsWithId);
 }
@@ -142,11 +149,11 @@ const skipBackOrForward = (backOrForward, songsList) => {
       <Token.Provider value={{token, setToken}}>
       <PlaylistsContext.Provider value={{playlists, setPlaylists, setRenderPlaylistsPage, currentPlaylistData, setCurrentPlaylistData, likedSongsPlaylist, setLikedSongsPlaylist, playedPlaylist, setPlayedPlaylist}}>
       <HandlePlayingSongContext.Provider value={{songs, setSongs, songPlayed,setSongPlayed, isSongPlaying, setIsSongPlaying, handleSongsId, skipBackOrForward}}>
-      {!["/Login", "/SignUp"].includes(location) && <Header backgroundVideo={backgroundVideo} isLibraryOpen={isLibraryOpen} setIsLibraryOpen={setIsLibraryOpen} setUserSearch={setUserSearch}/>}
+      {!["/Login", "/SignUp"].includes(location) && <Header backgroundVideo={backgroundVideo} isLibraryOpen={isLibraryOpen} setIsLibraryOpen={setIsLibraryOpen} setUserSearch={setUserSearch} screenWidth={screenWidth}/>}
         <ShowPopupsContext.Provider value={{showCreatePlaylistPopup, setShowCreatePlaylistPopup, showAddToPlaylistPopup, setShowAddToPlaylistPopup}}>
-      <Suspense >
+      <Suspense fallback={<div className={styles.loadingContainer}></div>} >
         <Routes>
-           <Route index element={<Home  backgroundVideo={backgroundVideo} isLibraryOpen={isLibraryOpen} setUserSearch={setUserSearch}/>} /> 
+           <Route index element={<Home  backgroundVideo={backgroundVideo} isLibraryOpen={isLibraryOpen} setUserSearch={setUserSearch} screenWidth={screenWidth}/>} /> 
             {token && ( <>
               <Route path="/LikedSongs" element={<LikedSongs />} />
               <Route path="/Playlists"  element={<Playlists />} />

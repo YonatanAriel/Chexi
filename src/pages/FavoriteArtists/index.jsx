@@ -52,9 +52,7 @@ function FavoriteArtists({setSongs}) {
           ...prev,
           songs: songsWithId
         }));
-        console.log(res);
       } catch (err) {
-        console.log(err);
       }
     };
     if(currentArtist.artistName) getSongs()

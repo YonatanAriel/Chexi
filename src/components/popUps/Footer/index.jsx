@@ -20,7 +20,7 @@ function Footer({backgroundVideo, setBackgroundVideo,}) {
   const {playedPlaylist} = useContext(Playlists)
   const {isSongPlaying, setIsSongPlaying, songs, songPlayed, skipBackOrForward} = useContext(HandlePlayingSongContext);
   const {showAddToPlaylistPopup, setShowAddToPlaylistPopup} = useContext(ShowPopups)
-  const [setFullScreenVideo] = useState(false);
+  // const [setFullScreenVideo] = useState(false);
   const [volume, setVolume] = useState(50);
   const [showFooter, setShowFooter] = useState(true);
   const [minutes, setMinutes] = useState(0);
@@ -43,26 +43,35 @@ function Footer({backgroundVideo, setBackgroundVideo,}) {
   }
 
   const handlePlayerStateChange = (e) => {
+    let interval;
+    const handleSongEnd = () => {
+      clearInterval(interval);
+      setMinutes(0);
+      setSeconds(0);
+    }
     if (e.data === window.YT.PlayerState.PLAYING) {
-      setInterval(() => {
-        const duration = playerRef.current.getDuration();
-        const currentTime = playerRef.current.getCurrentTime();
+      interval = setInterval(() => {
+        const duration = playerRef?.current?.getDuration();
+        const currentTime = playerRef?.current?.getCurrentTime();
         const progress = (currentTime / duration) * 100;
         setSongProgress(progress);
-      }, 1000);
+      // }, 1000);
       const player = e.target;
-      const interval = setInterval(() => {
-        const newCurrentTime = player.getCurrentTime();
+        // interval = setInterval(() => {
+        const newCurrentTime = player?.getCurrentTime();
         const newMinutes = Math.floor(newCurrentTime / 60);
         const newSeconds = Math.floor(newCurrentTime % 60);
         setMinutes(newMinutes);
         setSeconds(newSeconds);
-        if (e.data === window.YT.PlayerState.ENDED) {
-          clearInterval(interval);
-          setMinutes(0);
-          setSeconds(0);
+        if (currentTime >= duration) {
+          handleSongEnd();
         }
       }, 1000);
+    }
+    else{
+      clearInterval(interval);
+      setMinutes(0);
+      setSeconds(0);
     }
   };
 
@@ -84,6 +93,7 @@ function Footer({backgroundVideo, setBackgroundVideo,}) {
 
   useEffect(() => {
     if (playerRef?.current) {
+          if(isSongPlaying){
             playerRef.current?.playVideo();
           } else {
             playerRef.current?.pauseVideo();
@@ -91,6 +101,7 @@ function Footer({backgroundVideo, setBackgroundVideo,}) {
           if (playerRef?.current) {
             playerRef.current?.setVolume(volume);
           }
+      }
   }, [isSongPlaying, volume]);
 
   const handleBackgrundVideo = () => {
@@ -111,7 +122,6 @@ function Footer({backgroundVideo, setBackgroundVideo,}) {
   };
   
   useEffect(() => {
-    console.log("playerRef.current: ", playerRef.current);
   }, [playerRef]);
 
   return (
@@ -123,9 +133,16 @@ function Footer({backgroundVideo, setBackgroundVideo,}) {
           videoId={playedPlaylist? songPlayed?.videoId : songPlayed?.id}
           opts={opts}
           autoplay
-          onReady={(e) => (playerRef.current = e.target)}
+          onReady={(e) => {
+            (playerRef.current = e.target)
+            setMinutes(0)
+            setSeconds(0)
+              }
+            }
           onEnd={() => {
            playedPlaylist? skipBackOrForward("forward", playedPlaylist) : skipBackOrForward("forward", songs);
+           setMinutes(0)
+           setSeconds(0)
           }}
         />
       </div>
@@ -144,7 +161,7 @@ function Footer({backgroundVideo, setBackgroundVideo,}) {
             {location.pathname === "/Video" ? (
               <Link 
                onClick={() => {
-                setFullScreenVideo(true)
+                // setFullScreenVideo(true)
                 navigate(-1)
                 
               }}>
@@ -156,11 +173,13 @@ function Footer({backgroundVideo, setBackgroundVideo,}) {
                 }
               </Link>
             ) : (
-              <Link to={"Video"} onClick={() => setFullScreenVideo(false)}>
+              <Link to={"Video"} 
+              // onClick={() => setFullScreenVideo(false)}
+              >
                 {
                   <BsCameraVideoFill
                     size={25}
-                    style={{ marginLeft: "0.2vw" }}
+                    style={{ marginLeft: "0.2vw"}}
                   />
                 }
               </Link>
@@ -195,7 +214,8 @@ function Footer({backgroundVideo, setBackgroundVideo,}) {
               <HandleFavoriteSong />
               <TbPlayerSkipBackFilled
                 onClick={() => {
-                  playedPlaylist? skipBackOrForward("back", playedPlaylist) : skipBackOrForward("back", songs)}}
+                  playedPlaylist? skipBackOrForward("back", playedPlaylist) : skipBackOrForward("back", songs)
+                }}
                 size={19}
                 className={styles.iconButton}
               />
@@ -231,7 +251,7 @@ function Footer({backgroundVideo, setBackgroundVideo,}) {
               <div className={styles.progressTime}>
                 {`${minutes.toString().padStart(2, "0")}:${seconds
                   .toString()
-                  .padStart(2, "0")}`}{" "}
+                  .padStart(2, "0")}`}
               </div>
               <input
                 type="range"

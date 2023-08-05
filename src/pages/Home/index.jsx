@@ -7,7 +7,7 @@ import Playlists from "../../contexts/Playlists";
 import Loading from "../../components/Loading";
 
 
-function Home({isLibraryOpen}) {
+function Home({isLibraryOpen, screenWidth}) {
 
   const { isSongPlaying, setIsSongPlaying, songPlayed, setSongPlayed, songs, setSongs } = useContext(
     HandlePlayingSongContext
@@ -75,7 +75,7 @@ function Home({isLibraryOpen}) {
                   key={song?.thumbnail?.id}
                   className={styles.songImg}
                   src={song?.channel?.icon}
-                  style={{ height: imgHeight }}
+                  // style={{ height: imgHeight }}
                   loading={
                     i < 10 ? "lazy" : loadRemainingImgs ? "eager" : "lazy"
                   }
@@ -87,14 +87,14 @@ function Home({isLibraryOpen}) {
                   onLoad={i < 10 ? handleLoadingImgs : undefined}
                 />
                 {condition === song.id && isSongPlaying ? (
-                  <div className={styles.songButtonOrAnima}>
-                    <WaveSpinner size={95} />
+                  <div className={styles.WaveSpinner}>
+                    <WaveSpinner size={screenWidth > 1024? 95 : screenWidth > 900? 70: screenWidth > 768? 60 : 50} />
                   </div>
                 ) : (
                   <BsPlayCircleFill className={styles.songButton} size={40} />
                 )}
               </div>
-              <h3>
+              <h3 className={styles.songTitle}>
                 {song.title
                   .split(/[\(\[]/)[0]
                   .trim()

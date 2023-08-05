@@ -1,5 +1,5 @@
-import { useRef } from "react";
 import styles from "./style.module.css";
+import { useRef } from "react";
 import { MdOutlineContentCopy } from "react-icons/md";
 
 const ContactDetails = () => {
@@ -9,9 +9,7 @@ const ContactDetails = () => {
     try {
       const emailText = emailRef.current.innerText;
       navigator.clipboard.writeText(emailText);
-      console.log("Email copied!");
     } catch (err) {
-      console.log("Failed to copy email: ", err);
     }
   };
 

@@ -1,5 +1,5 @@
 import styles from "./style.module.css";
-import Song from "../Song";
+import PlaylistSong from "../PlaylistSong";
 import { useContext } from "react";
 import { useLocation } from "react-router-dom";
 import { BsPlayCircleFill } from "react-icons/bs";
@@ -47,9 +47,8 @@ function Playlist({ title, songs, setShowSongs, setSongs }) {
         <div className={styles.songsContainer}>
           {songs ? (
             songs?.map((song, i) => (
-              <Song
+              <PlaylistSong
                 songs={songs}
-                handleDeleteFromPlaylist={handleDeleteFromPlaylist}
                 handlePlayPlaylist={handlePlayPlaylist}
                 song={song}
                 index={i + 1}

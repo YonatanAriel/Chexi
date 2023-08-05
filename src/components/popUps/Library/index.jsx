@@ -17,7 +17,7 @@ export default function Library({backgroundVideo}){
           <NavLink to="./FavoriteArtists" className={({isActive}) => isActive? styles.active : undefined}>
             <BsPersonHearts style={{marginBottom:"-0.3vh"}} /><span>Favorite Artists</span>
             </NavLink>
-    </div>
+            </div>
     <div className={styles.contact}><ContactDetails /></div>
            </>
 }

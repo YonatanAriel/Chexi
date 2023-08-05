@@ -8,7 +8,7 @@ import HandlePlayingSongContext from "../../contexts/HandlePlayingSong";
 import Playlists from "../../contexts/Playlists";
 import api from "../../apiCalls/apiCalls";
 
-function Song({ song, index, handlePlayPlaylist }) {
+function PlaylistSong({ song, index, handlePlayPlaylist }) {
 
   const { isSongPlaying, songPlayed, setSongPlayed, handleSongsId} = useContext(HandlePlayingSongContext);
   const {
@@ -108,4 +108,4 @@ function Song({ song, index, handlePlayPlaylist }) {
   );
 }
 
-export default Song;
+export default PlaylistSong;

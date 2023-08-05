@@ -1,7 +1,9 @@
 .mainDiv {
   position: fixed;
+  /* position: sticky; */
   background: linear-gradient(to bottom, rgba(0, 0, 0, 0.24) 0.005%, black);
   width: 100vw;
+  width: 100%;
   top: 0;
   right: 0;
   height: 100%;
@@ -14,6 +16,8 @@
   gap: 10px;
   color: wheat;
   overflow-y: scroll;
+  z-index: 1;
+  /* padding: 10%; */
 }
 .decreaseMainDivWidth {
   width: 80vw;
@@ -22,6 +26,7 @@
 .song {
   backdrop-filter: blur(20px);
   width: 17vw;
+  /* min-width: 17%; */
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -33,8 +38,13 @@
   white-space: pre-wrap;
   overflow-wrap: break-word;
   word-break: break-word;
-  padding: 0 10px 15px;
+  /* padding: clamp( 5px, 0 10px 15px, 0 10px 15px); */
   box-sizing: border-box;
+  max-height: fit-content;
+  /* padding: 1.04%; */
+  padding: 14px 0;
+  gap:5px;
+  
 }
 .backgroundVideo {
   background-color: black;
@@ -45,14 +55,26 @@
 }
 .imgAndButton {
   position: relative;
+  max-width:min-content;
+  max-height: min-content;
+  display: flex; 
+  justify-content: center; 
+  align-items: center;
 }
 .songImg {
   transition: all 0.5s ease;
-  width: 100%;
+  /* min-width: 90%; */
+  width: 90%;
+  min-width: 15.3vw;
   z-index: -5;
-  margin: 2vh 0 1vh;
+  /* z-index: 666; */
+  /* margin: 2vh 0 1vh; */
   border-radius: 5px;
   object-fit: cover;
+  /* height: auto; */
+  /* min-height: 60%; */
+/* width: 130px; */
+
 }
 .song:hover .songImg {
   transform: scale(1.01);
@@ -62,14 +84,18 @@
 .ArtistName {
   margin: 1vh 0 1.5vh;
 }
-.songButtonOrAnima {
+.WaveSpinner {
   position: absolute;
-  bottom: 1.8vh;
+  /* bottom: 1.8vh; */
+  bottom: 0;
   left: 0;
   right: 0;
   overflow: hidden;
   border-radius: 0 0 5px 5px;
   max-height: 70%;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end; 
 }
 .songButton {
   position: absolute;
@@ -82,9 +108,35 @@
 .song:hover .songButton {
   display: block;
 }
-h3 {
+.songTitle {
   max-height: 83px;
   overflow: hidden;
   text-overflow: ellipsis;
   text-shadow: 0.3px 0.3px 2px rgb(0, 0, 0), -0.3px -0.3px 2px rgb(0, 0, 0);
+}
+@media screen and (max-width: 1024px) {
+  .mainDiv {
+  max-width: calc(100vw - max(20vw, 220px));
+  padding: 15vh 5% 18vh 5%;
+  }
+
+  .song {
+    /* min-width:minmax(25%, 100%); */
+    padding: 9px 0;
+  }
+}
+@media screen and (max-width: 769px) {
+  .song {
+    flex-direction: row;
+    max-width: 96vw;
+    width:96vw;
+    max-height: 19vh;
+    padding: 1.5vh 10px;
+    align-items: center;
+    gap: 15px;
+  }
+  .songImg {
+    max-height: 16vh;
+
+  }
 }

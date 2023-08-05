@@ -26,10 +26,8 @@ function AddArtist({setShowPopup}) {
       options.params.query = artistName;
       const res = await axios.request(options);
       const img = res.data.results[0].channel.icon;
-      console.log(img);
       return img;
     } catch (err) {
-      console.log(err);
       if (fetchArtistImgRetryCount < maxFetchArtistImgRetryCount) {
           setTimeout(() => {
             setFetchArtistImgRetryCount((prevFetchArtistImgRetryCount) => prevFetchArtistImgRetryCount + 1);
@@ -49,9 +47,8 @@ function AddArtist({setShowPopup}) {
 
       if (artistImg) {
         await api.post("users/addfavoriteartist", { artistName: artistName, artistImg: artistImg });
-      } else {
-        console.log("Max retry count reached. Unable to fetch artist image.");
-      }
+      } 
+      
       setShowPopup(null);
     }
   };

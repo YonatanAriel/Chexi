@@ -10,12 +10,14 @@ import Search from "../Search";
 import Token from "../../contexts/Token";
 import Playlists from "../../contexts/Playlists";
 import HandlePlayingSongContext from "../../contexts/HandlePlayingSong";
+import {ImMenu} from "react-icons/im"
 
 function Header({
   setUserSearch,
   isLibraryOpen,
   setIsLibraryOpen,
   backgroundVideo,
+  screenWidth
 }) {
   const location = useLocation().pathname;
   const changeStyleForLibrary =
@@ -53,10 +55,15 @@ function Header({
         }`}
       >
         <div className={styles.home_library_search}>
-          <Link className={styles.home} to="./">
+          {((screenWidth < 768 && 
+          location !== "/") 
+          || (screenWidth > 768)) 
+          && 
+          (<Link className={styles.home} to="./">
             <AiFillHome style={{ marginBottom: "-1px" }} size={17} />
             <span>Home</span>
-          </Link>
+          </Link>)
+}
           {!["/LikedSongs", "/Playlists", "/FavoriteArtists"].includes(
             location
           ) && (
@@ -65,7 +72,7 @@ function Header({
               Library
             </a>
           )}
-          <Search setUserSearch={setUserSearch} />
+          <Search setUserSearch={setUserSearch} screenWidth={screenWidth} />
         </div>
         <div className={styles.signAndLogDIv}>
           {token ? (
@@ -77,17 +84,19 @@ function Header({
               <span>Log out</span>
             </Link>
           ) : (
-            <Link to="./Login">
+            screenWidth > 513 &&
+             (<Link to="./Login">
               <HiLogin size={19} style={{ marginBottom: "-0.6vh" }} />
               <span>Log In</span>
-            </Link>
+            </Link>)
           )}
-          {!token && (
+          {(!token && screenWidth > 513) && (
             <Link to="./SignUp">
               <MdAssignmentInd style={{ marginBottom: "-0.3vh" }} />
               <span>Sign Up</span>
             </Link>
           )}
+          {screenWidth < 513 && <ImMenu size={24} />}
         </div>
       </div>
     </>

@@ -63,7 +63,6 @@ function AuthForm({ title, setUserSearch }) {
             setToken(loginToken);
             navigate("/");
           } catch (err) {
-            console.log(err);
             if (
               err?.response?.data === "User not exist" ||
               err?.response?.data === "password mismatch"
@@ -79,15 +78,12 @@ function AuthForm({ title, setUserSearch }) {
             setToken(registerToken);
             setUserSearch("Dua lipa");
             navigate("/");
-            console.log(registerToken);
           } catch (err) {
             if (err?.response?.data === "User already exist") {
               setUserNameErrors(
                 "This user name is not available. Please choose a new one"
               );
             }
-            console.log(err);
-            console.log(userNameErrors);
           }
 
         }

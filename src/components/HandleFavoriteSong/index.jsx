@@ -159,7 +159,9 @@ function HandleFavoriteSong() {
       )}
     </>
   ) : (
-    <FaRegHeart size={18} className={styles.heart} />
+    <FaRegHeart size={18}
+    //  className={styles.heart} 
+     />
   );
 }
 
