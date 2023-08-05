@@ -2,7 +2,7 @@ import styles from "./style.module.css";
 import { BsFillPersonPlusFill } from "react-icons/bs";
 import { Suspense, useContext, useEffect, useState } from "react";
 import Playlist from "../../components/playlist";
-import NewPlaylistOrArtist from "../../components/popUps/newPlaylistOrArtist";
+import NewPlaylistOrArtist from "../../components/popUps/NewPlaylistOrArtist";
 import HandlePlayingSongContext from "../../contexts/HandlePlayingSong";
 import axios from "axios";
 import api from "../../apiCalls/apiCalls"
