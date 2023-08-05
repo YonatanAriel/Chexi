@@ -29,7 +29,8 @@ function Search({setUserSearch, screenWidth}) {
         onChange={(e) => setInputText(e.target.value) } placeholder={screenWidth < 1057? "Search" : "what do you want to listen to?"} 
         className={styles.searchField} />
         <button onClick={handleSearch} className={styles.searchButton}>
-        <img src="src\assets\photos\search.webp" onAnimationEnd={handleAnimationEnd} 
+        <img src="public\assets\photos\search.webp" onAnimationEnd={handleAnimationEnd} 
+        // "src\assets\photos\search.webp"
         className={isSpinning ? styles.spinning : ''} />
       </button>
     </div>
