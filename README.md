@@ -8,8 +8,7 @@ Chexi is an innovative web application that allows users to enjoy their favorite
 music and video streaming experience. My platform is designed with a user-centric approach, enabling music enthusiasts to create playlists,
 add new artists, and save their preferred tracks effortlessly.
 
-### Visit Chexi Website
-Check out the [Chexi website]((https://chexi.netlify.app/)) to explore more about our platform and its features.
+## Visit Chexi Website - [Chexi website](https://chexi.netlify.app/)
 
 
 ### Key Features
@@ -60,7 +59,7 @@ Want to try Chexi out yourself? Follow these steps to get started:
 If you have any questions, suggestions, or encounter any issues, don't hesitate to reach out to me.
 You can contact me via GitHub or email at [yonatanriel@gmail.com](mailto:yonatanriel@gmail.com).
 
-Connect with me on LinkedIn: [LinkedIn Profile](https://www.linkedin.com/in/yonatanriel/)
+Connect with me on LinkedIn: [Yonatan Ariel LinkedIn Profile](https://www.linkedin.com/in/yonatanriel/)
 
 Thank you for visiting the Chexi GitHub repository, and I hope you have a fantastic time using my application!
 
