@@ -88,7 +88,7 @@ function Home({isLibraryOpen, screenWidth}) {
                 />
                 {condition === song.id && isSongPlaying ? (
                   <div className={styles.WaveSpinner}>
-                    <WaveSpinner size={screenWidth > 1024? 95 : screenWidth > 900? 70: screenWidth > 768? 60 : 50} />
+                    <WaveSpinner color={"wheat"} size={screenWidth > 1024? 95 : screenWidth > 900? 70: screenWidth > 768? 60 : 50} />
                   </div>
                 ) : (
                   <BsPlayCircleFill className={styles.songButton} size={40} />

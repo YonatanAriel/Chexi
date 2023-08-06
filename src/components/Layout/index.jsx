@@ -1,6 +1,8 @@
 import styles from "./style.module.css";
 import { useEffect, useState, lazy, Suspense } from "react";
 import { Route, Routes, useLocation } from "react-router-dom";
+import { BsMusicNote } from "react-icons/bs";
+import { getIconAsSvgDataURL } from '../../utils';
 import axios from "axios";
 import Token from "../../contexts/Token";
 import api from "../../apiCalls/apiCalls";
@@ -54,6 +56,14 @@ function Layout() {
       'X-RapidAPI-Host': 'simple-youtube-search.p.rapidapi.com'
     }
   };
+
+  const iconDataURL = getIconAsSvgDataURL(<BsMusicNote color="black" size={60} />);
+
+  useEffect(() => {
+    const favicon = document.querySelector('link[rel="icon"]');
+    favicon.href = iconDataURL;
+  }, [iconDataURL]);
+
 
   useEffect(() => {
     const handleResize = () => {
