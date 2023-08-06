@@ -12,7 +12,6 @@ import ShowPopupsContext from "../../contexts/ShowPopups";
 import Header from "../Header";
 import Footer from "../popUps/Footer";
 import Library from "../popUps/Library";
-// import Playlists from "../../pages/Playlists"
 const Home = lazy(() => import("../../pages/Home"))
 const Login = lazy(() => import("../../pages/Login"))
 const SignUp = lazy(() => import("../../pages/SignUp"))

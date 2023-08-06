@@ -53,11 +53,15 @@ function AuthForm({ title, setUserSearch }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (data.userName.trim().length >= 3) {
+    if (!data.userName.trim().length >= 3) {
+      setUserNameErrors("User name should contain at least 3 chracters");
+      return
+    }
+
       if (validatePassword(data.password)) {
         if (title === "Login") {
           try {
-            const loginToken = await api.post(`users/login`, tempUserData);
+            const loginToken = await api.post(`users/login`, data);
             localStorage.setItem("token", loginToken);
             setUserSearch("Dua Lipa");
             setToken(loginToken);
@@ -88,9 +92,9 @@ function AuthForm({ title, setUserSearch }) {
 
         }
       }
-    } else {
-      setUserNameErrors("User name should contain at least 3 chracters");
-    }
+    // } else {
+    //   setUserNameErrors("User name should contain at least 3 chracters");
+    // }
   };
   return (
     <>
