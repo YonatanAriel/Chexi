@@ -49,10 +49,11 @@ Chexi is built using cutting-edge technologies to ensure a seamless and robust a
 Want to try Chexi out yourself? Follow these steps to get started:
 
 1. Clone the repository to your local machine.
-2. Install the required dependencies using npm or yarn.
-3. Set up the backend server and database configuration.
-4. Run the frontend and backend servers.
-5. Enjoy the Chexi music and video streaming experience!
+2. clone chexi-server repository (in my github profile) to your local machine.
+3. Install the required dependencies using npm or yarn.
+4. Set up the backend server and database configuration.
+5. Run the frontend and backend servers.
+6. Enjoy the Chexi music and video streaming experience!
 
 ### Contact Me
 
