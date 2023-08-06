@@ -59,7 +59,7 @@ Want to try Chexi out yourself? Follow these steps to get started:
 If you have any questions, suggestions, or encounter any issues, don't hesitate to reach out to me.
 You can contact me via GitHub or email at [yonatanriel@gmail.com](mailto:yonatanriel@gmail.com).
 
-Connect with me on LinkedIn: [Yonatan Ariel LinkedIn Profile](https://www.linkedin.com/in/yonatanriel/)
+Connect with me on LinkedIn: [YonatanAriel](https://www.linkedin.com/in/yonatan-ariel)
 
 Thank you for visiting the Chexi GitHub repository, and I hope you have a fantastic time using my application!
 
