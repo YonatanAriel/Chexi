@@ -17,7 +17,8 @@ function Header({
   isLibraryOpen,
   setIsLibraryOpen,
   backgroundVideo,
-  screenWidth
+  screenWidth,
+  libraryWidth
 }) {
   const location = useLocation().pathname;
   const changeStyleForLibrary =
@@ -26,6 +27,7 @@ function Header({
   const { token, setToken } = useContext(Token);
   const { setSongs, setSongPlayed } = useContext(HandlePlayingSongContext);
   const { setPlaylists, setLikedSongsPlaylist } = useContext(Playlists);
+  const headerWidth = screenWidth < 1024? "100vw" : (changeStyleForLibrary? `calc(100vw - ${ libraryWidth})` : (screenWidth > 1024? "calc(100vw - 164px)" : "100vw"));
 
   const handleLogout = () => {
     localStorage.setItem("token", null);
@@ -53,6 +55,9 @@ function Header({
         className={`${styles.mainDiv} ${
           changeStyleForLibrary ? styles.libraryOpenMainDiv : ""
         }`}
+        style={{width: headerWidth,
+        left: screenWidth < 1024? 0 : (libraryWidth === 0? (screenWidth > 1024? "164px" : 0) : libraryWidth)
+      }}
       >
         <div className={styles.home_library_search}>
           {((screenWidth < 768 && 

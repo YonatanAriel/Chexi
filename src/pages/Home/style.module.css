@@ -2,8 +2,8 @@
   position: fixed;
   /* position: sticky; */
   background: linear-gradient(to bottom, rgba(0, 0, 0, 0.24) 0.005%, black);
-  width: 100vw;
-  width: 100%;
+  /* width: 100vw;
+  width: 100%; */
   top: 0;
   right: 0;
   height: 100%;
@@ -20,7 +20,7 @@
   /* padding: 10%; */
 }
 .decreaseMainDivWidth {
-  width: 80vw;
+  /* width: 80vw; */
   transition: width 2.3s ease-in-out;
 }
 .song {
@@ -44,7 +44,6 @@
   /* padding: 1.04%; */
   padding: 14px 0;
   gap:5px;
-  
 }
 .backgroundVideo {
   background-color: black;
@@ -117,7 +116,7 @@
 }
 @media screen and (max-width: 1024px) {
   .mainDiv {
-  max-width: calc(100vw - max(20vw, 220px));
+  /* max-width: calc(100vw - max(20vw, 220px)); */
   padding: 15vh 5% 18vh 5%;
   }
 
@@ -133,11 +132,27 @@
     width:96vw;
     max-height: 19vh;
     padding: 1.5vh 10px;
-    align-items: center;
     gap: 15px;
+    align-items: unset;
+    text-align: start;
   }
   .songImg {
     max-height: 16vh;
+    min-height: 100%;
+    width: 96%;
+    flex-grow: 1;
+  }
+}
+@media screen and (max-width: 420px) {
+  .imgAndButton {
+    max-width: unset;
+    flex-shrink: 0;
+  }
 
+
+}
+@media screen and (max-width: 320px) {
+  body{
+    min-width: 100vw;
   }
 }

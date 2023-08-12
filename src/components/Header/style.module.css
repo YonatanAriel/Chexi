@@ -17,8 +17,8 @@
 }
 .libraryOpenMainDiv {
   border-bottom-left-radius: 0;
-  left: 20vw;
-  width: 80vw;
+  /* left: 20vw;
+  width: 80vw; */
   transition: all 2.3s ease-in-out;
 }
 .logoBackground {
@@ -86,14 +86,6 @@ div span {
 
 }
 
-@media screen and (max-width: 768px) {
-  .mainDiv {
-    min-height: 12%;
-  }
-  .logoBackground {
-    display: none;
-  }
-}
 
 @media screen and (max-width: 768px) {
   .mainDiv {

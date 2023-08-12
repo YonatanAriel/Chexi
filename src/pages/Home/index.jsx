@@ -7,7 +7,7 @@ import Playlists from "../../contexts/Playlists";
 import Loading from "../../components/Loading";
 
 
-function Home({isLibraryOpen, screenWidth}) {
+function Home({isLibraryOpen, screenWidth, libraryWidth}) {
 
   const { isSongPlaying, setIsSongPlaying, songPlayed, setSongPlayed, songs, setSongs } = useContext(
     HandlePlayingSongContext
@@ -20,6 +20,8 @@ function Home({isLibraryOpen, screenWidth}) {
   const [loadedImages, setLoadedImages] = useState(0);
   const [loadRemainingImgs, setloadRemainingImgs] = useState(false);
   const condition = songPlayed && songPlayed[playedPlaylist? "videoId" : "id"]
+  const containerWidth = !isLibraryOpen || screenWidth < 513? "100vw" : `calc(100vw - ${libraryWidth})`
+  useEffect(() => console.log(containerWidth), [containerWidth])
 
   useEffect(() =>  {
     const storedSearchSongs = localStorage.getItem("searchSongs");
@@ -56,6 +58,7 @@ function Home({isLibraryOpen, screenWidth}) {
     <>
       <div
         className={`${styles.mainDiv} ${isLibraryOpen? styles.decreaseMainDivWidth : ""}`}
+        style={{width: containerWidth}}
       >
         {songs?.length > 0 ? (
           searchSongs?.map((song, i) => (
@@ -75,7 +78,7 @@ function Home({isLibraryOpen, screenWidth}) {
                   key={song?.thumbnail?.id}
                   className={styles.songImg}
                   src={song?.channel?.icon}
-                  // style={{ height: imgHeight }}
+                  style={{ height: imgHeight }}
                   loading={
                     i < 10 ? "lazy" : loadRemainingImgs ? "eager" : "lazy"
                   }
