@@ -25,8 +25,8 @@ body {
 }
 .arrowButton {
   position: fixed;
-  right: 4vw;
-  bottom: 13vh;
+  right: max(4vw, 30px);
+  bottom: max(13vh, 90px);
   width: 77px;
   height: 25px;
   display: flex;
@@ -61,7 +61,7 @@ body {
   position: fixed;
   bottom: 0;
   background-color: rgba(255, 255, 255, 0.05);
-  height: 13vh;
+  height: max(13vh, 90px);
   width: 100vw;
   display: flex;
   justify-content: center;
@@ -157,14 +157,15 @@ input[type="range"]::-webkit-slider-thumb {
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 45vw;
+  width: max(45vw, 300px);
 }
 .palyingButtonsContainer {
   position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 21vw;
+  /* width: max(21vw, 230px); */
+  width: max(47%, 200px);
   margin: 1vh 1.2vw 1vh 0;
   gap: 14%;
 }
@@ -186,7 +187,7 @@ input[type="range"]::-webkit-slider-thumb {
   min-width: 60px;
 }
 .progressInput {
-  width: 24vw;
+  width: max(24vw, 140px);
   margin: 0 2vw 0 0.8vw;
   cursor: pointer;
 }
@@ -210,4 +211,37 @@ input[type="range"].progressInput::-webkit-slider-thumb {
 .volumeInput {
   cursor: pointer;
   margin-left: 1vw;
+  width: 9.5vw;
+}
+@media  screen and (max-width: 1024px) {
+  .artistDetails {
+    display: none;
+  }
+  .volumeInput {
+    width: 13vw;
+  }  
+  .progressInput {
+    width: max(24vw, 250px);
+  }
+  .palyingButtonsContainer {
+  }
+}
+@media  screen and (max-width: 768px) {
+  .volume {
+    display: none;
+  }
+}
+@media  screen and (max-width: 500px) {
+  .mainDiv {
+    justify-content:unset;
+    gap: 400px;
+  }
+  .centerItemsContainer {
+    margin-left: 45vw;
+    width:  20%;
+    gap: .5rem;
+  }
+  .progressTime {
+    display: none;
+  }
 }
