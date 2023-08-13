@@ -28,7 +28,7 @@ function Header({
   const { setSongs, setSongPlayed } = useContext(HandlePlayingSongContext);
   const { setPlaylists, setLikedSongsPlaylist } = useContext(Playlists);
   const headerWidth = screenWidth < 1024? "100vw" : (changeStyleForLibrary? `calc(100vw - ${ libraryWidth})` : (screenWidth > 1024? "calc(100vw - 164px)" : "100vw"));
-
+  const showLogoutCondition = "";
   const handleLogout = () => {
     localStorage.setItem("token", null);
                 setSongs(null),
@@ -69,9 +69,7 @@ function Header({
             <span>Home</span>
           </Link>)
 }
-          {!["/LikedSongs", "/Playlists", "/FavoriteArtists"].includes(
-            location
-          ) && (
+          {!["/LikedSongs", "/Playlists", "/FavoriteArtists", `${screenWidth < 700 && "/Video"}`].includes(location) && (
             <a onClick={() => setIsLibraryOpen((prev) => !prev)}>
               <IoLibrary size={17} style={{ margin: "0 0.1vw -0.2vh 0" }} />
               Library
@@ -80,7 +78,7 @@ function Header({
           <Search setUserSearch={setUserSearch} screenWidth={screenWidth} />
         </div>
         <div className={styles.signAndLogDIv}>
-          {token ? (
+          {(token && screenWidth > 513)? (
             <Link
               to="/"
               onClick={handleLogout}
@@ -101,7 +99,7 @@ function Header({
               <span>Sign Up</span>
             </Link>
           )}
-          {screenWidth < 513 && <ImMenu size={24} />}
+          {screenWidth < 513  && <ImMenu size={24} />}
         </div>
       </div>
     </>

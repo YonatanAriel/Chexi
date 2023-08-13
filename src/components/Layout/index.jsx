@@ -176,7 +176,7 @@ const skipBackOrForward = (backOrForward, songsList) => {
             <Route path="/Video" element={<VideoContainer />}/> 
         </Routes>
        </Suspense>
-        {songPlayed && <Footer backgroundVideo={backgroundVideo} setBackgroundVideo={setBackgroundVideo} />}
+        {songPlayed && <Footer screenWidth={screenWidth} backgroundVideo={backgroundVideo} setBackgroundVideo={setBackgroundVideo} />}
         </ShowPopupsContext.Provider>
         {openLibraryCondition && <Library  backgroundVideo={backgroundVideo} libraryWidth={libraryWidth}/>}
         </HandlePlayingSongContext.Provider>

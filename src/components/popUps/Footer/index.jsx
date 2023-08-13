@@ -15,7 +15,7 @@ import ShowPopups from "../../../contexts/ShowPopups";
 import Playlists from "../../../contexts/Playlists";
 import Token from "../../../contexts/Token";
 
-function Footer({backgroundVideo, setBackgroundVideo,}) {
+function Footer({backgroundVideo, setBackgroundVideo, screenWidth}) {
   const {token} = useContext(Token)
   const {playedPlaylist} = useContext(Playlists)
   const {isSongPlaying, setIsSongPlaying, songs, songPlayed, skipBackOrForward} = useContext(HandlePlayingSongContext);
@@ -121,9 +121,6 @@ function Footer({backgroundVideo, setBackgroundVideo,}) {
     setVolume(50);
   };
   
-  useEffect(() => {
-  }, [playerRef]);
-
   return (
     <>
       <div className={styles.videoContainer}>
@@ -211,38 +208,39 @@ function Footer({backgroundVideo, setBackgroundVideo,}) {
           </div>
           <div className={styles.centerItemsContainer}>
             <div className={styles.palyingButtonsContainer} >
-              <HandleFavoriteSong />
+              <HandleFavoriteSong screenWidth={screenWidth} />
               <TbPlayerSkipBackFilled
                 onClick={() => {
                   playedPlaylist? skipBackOrForward("back", playedPlaylist) : skipBackOrForward("back", songs)
                 }}
-                size={19}
+                size={screenWidth > 500? 19 : 35}
                 className={styles.iconButton}
               />
               {!isSongPlaying && (
                 <FaPlay
                   className={`${styles.iconButton} ${styles.playAndPauseButton}`}
                   onClick={handlePlay}
-                  size={30}
+                  size={screenWidth > 500? 30 : 40}
+                  // size={40}
                 />
               )}
               {isSongPlaying && (
                 <TbPlayerPauseFilled
                   className={`${styles.iconButton} ${styles.playAndPauseButton}`}
                   onClick={handlePause}
-                  size={30}
+                  size={screenWidth > 500? 30 : 40}
                 />
               )}
               <TbPlayerSkipForwardFilled
                 onClick={() => {
                    playedPlaylist? skipBackOrForward("forward", playedPlaylist) : skipBackOrForward("forward", songs);}}
-                size={19}
-                className={styles.iconButton}
+                   size={screenWidth > 500? 19 : 35}
+                   className={styles.iconButton}
               />
               <div className={styles.AddToPlaylist}>
                 <BsPlusCircle
                   onClick={() => {if(token) setShowAddToPlaylistPopup((prev) => !prev)}}
-                  size={18}
+                  size={19}
                   className={`${styles.iconButton} ${styles.addToPlaylistButton}`}
                 />
               </div>

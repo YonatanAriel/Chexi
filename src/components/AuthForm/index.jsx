@@ -51,16 +51,8 @@ function AuthForm({ title, setUserSearch }) {
     password: "password123",
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    if (!data.userName.trim().length >= 3) {
-      setUserNameErrors("User name should contain at least 3 chracters");
-      return
-    }
-
-      if (validatePassword(data.password)) {
-        if (title === "Login") {
-          try {
+  const handleLogin = async () => {
+              try {
             const loginToken = await api.post(`users/login`, data);
             localStorage.setItem("token", loginToken);
             setUserSearch("Dua Lipa");
@@ -74,28 +66,41 @@ function AuthForm({ title, setUserSearch }) {
               setUserNameErrors("Wrong user name or password");
             }
           }
-
-        } else if (title === "Register") {
-          try {
-            const registerToken = await api.post("users/register", data);
-            localStorage.setItem("token", registerToken);
-            setToken(registerToken);
-            setUserSearch("Dua lipa");
-            navigate("/");
-          } catch (err) {
-            if (err?.response?.data === "User already exist") {
-              setUserNameErrors(
-                "This user name is not available. Please choose a new one"
-              );
-            }
-          }
-
-        }
+  }
+  
+  const handleRegister = async () => {
+    try {
+      const registerToken = await api.post("users/register", data);
+      localStorage.setItem("token", registerToken);
+      setToken(registerToken);
+      setUserSearch("Dua lipa");
+      navigate("/");
+    } catch (err) {
+      if (err?.response?.data === "User already exist") {
+        setUserNameErrors(
+          "This user name is not available. Please choose a new one"
+        );
       }
-    // } else {
-    //   setUserNameErrors("User name should contain at least 3 chracters");
-    // }
+    }
+
+  }
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (!data.userName.trim().length >= 3) {
+      setUserNameErrors("User name should contain at least 3 chracters");
+      return
+    }
+    if (!validatePassword(data.password)) return
+        if (title === "Login") {
+          handleLogin()
+          return
+        } 
+        else if (title === "Register") {
+          handleRegister()
+        }
   };
+
   return (
     <>
       <div className={styles.logoBackground}>

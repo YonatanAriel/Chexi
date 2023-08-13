@@ -6,7 +6,7 @@ import Playlists from "../../contexts/Playlists";
 import Token from "../../contexts/Token";
 import api from "../../apiCalls/apiCalls";
 
-function HandleFavoriteSong() {
+function HandleFavoriteSong({screenWidth}) {
   const { songPlayed } = useContext(HandlePlayingSongContext);
   const {
     playlists,
@@ -22,6 +22,7 @@ function HandleFavoriteSong() {
   const { token } = useContext(Token);
   const [isAnimationInProgress, setIsAnimationInProgress] = useState(false);
   const [isHeartCliked, setIsHeartCliked] = useState({red: false, empty: false})
+  const heartSize = screenWidth > 500? 19 : 35;
 
   useEffect(() => {
     setSongPlayedData((prev) => ({
@@ -140,8 +141,8 @@ function HandleFavoriteSong() {
           song?.videoId?.toString() === songPlayedData?.videoId?.toString()
       ) ? (
         <FaHeart
-          size={18}
-          className={`${isAnimationInProgress ? styles.disabledHeart : ""}
+        size={heartSize}
+        className={`${isAnimationInProgress ? styles.disabledHeart : ""}
           ${isHeartCliked.empty? styles.pulseHeart : ""}
             `}
           style={{ color: "red", cursor: "pointer" }}
@@ -149,7 +150,7 @@ function HandleFavoriteSong() {
         />
       ) : (
         <FaRegHeart
-          size={18}
+          size={heartSize}
           className={`${styles.heart}
           ${isAnimationInProgress ? styles.disabledHeart : ""}
           ${isHeartCliked.red? styles.emptyHeart : ""}
@@ -159,8 +160,8 @@ function HandleFavoriteSong() {
       )}
     </>
   ) : (
-    <FaRegHeart size={18}
-    //  className={styles.heart} 
+    <FaRegHeart 
+          size={heartSize}
      />
   );
 }
