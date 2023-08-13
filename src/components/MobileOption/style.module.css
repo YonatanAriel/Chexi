@@ -1,0 +1,21 @@
+.dropDownContent {
+    position: absolute;
+    top: 60px;
+    right: 0;
+    background-color:black ;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    color: wheat;
+    width: 44vw;
+    padding: 1em;
+    gap: .7em;
+    border-radius: 12px;
+    backdrop-filter: blur(30px);
+}
+@media screen and (max-width: 768px) {
+    .dropDownContent {
+      top: max(12%, 60px);
+    }
+}  

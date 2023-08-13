@@ -8,7 +8,7 @@ import axios from "axios";
 import api from "../../apiCalls/apiCalls"
 import Loading from "../../components/Loading";
 
-function FavoriteArtists({setSongs}) {
+function FavoriteArtists({setSongs, libraryWidth, screenWidth}) {
   const { handleSongsId } = useContext(HandlePlayingSongContext);
   const [showPopup, setShowPopup] = useState(false);
   const [artists, setArtists] = useState();
@@ -63,6 +63,8 @@ function FavoriteArtists({setSongs}) {
     <>
       {currentArtist.showArtistSongs && (
             <Playlist
+            screenWidth={screenWidth}
+            libraryWidth={libraryWidth}
           setCurrentArtist={setCurrentArtist}
           setSongs={setSongs}
           setShowSongs={setCurrentArtist}

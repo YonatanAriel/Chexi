@@ -10,7 +10,7 @@ import ShowPopups from "../../contexts/ShowPopups";
 import Loading from "../../components/Loading";
 
 
-function Playlists() {
+function Playlists({libraryWidth, screenWidth}) {
   const {handleSongsId} = useContext(HandlePlayingSongContext)
   const {showCreatePlaylistPopup, setShowCreatePlaylistPopup} = useContext(ShowPopups)
   const { playlists, setRenderPlaylistsPage, currentPlaylistData } = useContext(PlaylistsContext)
@@ -23,7 +23,7 @@ function Playlists() {
     setFilteredPlaylists(playlists?.filter((playlist) => playlist.isFavorite === false))
   },[playlists])
 
-  return <> {showSongs? (<Playlist title={currentPlaylistData.name} setShowSongs={setShowSongs} songs={handleSongsId(currentPlaylistData.songsId, true)} />)
+  return <> {showSongs? (<Playlist screenWidth={screenWidth} libraryWidth={libraryWidth} title={currentPlaylistData.name} setShowSongs={setShowSongs} songs={handleSongsId(currentPlaylistData.songsId, true)} />)
     :
         ( <>{showCreatePlaylistPopup && <NewPlaylistOrArtist />}
       <div className={styles.PlaylistsContainer}>

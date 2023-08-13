@@ -1,6 +1,6 @@
 import styles from "./style.module.css";
 import PlaylistSong from "../PlaylistSong";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import { BsPlayCircleFill } from "react-icons/bs";
 import HandlePlayingSongContext from "../../contexts/HandlePlayingSong";
@@ -8,12 +8,13 @@ import Playlists from "../../contexts/Playlists";
 import GoBackButton from "../GoBackButton";
 import Loading from "../Loading";
 
-function Playlist({ title, songs, setShowSongs, setSongs }) {
+function Playlist({ title, songs, setShowSongs, setSongs, libraryWidth, screenWidth}) {
   const { setSongPlayed, setIsSongPlaying } = useContext(
     HandlePlayingSongContext
   );
   const { setPlayedPlaylist } = useContext(Playlists);
   const location = useLocation().pathname;
+  const containerWidth = libraryWidth == 0 || screenWidth < 900? "100vw" : `calc(100vw - ${libraryWidth})`
 
   const handlePlayPlaylist = (index) => {
     if (songs?.length > 0) {
@@ -30,7 +31,7 @@ function Playlist({ title, songs, setShowSongs, setSongs }) {
 
   return (
     <>
-      <div className={styles.mainDiv}>
+      <div className={styles.mainDiv} style={{left: screenWidth < 900? 0 : libraryWidth, width: containerWidth}}>
         <div className={styles.arrowButton}>
           {location !== "/LikedSongs" && (
             <GoBackButton setShowSongs={setShowSongs} />

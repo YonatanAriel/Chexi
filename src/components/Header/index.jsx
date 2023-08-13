@@ -10,7 +10,7 @@ import Search from "../Search";
 import Token from "../../contexts/Token";
 import Playlists from "../../contexts/Playlists";
 import HandlePlayingSongContext from "../../contexts/HandlePlayingSong";
-import {ImMenu} from "react-icons/im"
+import MobileOption from "../MobileOption";
 
 function Header({
   setUserSearch,
@@ -18,7 +18,8 @@ function Header({
   setIsLibraryOpen,
   backgroundVideo,
   screenWidth,
-  libraryWidth
+  libraryWidth,
+  handleLogout
 }) {
   const location = useLocation().pathname;
   const changeStyleForLibrary =
@@ -29,15 +30,15 @@ function Header({
   const { setPlaylists, setLikedSongsPlaylist } = useContext(Playlists);
   const headerWidth = screenWidth < 1024? "100vw" : (changeStyleForLibrary? `calc(100vw - ${ libraryWidth})` : (screenWidth > 1024? "calc(100vw - 164px)" : "100vw"));
   const showLogoutCondition = "";
-  const handleLogout = () => {
-    localStorage.setItem("token", null);
-                setSongs(null),
-                setSongPlayed(null);
-                setLikedSongsPlaylist(null);
-                setPlaylists(null);
-                setToken(null);
-                setUserSearch("dua Lipa")
-  }
+  // const handleLogout = () => {
+  //   localStorage.setItem("token", null);
+  //               setSongs(null),
+  //               setSongPlayed(null);
+  //               setLikedSongsPlaylist(null);
+  //               setPlaylists(null);
+  //               setToken(null);
+  //               setUserSearch("dua Lipa")
+  // }
 
   return (
     <>
@@ -78,7 +79,8 @@ function Header({
           <Search setUserSearch={setUserSearch} screenWidth={screenWidth} />
         </div>
         <div className={styles.signAndLogDIv}>
-          {(token && screenWidth > 513)? (
+        {/* || !(screenWidth < 700 && "/Video" == location)) */}
+          {(token && screenWidth > 513 )? (
             <Link
               to="/"
               onClick={handleLogout}
@@ -99,7 +101,7 @@ function Header({
               <span>Sign Up</span>
             </Link>
           )}
-          {screenWidth < 513  && <ImMenu size={24} />}
+          {screenWidth < 513  && <MobileOption handleLogout={handleLogout} />}
         </div>
       </div>
     </>

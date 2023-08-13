@@ -42,7 +42,7 @@ function Layout() {
   const libraryWidth = isLibraryOpen? (screenWidth > 513? (screenWidth < 800? "35vw" : (screenWidth < 1180? "24vw": "20vw")) : "75%") : 0;
   const maxFetchSongsRetryCount = 4; 
   const location = useLocation().pathname
-  const openLibraryCondition = !["/Login", "/SignUp"].includes(location) && (["/LikedSongs", "/Playlists","/FavoriteArtists"].includes(location) || isLibraryOpen)
+  const openLibraryCondition = !["/Login", "/SignUp"].includes(location) && (["/LikedSongs", "/Playlists","/FavoriteArtists"].includes(location) && screenWidth > 900 || isLibraryOpen)
   
 
   const options = {
@@ -119,6 +119,17 @@ useEffect(() => {
   fetchData()
 }, [userSearch, fetchSongsRetryCount]);
 
+const handleLogout = () => {
+  localStorage.setItem("token", null);
+              setSongs(null),
+              setSongPlayed(null);
+              setLikedSongsPlaylist(null);
+              setPlaylists(null);
+              setToken(null);
+              setUserSearch("dua Lipa")
+}
+
+
 const handleSongsId = (songs, playPlaylist) => {
   const songsWithId = songs?.map((song, i) => {
     return {...song, index: i}});
@@ -161,15 +172,15 @@ const skipBackOrForward = (backOrForward, songsList) => {
       <Token.Provider value={{token, setToken}}>
       <PlaylistsContext.Provider value={{playlists, setPlaylists, setRenderPlaylistsPage, currentPlaylistData, setCurrentPlaylistData, likedSongsPlaylist, setLikedSongsPlaylist, playedPlaylist, setPlayedPlaylist}}>
       <HandlePlayingSongContext.Provider value={{songs, setSongs, songPlayed,setSongPlayed, isSongPlaying, setIsSongPlaying, handleSongsId, skipBackOrForward}}>
-      {!["/Login", "/SignUp"].includes(location) && <Header libraryWidth={libraryWidth} backgroundVideo={backgroundVideo} isLibraryOpen={isLibraryOpen} setIsLibraryOpen={setIsLibraryOpen} setUserSearch={setUserSearch} screenWidth={screenWidth}/>}
+      {!["/Login", "/SignUp"].includes(location) && <Header handleLogout={handleLogout} libraryWidth={libraryWidth} backgroundVideo={backgroundVideo} isLibraryOpen={isLibraryOpen} setIsLibraryOpen={setIsLibraryOpen} setUserSearch={setUserSearch} screenWidth={screenWidth}/>}
         <ShowPopupsContext.Provider value={{showCreatePlaylistPopup, setShowCreatePlaylistPopup, showAddToPlaylistPopup, setShowAddToPlaylistPopup}}>
       <Suspense fallback={<div className={styles.loadingContainer}></div>} >
         <Routes>
            <Route index element={<Home libraryWidth={libraryWidth} backgroundVideo={backgroundVideo} isLibraryOpen={isLibraryOpen} setUserSearch={setUserSearch} screenWidth={screenWidth}/>} /> 
             {token && ( <>
-              <Route path="/LikedSongs" element={<LikedSongs />} />
-              <Route path="/Playlists"  element={<Playlists />} />
-              <Route path="/FavoriteArtists" element={<FavoriteArtists setSongs={setSongs}/>} />
+              <Route path="/LikedSongs" element={<LikedSongs libraryWidth={libraryWidth} screenWidth={screenWidth} />} />
+              <Route path="/Playlists"  element={<Playlists libraryWidth={libraryWidth} screenWidth={screenWidth} />} />
+              <Route path="/FavoriteArtists" element={<FavoriteArtists screenWidth={screenWidth} setSongs={setSongs} libraryWidth={libraryWidth} />} />
                 </>)}
             <Route path="/Login" element={<Login setUserSearch={setUserSearch} />} />
             <Route path="/SignUp" element={<SignUp setUserSearch={setUserSearch} />} />
@@ -178,7 +189,7 @@ const skipBackOrForward = (backOrForward, songsList) => {
        </Suspense>
         {songPlayed && <Footer screenWidth={screenWidth} backgroundVideo={backgroundVideo} setBackgroundVideo={setBackgroundVideo} />}
         </ShowPopupsContext.Provider>
-        {openLibraryCondition && <Library  backgroundVideo={backgroundVideo} libraryWidth={libraryWidth}/>}
+        {openLibraryCondition && <Library setIsLibraryOpen={setIsLibraryOpen} screenWidth={screenWidth} backgroundVideo={backgroundVideo} libraryWidth={libraryWidth}/>}
         </HandlePlayingSongContext.Provider>
         </PlaylistsContext.Provider>
         </Token.Provider>

@@ -5,7 +5,7 @@ import Playlists from "../../contexts/Playlists";
 import HandlePlayingSongContext from "../../contexts/HandlePlayingSong";
 import api from "../../apiCalls/apiCalls"
 
-function LikedSongs() {
+function LikedSongs({libraryWidth, screenWidth}) {
   
   const {likedSongsPlaylist, setLikedSongsPlaylist, playedPlaylist, setPlayedPlaylist} = useContext(Playlists)
   const {songPlayed, handleSongsId, setSongPlayed} = useContext(HandlePlayingSongContext)
@@ -39,6 +39,8 @@ function LikedSongs() {
   return (
     <>
       <Playlist
+      screenWidth={screenWidth}
+      libraryWidth={libraryWidth}
       songs={likedSongs}
         title={"My favorit songs"}
       />

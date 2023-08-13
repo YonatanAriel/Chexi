@@ -255,4 +255,7 @@ input[type="range"].progressInput::-webkit-slider-thumb {
   .progressTime {
     display: none;
   }
+  /* .fullScreenButtons {
+    left:;
+  } */
 }

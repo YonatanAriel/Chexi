@@ -21,7 +21,6 @@ function Home({isLibraryOpen, screenWidth, libraryWidth}) {
   const [loadRemainingImgs, setloadRemainingImgs] = useState(false);
   const condition = songPlayed && songPlayed[playedPlaylist? "videoId" : "id"]
   const containerWidth = !isLibraryOpen || screenWidth < 513? "100vw" : `calc(100vw - ${libraryWidth})`
-  useEffect(() => console.log(containerWidth), [containerWidth])
 
   useEffect(() =>  {
     const storedSearchSongs = localStorage.getItem("searchSongs");
