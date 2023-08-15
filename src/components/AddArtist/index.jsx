@@ -59,7 +59,7 @@ function AddArtist({setShowPopup}) {
         type="text"
         ref={inputRef} 
         className={styles.popupInput}
-        placeholder="What is the artist name?"
+        placeholder="Artist name"
         onKeyDown={(e) => {if(e.key === 'Enter'){HandleAddArtist()}}}
       />
       <button onClick={HandleAddArtist} className={styles.popupButton}>

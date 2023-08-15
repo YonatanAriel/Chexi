@@ -102,7 +102,7 @@ function PlaylistSong({ song, index, handlePlayPlaylist }) {
             <AiTwotoneDelete style={{marginTop:"6px"}} size={20} />
           </div>
         )}
-        <span>{song?.duration_formatted}</span>
+        <span className={styles.duration}>{song?.duration_formatted}</span>
       </div>
     </>
   );

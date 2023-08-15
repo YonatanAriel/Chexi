@@ -3,7 +3,8 @@
   z-index: 10;
   top: 0;
   left: 0;
-  width: 100vw;
+  right: 0;
+  min-width: 100vw;
   height: 130px;
   background-color: rgba(0, 0, 0, 0.6);
   color: wheat;
@@ -31,15 +32,18 @@
   position: absolute;
   top: 130px;
   left: 0;
-  width: 100%;
-  min-height: calc(100vh - 130px);
+  right: 0;
   background: linear-gradient(to bottom, rgba(0, 0, 0, 0.24) 0.005%, black);
   display: flex;
   align-items: center;
   justify-content: center;
+  width: 100vw;
+  min-height:100vh;
+  padding-bottom: 2rem;
 }
 .form {
   position: relative;
+  top: 20px;
   margin: auto;
   background-color: rgba(0, 0, 0, 0.6);
   background: linear-gradient(to top, rgba(0, 0, 0, 0.24) 0.005%, black);
@@ -48,9 +52,10 @@
   flex-direction: column;
   align-items: center;
   width: max(45%, 450px);
-  height: 90%;
+  max-width: 90vw;
   color: wheat;
   backdrop-filter: blur(20px);
+  padding-bottom: 2rem;
 }
 .form > span:first-child {
   font-size: 3.5rem;
@@ -105,6 +110,7 @@
 
 .error {
   color: red;
+  max-width: 75% ;
 }
 .redBorder {
   border: solid 2px red;

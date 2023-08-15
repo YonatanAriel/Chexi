@@ -11,9 +11,9 @@
   flex-direction: column;
   align-items: center;
   gap: 2.5vh;
-  max-width: 25%;
-  min-width: 25%;
-  max-height: 45vh;
+  max-width: 30%;
+  min-width: min(95vw, 300px);
+  max-height:50vh;
   border-radius: 20px;
 }
 .popup > div:first-child {
@@ -44,22 +44,23 @@
   overflow-y: auto;
 }
 .popup li {
-  display: flex;
+    display: flex;
   align-items: center;
   gap: 10px;
   font-size: 1.2rem;
   font-weight: 500;
   cursor: pointer;
+  min-height: 55px;
 }
 .popup ul img,
 .popup li > div:first-child {
-  max-height: 3.78vw;
-  min-width: 6.76vw;
+  height: 45px;
+  width: 85px;
   border-radius: 5px;
 }
 .popup li > div:first-child {
   background-color: black;
-  min-height: 3.78vw;
+  min-height: 97%;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -74,4 +75,28 @@
 }
 .popup li span {
   overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+@media screen and (max-width: 1060px) {
+  .popup {
+    right: 20vw;
+    bottom: 120px;
+  }
+}
+@media screen and (max-width: 1060px) {
+  .popup {
+    bottom: 120px;
+  }
+}
+@media screen and (max-width: 410px) {
+  .popup {
+    min-height: 60vh;
+    min-width: 93vw;
+    left: 3.5vw;
+    right: 3.5vw;
+  }
+  .popup > div > span:last-child {
+    font-size: 1.6rem;
+  }
 }

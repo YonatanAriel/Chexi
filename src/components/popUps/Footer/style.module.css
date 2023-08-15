@@ -238,6 +238,7 @@ input[type="range"].progressInput::-webkit-slider-thumb {
   .volume {
     display: none;
   }
+
 }
 @media  screen and (max-width: 500px) {
   .videoContainer {
@@ -255,7 +256,13 @@ input[type="range"].progressInput::-webkit-slider-thumb {
   .progressTime {
     display: none;
   }
-  /* .fullScreenButtons {
-    left:;
+  /* .backgroundVideo {
+    display: none;
   } */
+  .centerItemsContainer {
+    width: 80vw;
+    /* overflow: hidden; */
+    margin: 0 auto;
+    padding-bottom: 10px;
+  }
 }

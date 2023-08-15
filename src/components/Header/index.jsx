@@ -8,8 +8,6 @@ import { BsMusicNote } from "react-icons/bs";
 import { IoLibrary } from "react-icons/io5";
 import Search from "../Search";
 import Token from "../../contexts/Token";
-import Playlists from "../../contexts/Playlists";
-import HandlePlayingSongContext from "../../contexts/HandlePlayingSong";
 import MobileOption from "../MobileOption";
 
 function Header({
@@ -17,6 +15,7 @@ function Header({
   isLibraryOpen,
   setIsLibraryOpen,
   backgroundVideo,
+  setBackgroundVideo,
   screenWidth,
   libraryWidth,
   handleLogout
@@ -25,20 +24,9 @@ function Header({
   const changeStyleForLibrary =
     ["/LikedSongs", "/Playlists", "/FavoriteArtists"].includes(location) ||
     isLibraryOpen;
-  const { token, setToken } = useContext(Token);
-  const { setSongs, setSongPlayed } = useContext(HandlePlayingSongContext);
-  const { setPlaylists, setLikedSongsPlaylist } = useContext(Playlists);
-  const headerWidth = screenWidth < 1024? "100vw" : (changeStyleForLibrary? `calc(100vw - ${ libraryWidth})` : (screenWidth > 1024? "calc(100vw - 164px)" : "100vw"));
-  const showLogoutCondition = "";
-  // const handleLogout = () => {
-  //   localStorage.setItem("token", null);
-  //               setSongs(null),
-  //               setSongPlayed(null);
-  //               setLikedSongsPlaylist(null);
-  //               setPlaylists(null);
-  //               setToken(null);
-  //               setUserSearch("dua Lipa")
-  // }
+  const { token } = useContext(Token);
+  const containerWidth = screenWidth < 1024? "100vw" : (changeStyleForLibrary? `calc(100vw - ${ libraryWidth})` : (screenWidth > 1024? "calc(100vw - 164px)" : "100vw"));
+  const containerLeft = screenWidth < 1024? 0 : (libraryWidth === 0? (screenWidth > 1024? "164px" : 0) : isLibraryOpen || ["/LikedSongs", "/Playlists", "/FavoriteArtists", `${screenWidth < 700 && "/Video"}`].includes(location)? libraryWidth : "164px");
 
   return (
     <>
@@ -56,8 +44,8 @@ function Header({
         className={`${styles.mainDiv} ${
           changeStyleForLibrary ? styles.libraryOpenMainDiv : ""
         }`}
-        style={{width: headerWidth,
-        left: screenWidth < 1024? 0 : (libraryWidth === 0? (screenWidth > 1024? "164px" : 0) : libraryWidth)
+        style={{width: containerWidth,
+        left: containerLeft
       }}
       >
         <div className={styles.home_library_search}>
@@ -79,7 +67,6 @@ function Header({
           <Search setUserSearch={setUserSearch} screenWidth={screenWidth} />
         </div>
         <div className={styles.signAndLogDIv}>
-        {/* || !(screenWidth < 700 && "/Video" == location)) */}
           {(token && screenWidth > 513 )? (
             <Link
               to="/"
@@ -101,7 +88,7 @@ function Header({
               <span>Sign Up</span>
             </Link>
           )}
-          {screenWidth < 513  && <MobileOption handleLogout={handleLogout} />}
+          {screenWidth < 513  && <MobileOption handleLogout={handleLogout} setIsLibraryOpen={setIsLibraryOpen} backgroundVideo={backgroundVideo} setBackgroundVideo={setBackgroundVideo}/>}
         </div>
       </div>
     </>

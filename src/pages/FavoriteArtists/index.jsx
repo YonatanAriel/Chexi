@@ -17,6 +17,7 @@ function FavoriteArtists({setSongs, libraryWidth, screenWidth}) {
     songs: "",
     showArtistSongs: false,
   });
+  const containerWidth = libraryWidth == 0 || screenWidth < 900? "100vw" : `calc(100vw - ${libraryWidth})`
   const options = {
     method: "GET",
     url: "https://simple-youtube-search.p.rapidapi.com/search",
@@ -81,14 +82,14 @@ function FavoriteArtists({setSongs, libraryWidth, screenWidth}) {
           />
         )}
 
-        <div className={styles.FavoriteArtistsContainer}>
+        <div className={styles.FavoriteArtistsContainer} style={{width: containerWidth, left: screenWidth < 900? 0 : libraryWidth}}>
           <div className={styles.addNewArtistContainer}>
             <span>New artist</span>
             <div
               className={styles.addArtistButton}
               onClick={() => setShowPopup(true)}
             >
-              <BsFillPersonPlusFill size={90} />
+              <BsFillPersonPlusFill size={screenWidth > 520? 90 : 65} />
             </div>
           </div>
           <div className={styles.artistsContainer}>

@@ -22,8 +22,8 @@ function PlaylistCard({ playlist, setShowSongs }) {
             }}>
               {(playlist?.songsId[imgIndex]?.songImg)?
                 <img src={playlist?.songsId[imgIndex]?.songImg} alt={playlist.name} /> :
-                <div><BsMusicNote size={92}/><span>Chexi</span></div> }
-                <span>{playlist.name}</span>
+                <div className={styles.icon}><BsMusicNote size={92}/><span>Chexi</span></div> }
+                <span className={styles.playlistTitle} >{playlist.name}</span>
               </div>
           </>
   )

@@ -28,6 +28,7 @@
 @keyframes entryAnimation {
   from {
     overflow: hidden;
+    padding-left: 0;
     width: 0;
     min-width: 0;
     left: 0;
@@ -93,15 +94,12 @@
 }
 @media screen and (max-width: 513px) {
   .libraryContainer { 
-    /* width:70%; */
     height: 100%;
     bottom: 0;
     z-index: 9;
     padding-left:10%;  
 }
   .contact{
-    /* width: 70%;
-    max-width: 70%; */
     z-index: 9;
   }
   .libraryContainer span {

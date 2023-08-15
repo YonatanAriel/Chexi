@@ -45,6 +45,15 @@
 .numberAndButtonsContainer .songButtons{
     width: 1.7em;
 }
+.title {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2; 
+    max-width: 60%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-height: 90%;
+}
 .delete{
     position: absolute;
     right: 70px;
@@ -56,4 +65,22 @@
 .mainDiv > span:last-child {
     position: absolute;
     right: 20px;
+}
+@media screen and (max-width: 660px) {
+    .mainDiv {
+        padding: 0 20px 0 8px ;
+    }
+    .duration{
+        display: none;
+    }
+    .delete{
+        right: 14px;
+    }
+    .numberAndButtonsContainer > div:first-child,
+.numberAndButtonsContainer .songButtons{
+    width: .7em;
+}
+.title {
+    max-width: 47%;
+}
 }

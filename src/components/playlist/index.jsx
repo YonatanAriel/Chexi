@@ -43,7 +43,7 @@ function Playlist({ title, songs, setShowSongs, setSongs, libraryWidth, screenWi
             onClick={() => handlePlayPlaylist(0)}
             size={90}
           />
-          <span>{title}</span>
+          <span className={styles.playlistTitle}>{title}</span>
         </div>
         <div className={styles.songsContainer}>
           {songs ? (

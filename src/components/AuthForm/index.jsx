@@ -1,5 +1,5 @@
 import styles from "./style.module.css";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { BsMusicNote } from "react-icons/bs";
 import { Link, useNavigate } from "react-router-dom";
 import Token from "../../contexts/Token";
@@ -13,6 +13,9 @@ function AuthForm({ title, setUserSearch }) {
   const navigate = useNavigate();
   const passwordRegex =
     /^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,}$/;
+    const userNameRef = useRef();
+
+    useEffect(() => userNameRef.current.focus(), [])
 
   useEffect(() => {
     setUserNameErrors([]);
@@ -117,6 +120,7 @@ function AuthForm({ title, setUserSearch }) {
             <div>
               <label htmlFor="username">User name</label>
               <input
+              ref={userNameRef}
                 type="text"
                 id="username"
                 placeholder="user name"

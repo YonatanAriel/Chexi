@@ -39,7 +39,8 @@ function Layout() {
   const [backgroundVideo, setBackgroundVideo] = useState(false)
   const [token, setToken] = useState(localStorage.getItem("token") === "null" ? null : localStorage.token)
   const [screenWidth, setScreenWidth] = useState(window.innerWidth);
-  const libraryWidth = isLibraryOpen? (screenWidth > 513? (screenWidth < 800? "35vw" : (screenWidth < 1180? "24vw": "20vw")) : "75%") : 0;
+
+  const libraryWidth = (screenWidth > 513? (screenWidth < 800? "35vw" : (screenWidth < 1180? "24vw": "20vw")) : "84%");
   const maxFetchSongsRetryCount = 4; 
   const location = useLocation().pathname
   const openLibraryCondition = !["/Login", "/SignUp"].includes(location) && (["/LikedSongs", "/Playlists","/FavoriteArtists"].includes(location) && screenWidth > 900 || isLibraryOpen)
@@ -165,14 +166,14 @@ const skipBackOrForward = (backOrForward, songsList) => {
   }
 
  }
-
+useEffect(() => console.log(libraryWidth + " * ", isLibraryOpen), [libraryWidth])
   return (
     <>
     <div className={styles.appContainer}>
       <Token.Provider value={{token, setToken}}>
       <PlaylistsContext.Provider value={{playlists, setPlaylists, setRenderPlaylistsPage, currentPlaylistData, setCurrentPlaylistData, likedSongsPlaylist, setLikedSongsPlaylist, playedPlaylist, setPlayedPlaylist}}>
       <HandlePlayingSongContext.Provider value={{songs, setSongs, songPlayed,setSongPlayed, isSongPlaying, setIsSongPlaying, handleSongsId, skipBackOrForward}}>
-      {!["/Login", "/SignUp"].includes(location) && <Header handleLogout={handleLogout} libraryWidth={libraryWidth} backgroundVideo={backgroundVideo} isLibraryOpen={isLibraryOpen} setIsLibraryOpen={setIsLibraryOpen} setUserSearch={setUserSearch} screenWidth={screenWidth}/>}
+      {!["/Login", "/SignUp"].includes(location) && <Header handleLogout={handleLogout} libraryWidth={libraryWidth} backgroundVideo={backgroundVideo} setBackgroundVideo={setBackgroundVideo} isLibraryOpen={isLibraryOpen} setIsLibraryOpen={setIsLibraryOpen} setUserSearch={setUserSearch} screenWidth={screenWidth}/>}
         <ShowPopupsContext.Provider value={{showCreatePlaylistPopup, setShowCreatePlaylistPopup, showAddToPlaylistPopup, setShowAddToPlaylistPopup}}>
       <Suspense fallback={<div className={styles.loadingContainer}></div>} >
         <Routes>

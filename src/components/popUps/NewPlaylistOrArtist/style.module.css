@@ -11,15 +11,22 @@
 }
 .popup > div:first-child {
   position: absolute;
-  width: 30vw;
-  height: 30vw;
+  width: min(400px, 95vw);
+  height: min(400px, 95vw);
   background: linear-gradient(to bottom, black, rgba(0, 0, 0, 0.4), black);
   z-index: 21;
   display: flex;
   justify-content: center;
   align-items: center;
   border-radius: 10px;
+  font-size: min(3vmin, .5rem);
+  flex-direction: column;
+  text-align: center;
 }
+.popup > div:first-child > h1 {
+  margin: 0 1em 1em 1em;
+}
+
 .createPlaylist {
   display: flex;
   justify-content: center;

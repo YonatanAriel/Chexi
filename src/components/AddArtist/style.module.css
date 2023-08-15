@@ -4,19 +4,20 @@
     align-items: center;
     height: fit-content;
     width: 80%;
+    justify-content: center;
 }
 .popupInput {
+    position: absolute;
     height: 50px;
     border-radius: 100px;
     outline: none;
     border: none;
-    width: 100%;
+    min-width: 100%;
     padding: 10px 35px 10px 15px;
 }
 .popupButton {
-    position: absolute; 
-    top:3%;
-    right: -10px;
+    z-index: 1;
     background: none;
     color: black;
+    margin-left: auto;
 }

@@ -17,7 +17,6 @@
   color: wheat;
   overflow-y: scroll;
   z-index: 1;
-  /* padding: 10%; */
 }
 .decreaseMainDivWidth {
   /* width: 80vw; */
@@ -143,13 +142,11 @@
     flex-grow: 1;
   }
 }
-@media screen and (max-width: 420px) {
+@media screen and (max-width: 768px) {
   .imgAndButton {
     max-width: unset;
     flex-shrink: 0;
   }
-
-
 }
 @media screen and (max-width: 320px) {
   body{

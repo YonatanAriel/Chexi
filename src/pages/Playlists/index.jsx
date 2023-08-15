@@ -16,6 +16,8 @@ function Playlists({libraryWidth, screenWidth}) {
   const { playlists, setRenderPlaylistsPage, currentPlaylistData } = useContext(PlaylistsContext)
   const [showSongs, setShowSongs] = useState(false)
   const [filteredPlaylists, setFilteredPlaylists] = useState()
+  const containerWidth = libraryWidth == 0 || screenWidth < 900? "100vw" : `calc(100vw - ${libraryWidth})`
+
 
   useEffect(() => setRenderPlaylistsPage(prev => !prev), [])
 
@@ -26,11 +28,11 @@ function Playlists({libraryWidth, screenWidth}) {
   return <> {showSongs? (<Playlist screenWidth={screenWidth} libraryWidth={libraryWidth} title={currentPlaylistData.name} setShowSongs={setShowSongs} songs={handleSongsId(currentPlaylistData.songsId, true)} />)
     :
         ( <>{showCreatePlaylistPopup && <NewPlaylistOrArtist />}
-      <div className={styles.PlaylistsContainer}>
-        <div>
+      <div className={styles.PlaylistsContainer} style={{width: containerWidth, left: screenWidth < 900? 0 : libraryWidth}}>
+        <div >
           <span>New playlist</span>
           <div className={styles.newPlaylistBtn} onClick={() => setShowCreatePlaylistPopup(prev => !prev)}>
-            <IoMdAddCircleOutline size={115} style={{ marginTop: "15px" }} />
+            <IoMdAddCircleOutline size={screenWidth > 380? 115 : 75} style={{ marginTop: "15px" }} />
           </div>
         </div>
         <div>

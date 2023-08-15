@@ -21,9 +21,10 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  text-align: center;
 }
 .PlaylistsContainer > div:first-child span {
-  font-size: 4.5em;
+  font-size: clamp(1rem, 13vmin, 4.5rem);
   font-weight: 600;
   margin-right: 2%;
 }
@@ -37,4 +38,19 @@
   justify-content: center;
   gap: 10px;
   padding: 45px 0 18vh 0;
+}
+@media screen and (max-width: 660px) {
+  .PlaylistsContainer > div:first-child{
+    flex-direction: column;
+    height: 60vw;
+  }
+  .PlaylistsContainer > div:last-child {
+    top: 48vw;
+  }
+}
+@media screen and (max-width: 380px) {
+  .PlaylistsContainer > div:first-child span {
+    font-size: max(1rem, 11vmin);
+    
+  }  
 }

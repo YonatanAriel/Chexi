@@ -20,7 +20,6 @@ function Footer({backgroundVideo, setBackgroundVideo, screenWidth}) {
   const {playedPlaylist} = useContext(Playlists)
   const {isSongPlaying, setIsSongPlaying, songs, songPlayed, skipBackOrForward} = useContext(HandlePlayingSongContext);
   const {showAddToPlaylistPopup, setShowAddToPlaylistPopup} = useContext(ShowPopups)
-  // const [setFullScreenVideo] = useState(false);
   const [volume, setVolume] = useState(50);
   const [showFooter, setShowFooter] = useState(true);
   const [minutes, setMinutes] = useState(0);
@@ -55,9 +54,7 @@ function Footer({backgroundVideo, setBackgroundVideo, screenWidth}) {
         const currentTime = playerRef?.current?.getCurrentTime();
         const progress = (currentTime / duration) * 100;
         setSongProgress(progress);
-      // }, 1000);
-      const player = e.target;
-        // interval = setInterval(() => {
+        const player = e.target;
         const newCurrentTime = player?.getCurrentTime();
         const newMinutes = Math.floor(newCurrentTime / 60);
         const newSeconds = Math.floor(newCurrentTime % 60);
@@ -158,7 +155,6 @@ function Footer({backgroundVideo, setBackgroundVideo, screenWidth}) {
             {location.pathname === "/Video" ? (
               <Link 
                onClick={() => {
-                // setFullScreenVideo(true)
                 navigate(-1)
                 
               }}>
@@ -171,28 +167,31 @@ function Footer({backgroundVideo, setBackgroundVideo, screenWidth}) {
               </Link>
             ) : (
               <Link to={"Video"} 
-              // onClick={() => setFullScreenVideo(false)}
               >
                 {
                   <BsCameraVideoFill
                     size={25}
-                    style={{ marginLeft: "0.2vw"}}
+                    style={{display: screenWidth < 513 && "none", marginLeft: "0.2vw"}}
                   />
                 }
               </Link>
             )}
             {!backgroundVideo && (
+              <div >
               <FaExpandArrowsAlt
                 size={24}
                 onClick={handleBackgrundVideo}
                 className={styles.iconButton}
+                style={{display: screenWidth < 513 && "none"}}
               />
+              </div>
             )}
             {backgroundVideo && (
               <FaCompressArrowsAlt
                 size={24}
                 onClick={handleBackgrundVideo}
                 className={styles.iconButton}
+                style={{display: screenWidth < 513 && "none"}}
               />
             )}
           </div>
