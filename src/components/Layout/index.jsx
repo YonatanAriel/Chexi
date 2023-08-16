@@ -44,8 +44,6 @@ function Layout() {
   const maxFetchSongsRetryCount = 4; 
   const location = useLocation().pathname
   const openLibraryCondition = !["/Login", "/SignUp"].includes(location) && (["/LikedSongs", "/Playlists","/FavoriteArtists"].includes(location) && screenWidth > 900 || isLibraryOpen)
-  
-
   const options = {
     method: 'GET',
     url: 'https://simple-youtube-search.p.rapidapi.com/search',
@@ -166,8 +164,7 @@ const skipBackOrForward = (backOrForward, songsList) => {
   }
 
  }
-useEffect(() => console.log(libraryWidth + " * ", isLibraryOpen), [libraryWidth])
-  return (
+   return (
     <>
     <div className={styles.appContainer}>
       <Token.Provider value={{token, setToken}}>

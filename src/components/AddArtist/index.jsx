@@ -1,5 +1,5 @@
 import styles from "./style.module.css"
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { HiPlus } from "react-icons/hi";
 import api from "../../apiCalls/apiCalls"
 import axios from 'axios'
@@ -19,6 +19,7 @@ function AddArtist({setShowPopup}) {
       "X-RapidAPI-Host": "simple-youtube-search.p.rapidapi.com",
     },
   };
+  useEffect(() => inputRef.current.focus(), [])
   
 
   const getArtistImg = async (artistName) => {

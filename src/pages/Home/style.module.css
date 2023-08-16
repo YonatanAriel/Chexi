@@ -108,14 +108,16 @@
   display: block;
 }
 .songTitle {
-  max-height: 83px;
   overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3; 
   text-overflow: ellipsis;
   text-shadow: 0.3px 0.3px 2px rgb(0, 0, 0), -0.3px -0.3px 2px rgb(0, 0, 0);
+  max-width: 90%;
 }
 @media screen and (max-width: 1024px) {
   .mainDiv {
-  /* max-width: calc(100vw - max(20vw, 220px)); */
   padding: 15vh 5% 18vh 5%;
   }
 

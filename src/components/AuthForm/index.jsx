@@ -1,7 +1,7 @@
 import styles from "./style.module.css";
 import { useContext, useEffect, useRef, useState } from "react";
 import { BsMusicNote } from "react-icons/bs";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import Token from "../../contexts/Token";
 import api from "../../apiCalls/apiCalls";
 
@@ -9,6 +9,11 @@ function AuthForm({ title, setUserSearch }) {
   const [data, setData] = useState({ userName: "", password: "" });
   const [passwordErrors, setPasswordErrors] = useState([]);
   const [userNameErrors, setUserNameErrors] = useState([]);
+  const [isDemoMode, setIsDemoMode] = useState(false);
+  const demoUserData = { userName: "demoUser", password: "55Da$s"};
+  const location = useLocation().pathname;
+  const formRef = useRef()
+  
   const { setToken } = useContext(Token);
   const navigate = useNavigate();
   const passwordRegex =
@@ -26,10 +31,12 @@ function AuthForm({ title, setUserSearch }) {
       ]);
     }
   }, [data.userName]);
+
   const handleGuest = () => {
     localStorage.setItem("token", null);
     setToken(null);
   };
+
   const validatePassword = (password) => {
     const errors = [];
     if (!passwordRegex.test(password)) {
@@ -49,19 +56,16 @@ function AuthForm({ title, setUserSearch }) {
     setPasswordErrors(errors);
     return errors.length === 0;
   };
-  const tempUserData = {
-    userName: "emma_smith",
-    password: "password123",
-  };
 
-  const handleLogin = async () => {
+  const handleLogin = async (userData) => {
               try {
-            const loginToken = await api.post(`users/login`, data);
+            const loginToken = await api.post(`users/login`, userData);
             localStorage.setItem("token", loginToken);
             setUserSearch("Dua Lipa");
             setToken(loginToken);
             navigate("/");
           } catch (err) {
+            formRef.current.style.cursor = 'auto';
             if (
               err?.response?.data === "User not exist" ||
               err?.response?.data === "password mismatch"
@@ -79,6 +83,7 @@ function AuthForm({ title, setUserSearch }) {
       setUserSearch("Dua lipa");
       navigate("/");
     } catch (err) {
+      formRef.current.style.cursor = 'auto';
       if (err?.response?.data === "User already exist") {
         setUserNameErrors(
           "This user name is not available. Please choose a new one"
@@ -90,18 +95,27 @@ function AuthForm({ title, setUserSearch }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!data.userName.trim().length >= 3) {
-      setUserNameErrors("User name should contain at least 3 chracters");
+    formRef.current.style.cursor = 'wait';
+    if(isDemoMode){
+      handleLogin(demoUserData)
       return
     }
-    if (!validatePassword(data.password)) return
-        if (title === "Login") {
-          handleLogin()
+    if(!(data.userName.trim().length >= 3)) {
+      setUserNameErrors("User name should contain at least 3 chracters");
+      formRef.current.style.cursor = 'auto';
+      return
+    }
+    if(!validatePassword(data.password)){
+      formRef.current.style.cursor = 'auto';
+      return
+    } 
+    if (title === "Login") {
+          handleLogin(data)
           return
-        } 
-        else if (title === "Register") {
+    } 
+    else if (title === "Register") {
           handleRegister()
-        }
+    }
   };
 
   return (
@@ -113,8 +127,8 @@ function AuthForm({ title, setUserSearch }) {
         </div>
       </div>
 
-      <div className={styles.loginContainer}>
-        <form className={styles.form} onSubmit={handleSubmit} noValidate>
+      <div className={styles.loginContainer} ref={formRef}>
+        <form className={styles.form}  onSubmit={handleSubmit} noValidate>
           <span>{title}</span>
           <div className={styles.inputContainer}>
             <div>
@@ -167,9 +181,16 @@ function AuthForm({ title, setUserSearch }) {
             </div>
           </div>
           <button type="submit">{title}</button>
-          <Link to={"/"} onClick={handleGuest}>
-            Or - Continue as a guest
-          </Link>
+          <div className={styles.orContent} >
+              <span>Or</span>
+              <span>For a quick preview - <button type="submit" onClick={() => setIsDemoMode(true)}>Demo mode</button></span>
+              <Link to={"/"} onClick={handleGuest}>
+                Continue as a guest
+              </Link>
+              {location == "/Login"? 
+                <Link to={"/SignUp"}>Register</Link> 
+              : <Link to={"/Login"}>Log in</Link>}
+          </div>
         </form>
       </div>
     </>

@@ -15,7 +15,7 @@ function Home({isLibraryOpen, screenWidth, libraryWidth}) {
   const [searchSongs, setSearchSongs] = useState()
   const {setPlayedPlaylist, playedPlaylist} = useContext(Playlists)
   const [imagesErrorCount, setImagesErrorCount] = useState(0);
-  const [songDivHeight, setSongDivHeight] = useState("50.3vh");
+  const [songDivHeight, setSongDivHeight] = useState("52.3vh");
   const [imgHeight, setImgHeight] = useState("15vw");
   const [loadedImages, setLoadedImages] = useState(0);
   const [loadRemainingImgs, setloadRemainingImgs] = useState(false);
@@ -48,7 +48,7 @@ function Home({isLibraryOpen, screenWidth, libraryWidth}) {
       setSongDivHeight("36vh");
       setImgHeight("8.415vw");
     } else {
-      setSongDivHeight("50.3vh");
+      setSongDivHeight("52.3vh");
       setImgHeight("15vw");
     }
   }, [imagesErrorCount, songs?.length, songs]);

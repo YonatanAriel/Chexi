@@ -78,7 +78,7 @@
     }
     .numberAndButtonsContainer > div:first-child,
 .numberAndButtonsContainer .songButtons{
-    width: .7em;
+    width: 1.4em;
 }
 .title {
     max-width: 47%;

@@ -101,10 +101,25 @@
   background-color: rgb(255, 255, 255, 0.12);
   scale: 0.97;
 }
-.form > a:last-child {
+.orContent {
+  padding-top: 3vh;
+  text-align: center;
+}
+.orContent span {
+  font-size: 1.1rem;
+}
+.orContent span:first-child {
+  font-size: 1.4rem;
+  font-weight: bolder;
+}
+.orContent button {
+  font-size: initial;
+  margin: inherit;
+}
+.orContent a{
   font-size: 1.2rem;
 }
-.form > a:last-child:hover {
+.orContent a:hover {
   transform: scale(1.04);
 }
 
@@ -117,4 +132,10 @@
 }
 .greenBorder {
   border: solid 2px green;
+}
+@media screen and (max-width:360px){
+  .orContent button {
+    margin-top: 15px;
+  }
+  
 }

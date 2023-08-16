@@ -36,7 +36,6 @@
 }
 .songsContainer {
   position: sticky;
-  /* top: 400px; */
   top:30%;
   display: flex;
   flex-direction: column;
@@ -44,11 +43,16 @@
   padding: 0 20px 18vh 20px;
   top: 30%;
 }
+@media screen and (max-width: 768px) {
+  .mainDiv {
+    top: max(60px, 12%);
+  }
+}
 @media  screen and (max-width: 600px) {
   .hedingDiv {
     flex-direction: column;
     align-items: flex-start;
-    height: 45%;
+    height: 30vh;
   }
   .hedingDiv span {
     max-width: 95%;

@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import styles from "./style.module.css";
 import { HiPlus } from "react-icons/hi";
 import ShowPopups from "../../contexts/ShowPopups";
@@ -13,6 +13,8 @@ function CreatePlaylist({ placeHolder, addSong, songPlayedData }) {
   const [playlistId, setPlaylistId] = useState("");
   const [inputValue, setInputValue] = useState();
   const { setRenderPlaylistsPage } = useContext(Playlists);
+  const inputRef = useRef()
+  useEffect(() => inputRef.current.focus(), [])
 
   useEffect(() => {
     async function addSongToPlaylist (){
@@ -33,12 +35,14 @@ function CreatePlaylist({ placeHolder, addSong, songPlayedData }) {
 
   };
 
+
   return (
     <div className={styles.createPlaylist}>
       <input
+      ref={inputRef}
         type="text"
         className={styles.createPlaylistInput}
-        placeholder={placeHolder ? placeHolder : " Create new playlist"}
+        placeholder={placeHolder ? placeHolder : " Create a new playlist"}
         onChange={(e) => setInputValue(e.target.value)}
         onKeyDown={(e) => {if(e.key === 'Enter'){handleButtonClick()}}}
       />

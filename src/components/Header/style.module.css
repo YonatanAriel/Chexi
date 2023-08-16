@@ -88,15 +88,12 @@ div span {
 @media screen and (max-width: 768px) {
   .mainDiv {
     min-height: 12%;
-  }
-  .logoBackground {
-    display: none;
-  }
-  .mainDiv {
     width: 100%; 
     left: 0;
     right: 0;
   }
-
+  .logoBackground {
+    display: none;
+  }
 }
 
