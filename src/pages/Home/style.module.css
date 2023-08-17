@@ -61,18 +61,11 @@
 }
 .songImg {
   transition: all 0.5s ease;
-  /* min-width: 90%; */
   width: 90%;
   min-width: 15.3vw;
   z-index: -5;
-  /* z-index: 666; */
-  /* margin: 2vh 0 1vh; */
   border-radius: 5px;
   object-fit: cover;
-  /* height: auto; */
-  /* min-height: 60%; */
-/* width: 130px; */
-
 }
 .song:hover .songImg {
   transform: scale(1.01);
@@ -84,7 +77,6 @@
 }
 .WaveSpinner {
   position: absolute;
-  /* bottom: 1.8vh; */
   bottom: 0;
   left: 0;
   right: 0;
@@ -122,11 +114,10 @@
   }
 
   .song {
-    /* min-width:minmax(25%, 100%); */
     padding: 9px 0;
   }
 }
-@media screen and (max-width: 769px) {
+@media screen and (max-width: 768px) {
   .song {
     flex-direction: row;
     max-width: 96vw;
@@ -137,17 +128,16 @@
     align-items: unset;
     text-align: start;
   }
+  .imgAndButton {
+    max-width: unset;
+    max-width: 34%;
+    flex-shrink: 0;
+  }
   .songImg {
     max-height: 16vh;
     min-height: 100%;
     width: 96%;
     flex-grow: 1;
-  }
-}
-@media screen and (max-width: 768px) {
-  .imgAndButton {
-    max-width: unset;
-    flex-shrink: 0;
   }
 }
 @media screen and (max-width: 320px) {

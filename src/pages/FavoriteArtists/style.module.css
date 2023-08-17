@@ -59,7 +59,12 @@
 }
 .artist span {
   max-height: 2rem;
-  overflow-y: auto;
+}
+
+@media screen and (max-width: 768px) {
+  .FavoriteArtistsContainer {
+    top: max(60px, 12%);
+  }
 }
 
 @media screen and (max-width: 550px){

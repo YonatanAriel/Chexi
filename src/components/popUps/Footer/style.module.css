@@ -219,7 +219,7 @@ input[type="range"].progressInput::-webkit-slider-thumb {
 }
 @media  screen and (max-width: 1024px) {
   .videoContainer {
-    transform: scale(1.1, 1.68);
+    transform: scale(1.5, 1.68);
   }
   .artistDetails {
     display: none;
@@ -233,7 +233,7 @@ input[type="range"].progressInput::-webkit-slider-thumb {
 }
 @media  screen and (max-width: 768px) {
   .videoContainer {
-    transform: scale(1.1, 2.6);
+    transform: scale(2, 2.6);
   }
   .volume {
     display: none;
@@ -242,7 +242,7 @@ input[type="range"].progressInput::-webkit-slider-thumb {
 }
 @media  screen and (max-width: 500px) {
   .videoContainer {
-    transform: scale(1.1, 4.5);
+    transform: scale(3, 4.5);
   }
   .mainDiv {
     justify-content:unset;
