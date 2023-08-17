@@ -60,3 +60,6 @@ img {
   backdrop-filter: blur(20px);
   background-color: wheat;
 }
+input {
+  background-color: white;
+}

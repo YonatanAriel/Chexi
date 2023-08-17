@@ -134,8 +134,7 @@
   border: solid 2px green;
 }
 @media screen and (max-width:360px){
-  .orContent button {
-    margin-top: 15px;
+  .orContent button{
+    margin-top: 1em;
   }
-  
 }

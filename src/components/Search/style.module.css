@@ -2,26 +2,21 @@
   display: flex;
   flex-direction: row;
   height: 50px;
-  /* width: 35vw; */
   width: 22vw;
   position: relative;
-  /* background-color: blueviolet; */
 }
 .searchField {
-  /* width: 75%; */
   width: 100%;
   padding: 10px 35px 10px 15px;
   border: none;
   border-radius: 100px;
   outline: none;
   color: black;
-  /* background-color: aqua; */
 }
 .searchButton {
   background: transparent;
   border: none;
   position: absolute;
-  /* right: 8vw; */
   right: -5px;
   top: 12%;
 }
@@ -34,6 +29,7 @@
 .searchButton img.spinning {
   animation: searchSpin 2s;
 }
+
 @keyframes searchSpin {
   0% {
     transform: rotate(0);
@@ -42,10 +38,10 @@
     transform: rotate(360deg);
   }
 }
+
 @media screen and (max-width: 768px) {
   .form {
     min-width: 40vw;
-    /* width: 100%; */
   }
 }
 @media screen and (max-width: 387px) {

@@ -122,7 +122,7 @@ function AuthForm({ title, setUserSearch }) {
     <>
       <div className={styles.logoBackground}>
         <div className={styles.logoContainer}>
-          <BsMusicNote style={{ marginBottom: "8px" }} size={103} />
+          <BsMusicNote style={{ marginBottom: ".6em" }} size={103} />
           <span className={styles.logoText}> Chexi</span>
         </div>
       </div>
