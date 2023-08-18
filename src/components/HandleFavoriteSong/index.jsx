@@ -6,7 +6,7 @@ import Playlists from "../../contexts/Playlists";
 import Token from "../../contexts/Token";
 import api from "../../apiCalls/apiCalls";
 
-function HandleFavoriteSong({screenWidth}) {
+function HandleFavoriteSong({ screenWidth }) {
   const { songPlayed } = useContext(HandlePlayingSongContext);
   const {
     playlists,
@@ -21,8 +21,11 @@ function HandleFavoriteSong({screenWidth}) {
   const [songPlayedData, setSongPlayedData] = useState();
   const { token } = useContext(Token);
   const [isAnimationInProgress, setIsAnimationInProgress] = useState(false);
-  const [isHeartCliked, setIsHeartCliked] = useState({red: false, empty: false})
-  const heartSize = screenWidth > 500? 19 : 35;
+  const [isHeartCliked, setIsHeartCliked] = useState({
+    red: false,
+    empty: false,
+  });
+  const heartSize = screenWidth > 500 ? 19 : 35;
 
   useEffect(() => {
     setSongPlayedData((prev) => ({
@@ -67,70 +70,78 @@ function HandleFavoriteSong({screenWidth}) {
     getLikesSongsPlaylist();
   }, [likedSongsPlaylistId]);
 
-
   const handleHeartClick = async (addOrRemove) => {
     if (isAnimationInProgress) return;
     let animationDuration = 1000;
     setIsAnimationInProgress(true);
-    
-    if (addOrRemove === "add") {
-        setIsHeartCliked((prev) =>  ({...prev, empty: true }))
-        animationDuration = 600
-        if (!likedSongsPlaylistId) {
-          const likedSongsPlaylistRes = await api.post("playlists/addplaylist", {
-            name: "My favorite songs",
-            isFavorite: true,
-          });
-          setLikedSongsPlaylistId(likedSongsPlaylistRes._id);
 
-        } else {
-          if (!isFavorite) {
-            setIsFavorite(true);
-            const newFavoriteSongId = await api.post(`playlists/addsong/${likedSongsPlaylistId}`, songPlayedData)
-                if (!likedSongsPlaylist.songsId.includes(newFavoriteSongId)) {
-                  setLikedSongsPlaylist((prev) => ({
-                    ...prev,
-                    songsId: [...prev.songsId, newFavoriteSongId],
-                  }));
-                }
+    if (addOrRemove === "add") {
+      setIsHeartCliked((prev) => ({ ...prev, empty: true }));
+      animationDuration = 600;
+      if (!likedSongsPlaylistId) {
+        const likedSongsPlaylistRes = await api.post("playlists/addplaylist", {
+          name: "My favorite songs",
+          isFavorite: true,
+        });
+        setLikedSongsPlaylistId(likedSongsPlaylistRes._id);
+      } else {
+        if (!isFavorite) {
+          setIsFavorite(true);
+          const newFavoriteSongId = await api.post(
+            `playlists/addsong/${likedSongsPlaylistId}`,
+            songPlayedData
+          );
+          if (!likedSongsPlaylist.songsId.includes(newFavoriteSongId)) {
+            setLikedSongsPlaylist((prev) => ({
+              ...prev,
+              songsId: [...prev.songsId, newFavoriteSongId],
+            }));
           }
         }
-      } else {
-        setIsHeartCliked((prev) =>  ({...prev, red: true }))
-        if (isFavorite) {
-          setIsFavorite(false);
-          const removedSong = await api.post(`playlists/deletesong/${likedSongsPlaylistId}`, 
-{ id: likedSongsPlaylist.songsId.find((song) => song.videoId === songPlayedData.videoId)?._id})
-              setLikedSongsPlaylist((prev) => ({
-                ...prev,
-                songsId: prev.songsId.filter(
-                  (song) => song._id !== removedSong.songId
-                ),
-              }));
-
+      }
+    } else {
+      setIsHeartCliked((prev) => ({ ...prev, red: true }));
+      if (isFavorite) {
+        setIsFavorite(false);
+        const removedSong = await api.post(
+          `playlists/deletesong/${likedSongsPlaylistId}`,
+          {
+            id: likedSongsPlaylist.songsId.find(
+              (song) => song.videoId === songPlayedData.videoId
+            )?._id,
           }
+        );
+        setLikedSongsPlaylist((prev) => ({
+          ...prev,
+          songsId: prev.songsId.filter(
+            (song) => song._id !== removedSong.songId
+          ),
+        }));
+      }
     }
     setTimeout(() => {
       setIsAnimationInProgress(false);
-      setIsHeartCliked({red: false, empty: false})
+      setIsHeartCliked({ red: false, empty: false });
     }, animationDuration);
   };
 
   useEffect(() => {
-    async function addSongToPlaylist(){
+    async function addSongToPlaylist() {
       if (!isFavorite && likedSongsPlaylistId) {
         setIsFavorite(true);
-        const newFavoriteSongId = await api.post(`playlists/addsong/${likedSongsPlaylistId}`, songPlayedData)
-                    if (!likedSongsPlaylist?.songsId?.includes(newFavoriteSongId)) {
-              setLikedSongsPlaylist((prev) => ({
-                ...prev,
-                songsId: [newFavoriteSongId]
-              }));
-            }
-
-          }
+        const newFavoriteSongId = await api.post(
+          `playlists/addsong/${likedSongsPlaylistId}`,
+          songPlayedData
+        );
+        if (!likedSongsPlaylist?.songsId?.includes(newFavoriteSongId)) {
+          setLikedSongsPlaylist((prev) => ({
+            ...prev,
+            songsId: [newFavoriteSongId],
+          }));
         }
-        addSongToPlaylist()
+      }
+    }
+    addSongToPlaylist();
   }, [likedSongsPlaylistId]);
 
   return token ? (
@@ -141,9 +152,9 @@ function HandleFavoriteSong({screenWidth}) {
           song?.videoId?.toString() === songPlayedData?.videoId?.toString()
       ) ? (
         <FaHeart
-        size={heartSize}
-        className={`${isAnimationInProgress ? styles.disabledHeart : ""}
-          ${isHeartCliked.empty? styles.pulseHeart : ""}
+          size={heartSize}
+          className={`${isAnimationInProgress ? styles.disabledHeart : ""}
+          ${isHeartCliked.empty ? styles.pulseHeart : ""}
             `}
           style={{ color: "red", cursor: "pointer" }}
           onClick={() => handleHeartClick("remove")}
@@ -153,16 +164,14 @@ function HandleFavoriteSong({screenWidth}) {
           size={heartSize}
           className={`${styles.heart}
           ${isAnimationInProgress ? styles.disabledHeart : ""}
-          ${isHeartCliked.red? styles.emptyHeart : ""}
+          ${isHeartCliked.red ? styles.emptyHeart : ""}
           `}
           onClick={() => handleHeartClick("add")}
         />
       )}
     </>
   ) : (
-    <FaRegHeart 
-          size={heartSize}
-     />
+    <FaRegHeart size={heartSize} />
   );
 }
 

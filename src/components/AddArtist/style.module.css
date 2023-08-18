@@ -1,23 +1,23 @@
 .addNewArtistPopup {
-    position: relative;
-    display: flex;
-    align-items: center;
-    height: fit-content;
-    width: 80%;
-    justify-content: center;
+  position: relative;
+  display: flex;
+  align-items: center;
+  height: fit-content;
+  width: 80%;
+  justify-content: center;
 }
 .popupInput {
-    position: absolute;
-    height: 50px;
-    border-radius: 100px;
-    outline: none;
-    border: none;
-    min-width: 100%;
-    padding: 10px 35px 10px 15px;
+  position: absolute;
+  height: 50px;
+  border-radius: 100px;
+  outline: none;
+  border: none;
+  min-width: 100%;
+  padding: 10px 35px 10px 15px;
 }
 .popupButton {
-    z-index: 1;
-    background: none;
-    color: black;
-    margin-left: auto;
+  z-index: 1;
+  background: none;
+  color: black;
+  margin-left: auto;
 }

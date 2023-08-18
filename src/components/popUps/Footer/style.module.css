@@ -212,12 +212,12 @@ input[type="range"].progressInput::-webkit-slider-thumb {
   margin-left: 1vw;
   width: 9.5vw;
 }
-@media  screen and (max-width: 1150px) {
+@media screen and (max-width: 1150px) {
   .videoContainer {
     transform: scale(1.1, 1.3);
   }
 }
-@media  screen and (max-width: 1024px) {
+@media screen and (max-width: 1024px) {
   .videoContainer {
     transform: scale(1.5, 1.68);
   }
@@ -226,42 +226,37 @@ input[type="range"].progressInput::-webkit-slider-thumb {
   }
   .volumeInput {
     width: 13vw;
-  }  
+  }
   .progressInput {
     width: max(24vw, 250px);
   }
 }
-@media  screen and (max-width: 768px) {
+@media screen and (max-width: 768px) {
   .videoContainer {
     transform: scale(2, 2.6);
   }
   .volume {
     display: none;
   }
-
 }
-@media  screen and (max-width: 500px) {
+@media screen and (max-width: 500px) {
   .videoContainer {
     transform: scale(3, 4.5);
   }
   .mainDiv {
-    justify-content:unset;
+    justify-content: unset;
     gap: 400px;
   }
   .centerItemsContainer {
     margin-left: 45vw;
-    width:  20%;
-    gap: .5rem;
+    width: 20%;
+    gap: 0.5rem;
   }
   .progressTime {
     display: none;
   }
-  /* .backgroundVideo {
-    display: none;
-  } */
   .centerItemsContainer {
     width: 80vw;
-    /* overflow: hidden; */
     margin: 0 auto;
     padding-bottom: 10px;
   }

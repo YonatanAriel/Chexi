@@ -38,7 +38,7 @@
   align-items: center;
   justify-content: center;
   width: 100vw;
-  min-height:100vh;
+  min-height: 100vh;
   padding-bottom: 2rem;
 }
 .form {
@@ -116,7 +116,7 @@
   font-size: initial;
   margin: inherit;
 }
-.orContent a{
+.orContent a {
   font-size: 1.2rem;
 }
 .orContent a:hover {
@@ -125,7 +125,7 @@
 
 .error {
   color: red;
-  max-width: 75% ;
+  max-width: 75%;
 }
 .redBorder {
   border: solid 2px red;
@@ -133,14 +133,14 @@
 .greenBorder {
   border: solid 2px green;
 }
-@media screen and (max-width:700px){
+@media screen and (max-width: 700px) {
   .logoText {
     font-size: 4.5rem;
-    margin-top: .17em;
+    margin-top: 0.17em;
   }
 }
-@media screen and (max-width:360px){
-  .orContent button{
+@media screen and (max-width: 360px) {
+  .orContent button {
     margin-top: 1em;
   }
 }

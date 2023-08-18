@@ -1,4 +1,4 @@
-import { renderToString } from 'react-dom/server';
+import { renderToString } from "react-dom/server";
 
 export function getIconAsSvgDataURL(iconComponent) {
   const svgString = renderToString(iconComponent);

@@ -1,5 +1,5 @@
 import { createContext } from "react";
 
-const Playlists = createContext()
+const Playlists = createContext();
 
-export default Playlists
+export default Playlists;

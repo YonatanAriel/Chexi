@@ -2,35 +2,40 @@ import styles from "./style.module.css";
 import { BsPlayCircleFill } from "react-icons/bs";
 import { useContext, useEffect, useState } from "react";
 import HandlePlayingSongContext from "../../contexts/HandlePlayingSong";
-import {  WaveSpinner } from "react-spinners-kit";
+import { WaveSpinner } from "react-spinners-kit";
 import Playlists from "../../contexts/Playlists";
 import Loading from "../../components/Loading";
 
-
-function Home({isLibraryOpen, screenWidth, libraryWidth}) {
-
-  const { isSongPlaying, setIsSongPlaying, songPlayed, setSongPlayed, songs, setSongs } = useContext(
-    HandlePlayingSongContext
-  );
-  const [searchSongs, setSearchSongs] = useState()
-  const {setPlayedPlaylist, playedPlaylist} = useContext(Playlists)
+function Home({ isLibraryOpen, screenWidth, libraryWidth }) {
+  const {
+    isSongPlaying,
+    setIsSongPlaying,
+    songPlayed,
+    setSongPlayed,
+    songs,
+    setSongs,
+  } = useContext(HandlePlayingSongContext);
+  const [searchSongs, setSearchSongs] = useState();
+  const { setPlayedPlaylist, playedPlaylist } = useContext(Playlists);
   const [imagesErrorCount, setImagesErrorCount] = useState(0);
   const [songDivHeight, setSongDivHeight] = useState("52.3vh");
   const [imgHeight, setImgHeight] = useState("15vw");
   const [loadedImages, setLoadedImages] = useState(0);
   const [loadRemainingImgs, setloadRemainingImgs] = useState(false);
-  const condition = songPlayed && songPlayed[playedPlaylist? "videoId" : "id"]
-  const containerWidth = !isLibraryOpen || screenWidth < 513? "100vw" : `calc(100vw - ${libraryWidth})`
+  const condition = songPlayed && songPlayed[playedPlaylist ? "videoId" : "id"];
+  const containerWidth =
+    !isLibraryOpen || screenWidth < 513
+      ? "100vw"
+      : `calc(100vw - ${libraryWidth})`;
 
-  useEffect(() =>  {
+  useEffect(() => {
     const storedSearchSongs = localStorage.getItem("searchSongs");
     if (storedSearchSongs) {
       try {
         setSearchSongs(JSON.parse(storedSearchSongs));
-      } catch (error) {
-      }
-    }  }
-    ,[songs])
+      } catch (error) {}
+    }
+  }, [songs]);
 
   const handleLoadingImgs = () => {
     setLoadedImages((prev) => prev + 1);
@@ -56,8 +61,10 @@ function Home({isLibraryOpen, screenWidth, libraryWidth}) {
   return (
     <>
       <div
-        className={`${styles.mainDiv} ${isLibraryOpen? styles.decreaseMainDivWidth : ""}`}
-        style={{width: containerWidth}}
+        className={`${styles.mainDiv} ${
+          isLibraryOpen ? styles.decreaseMainDivWidth : ""
+        }`}
+        style={{ width: containerWidth }}
       >
         {songs?.length > 0 ? (
           searchSongs?.map((song, i) => (
@@ -65,10 +72,13 @@ function Home({isLibraryOpen, screenWidth, libraryWidth}) {
               className={`${styles.song} `}
               style={{
                 height: songDivHeight,
-                cursor: condition !== song.id && "pointer"
+                cursor: condition !== song.id && "pointer",
               }}
               onClick={() => {
-                setPlayedPlaylist(null), setSongPlayed(song), setIsSongPlaying(true), setSongs(searchSongs);
+                setPlayedPlaylist(null),
+                  setSongPlayed(song),
+                  setIsSongPlaying(true),
+                  setSongs(searchSongs);
               }}
               key={i}
             >
@@ -90,7 +100,18 @@ function Home({isLibraryOpen, screenWidth, libraryWidth}) {
                 />
                 {condition === song.id && isSongPlaying ? (
                   <div className={styles.WaveSpinner}>
-                    <WaveSpinner color={"wheat"} size={screenWidth > 1024? 95 : screenWidth > 900? 70: screenWidth > 768? 60 : 50} />
+                    <WaveSpinner
+                      color={"wheat"}
+                      size={
+                        screenWidth > 1024
+                          ? 95
+                          : screenWidth > 900
+                          ? 70
+                          : screenWidth > 768
+                          ? 60
+                          : 50
+                      }
+                    />
                   </div>
                 ) : (
                   <BsPlayCircleFill className={styles.songButton} size={40} />
@@ -104,7 +125,7 @@ function Home({isLibraryOpen, screenWidth, libraryWidth}) {
                   .trim()
                   .slice(0, 50)}
               </h3>
-            </div> 
+            </div>
           ))
         ) : (
           <Loading />

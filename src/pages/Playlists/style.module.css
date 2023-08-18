@@ -46,7 +46,7 @@
 }
 
 @media screen and (max-width: 660px) {
-  .PlaylistsContainer > div:first-child{
+  .PlaylistsContainer > div:first-child {
     flex-direction: column;
     height: 60vw;
   }
@@ -57,6 +57,5 @@
 @media screen and (max-width: 380px) {
   .PlaylistsContainer > div:first-child span {
     font-size: max(1rem, 11vmin);
-    
-  }  
+  }
 }

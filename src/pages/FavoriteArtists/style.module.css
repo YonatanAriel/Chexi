@@ -67,7 +67,7 @@
   }
 }
 
-@media screen and (max-width: 550px){
+@media screen and (max-width: 550px) {
   .addNewArtistContainer {
     flex-direction: column;
     padding: 2.5em 1em 1em 1em;

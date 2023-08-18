@@ -18,15 +18,37 @@ function Header({
   setBackgroundVideo,
   screenWidth,
   libraryWidth,
-  handleLogout
+  handleLogout,
 }) {
   const location = useLocation().pathname;
   const changeStyleForLibrary =
     ["/LikedSongs", "/Playlists", "/FavoriteArtists"].includes(location) ||
     isLibraryOpen;
   const { token } = useContext(Token);
-  const containerWidth = screenWidth < 1024? "100vw" : (changeStyleForLibrary? `calc(100vw - ${ libraryWidth})` : (screenWidth > 1024? "calc(100vw - 164px)" : "100vw"));
-  const containerLeft = screenWidth < 1024? 0 : (libraryWidth === 0? (screenWidth > 1024? "164px" : 0) : isLibraryOpen || ["/LikedSongs", "/Playlists", "/FavoriteArtists", `${screenWidth < 700 && "/Video"}`].includes(location)? libraryWidth : "164px");
+  const containerWidth =
+    screenWidth < 1024
+      ? "100vw"
+      : changeStyleForLibrary
+      ? `calc(100vw - ${libraryWidth})`
+      : screenWidth > 1024
+      ? "calc(100vw - 164px)"
+      : "100vw";
+  const containerLeft =
+    screenWidth < 1024
+      ? 0
+      : libraryWidth === 0
+      ? screenWidth > 1024
+        ? "164px"
+        : 0
+      : isLibraryOpen ||
+        [
+          "/LikedSongs",
+          "/Playlists",
+          "/FavoriteArtists",
+          `${screenWidth < 700 && "/Video"}`,
+        ].includes(location)
+      ? libraryWidth
+      : "164px";
 
   return (
     <>
@@ -44,21 +66,21 @@ function Header({
         className={`${styles.mainDiv} ${
           changeStyleForLibrary ? styles.libraryOpenMainDiv : ""
         }`}
-        style={{width: containerWidth,
-        left: containerLeft
-      }}
+        style={{ width: containerWidth, left: containerLeft }}
       >
         <div className={styles.home_library_search}>
-          {((screenWidth < 768 && 
-          location !== "/") 
-          || (screenWidth > 768)) 
-          && 
-          (<Link className={styles.home} to="./">
-            <AiFillHome style={{ marginBottom: "-1px" }} size={17} />
-            <span>Home</span>
-          </Link>)
-}
-          {!["/LikedSongs", "/Playlists", "/FavoriteArtists", `${screenWidth < 700 && "/Video"}`].includes(location) && (
+          {((screenWidth < 768 && location !== "/") || screenWidth > 768) && (
+            <Link className={styles.home} to="./">
+              <AiFillHome style={{ marginBottom: "-1px" }} size={17} />
+              <span>Home</span>
+            </Link>
+          )}
+          {![
+            "/LikedSongs",
+            "/Playlists",
+            "/FavoriteArtists",
+            `${screenWidth < 700 && "/Video"}`,
+          ].includes(location) && (
             <a onClick={() => setIsLibraryOpen((prev) => !prev)}>
               <IoLibrary size={17} style={{ margin: "0 0.1vw -0.2vh 0" }} />
               Library
@@ -67,28 +89,33 @@ function Header({
           <Search setUserSearch={setUserSearch} screenWidth={screenWidth} />
         </div>
         <div className={styles.signAndLogDIv}>
-          {(token && screenWidth > 513 )? (
-            <Link
-              to="/"
-              onClick={handleLogout}
-            >
+          {token && screenWidth > 513 ? (
+            <Link to="/" onClick={handleLogout}>
               <HiLogout size={19} style={{ marginBottom: "-0.6vh" }} />
               <span>Log out</span>
             </Link>
           ) : (
-            screenWidth > 513 &&
-             (<Link to="./Login">
-              <HiLogin size={19} style={{ marginBottom: "-0.6vh" }} />
-              <span>Log In</span>
-            </Link>)
+            screenWidth > 513 && (
+              <Link to="./Login">
+                <HiLogin size={19} style={{ marginBottom: "-0.6vh" }} />
+                <span>Log In</span>
+              </Link>
+            )
           )}
-          {(!token && screenWidth > 513) && (
+          {!token && screenWidth > 513 && (
             <Link to="./SignUp">
               <MdAssignmentInd style={{ marginBottom: "-0.3vh" }} />
               <span>Sign Up</span>
             </Link>
           )}
-          {screenWidth < 513  && <MobileOption handleLogout={handleLogout} setIsLibraryOpen={setIsLibraryOpen} backgroundVideo={backgroundVideo} setBackgroundVideo={setBackgroundVideo}/>}
+          {screenWidth < 513 && (
+            <MobileOption
+              handleLogout={handleLogout}
+              setIsLibraryOpen={setIsLibraryOpen}
+              backgroundVideo={backgroundVideo}
+              setBackgroundVideo={setBackgroundVideo}
+            />
+          )}
         </div>
       </div>
     </>

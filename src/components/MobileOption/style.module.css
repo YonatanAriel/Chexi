@@ -2,24 +2,24 @@
   margin-bottom: -7px;
 }
 .dropDownContent {
-    position: absolute;
-    top: 60px;
-    right: 0;
-    background-color:black ;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    color: wheat;
-    width: max(44vw, 130px);
-    padding: 1em;
-    gap: .9em;
-    border-radius: 12px;
-    backdrop-filter: blur(30px);
-    border: 2.5px solid wheat;
+  position: absolute;
+  top: 60px;
+  right: 0;
+  background-color: black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  color: wheat;
+  width: max(44vw, 130px);
+  padding: 1em;
+  gap: 0.9em;
+  border-radius: 12px;
+  backdrop-filter: blur(30px);
+  border: 2.5px solid wheat;
 }
 @media screen and (max-width: 768px) {
-    .dropDownContent {
-      top: max(12%, 60px);
-    }
-}  
+  .dropDownContent {
+    top: max(12%, 60px);
+  }
+}

@@ -11,7 +11,6 @@
   padding: 15px 15px 5px 15px;
   border-radius: 5px;
   cursor: pointer;
-  /* width: 100%; */
 }
 .playlist img,
 .playlist div {
@@ -42,8 +41,7 @@
   text-overflow: ellipsis;
   white-space: nowrap;
   text-align: center;
-  font-size: clamp(.5rem, 8vmin, 1.7rem);
-  ;
+  font-size: clamp(0.5rem, 8vmin, 1.7rem);
 }
 @media screen and (max-width: 760px) {
   .playlist {
@@ -59,9 +57,7 @@
   }
 }
 @media screen and (max-width: 320px) {
-
   .playlist > div:first-child > span {
     font-size: 3.5rem;
   }
 }
-

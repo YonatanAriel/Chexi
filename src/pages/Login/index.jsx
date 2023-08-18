@@ -1,9 +1,9 @@
-import AuthForm from "../../components/AuthForm"
+import AuthForm from "../../components/AuthForm";
 
-function Login({setUserSearch}) {
+function Login({ setUserSearch }) {
   return (
     <>
-    <AuthForm setUserSearch={setUserSearch} title={"Login"}/>
+      <AuthForm setUserSearch={setUserSearch} title={"Login"} />
     </>
   );
 }

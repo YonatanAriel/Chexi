@@ -1,8 +1,12 @@
 import styles from "./style.module.css";
 import YouTube from "react-youtube";
-import { useContext, useEffect, useRef, useState, lazy, Suspense } from "react";
-import {FaPlay, FaCompressArrowsAlt, FaExpandArrowsAlt } from "react-icons/fa";
-import {TbPlayerSkipForwardFilled, TbPlayerSkipBackFilled, TbPlayerPauseFilled} from "react-icons/tb";
+import { useContext, useEffect, useRef, useState } from "react";
+import { FaPlay, FaCompressArrowsAlt, FaExpandArrowsAlt } from "react-icons/fa";
+import {
+  TbPlayerSkipForwardFilled,
+  TbPlayerSkipBackFilled,
+  TbPlayerPauseFilled,
+} from "react-icons/tb";
 import { ImVolumeMute2, ImVolumeHigh } from "react-icons/im";
 import { BsCameraVideoFill, BsFillCameraVideoOffFill } from "react-icons/bs";
 import { Link, useLocation, useNavigate } from "react-router-dom";
@@ -15,17 +19,24 @@ import ShowPopups from "../../../contexts/ShowPopups";
 import Playlists from "../../../contexts/Playlists";
 import Token from "../../../contexts/Token";
 
-function Footer({backgroundVideo, setBackgroundVideo, screenWidth}) {
-  const {token} = useContext(Token)
-  const {playedPlaylist} = useContext(Playlists)
-  const {isSongPlaying, setIsSongPlaying, songs, songPlayed, skipBackOrForward} = useContext(HandlePlayingSongContext);
-  const {showAddToPlaylistPopup, setShowAddToPlaylistPopup} = useContext(ShowPopups)
+function Footer({ backgroundVideo, setBackgroundVideo, screenWidth }) {
+  const { token } = useContext(Token);
+  const { playedPlaylist } = useContext(Playlists);
+  const {
+    isSongPlaying,
+    setIsSongPlaying,
+    songs,
+    songPlayed,
+    skipBackOrForward,
+  } = useContext(HandlePlayingSongContext);
+  const { showAddToPlaylistPopup, setShowAddToPlaylistPopup } =
+    useContext(ShowPopups);
   const [volume, setVolume] = useState(50);
   const [showFooter, setShowFooter] = useState(true);
   const [minutes, setMinutes] = useState(0);
   const [seconds, setSeconds] = useState(0);
   const [songProgress, setSongProgress] = useState(0);
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const location = useLocation();
   const playerRef = useRef(null);
   const opts = {
@@ -37,9 +48,9 @@ function Footer({backgroundVideo, setBackgroundVideo, screenWidth}) {
       modestbranding: 1,
       showinfo: 0,
       rel: 0,
-      Loop: 1
+      Loop: 1,
     },
-  }
+  };
 
   const handlePlayerStateChange = (e) => {
     let interval;
@@ -47,7 +58,7 @@ function Footer({backgroundVideo, setBackgroundVideo, screenWidth}) {
       clearInterval(interval);
       setMinutes(0);
       setSeconds(0);
-    }
+    };
     if (e.data === window.YT.PlayerState.PLAYING) {
       interval = setInterval(() => {
         const duration = playerRef?.current?.getDuration();
@@ -64,8 +75,7 @@ function Footer({backgroundVideo, setBackgroundVideo, screenWidth}) {
           handleSongEnd();
         }
       }, 1000);
-    }
-    else{
+    } else {
       clearInterval(interval);
       setMinutes(0);
       setSeconds(0);
@@ -79,7 +89,7 @@ function Footer({backgroundVideo, setBackgroundVideo, screenWidth}) {
     playerRef.current.seekTo(seekTime);
     setSongProgress(progress);
   };
-    
+
   const handlePause = () => {
     setIsSongPlaying(false);
   };
@@ -90,18 +100,18 @@ function Footer({backgroundVideo, setBackgroundVideo, screenWidth}) {
 
   useEffect(() => {
     if (playerRef?.current) {
-          if(isSongPlaying){
-            playerRef.current?.playVideo();
-          } else {
-            playerRef.current?.pauseVideo();
-          }
-          if (playerRef?.current) {
-            playerRef.current?.setVolume(volume);
-          }
+      if (isSongPlaying) {
+        playerRef.current?.playVideo();
+      } else {
+        playerRef.current?.pauseVideo();
       }
+      if (playerRef?.current) {
+        playerRef.current?.setVolume(volume);
+      }
+    }
   }, [isSongPlaying, volume]);
 
-  const handleBackgrundVideo = () => {
+  const handleBackgroundVideo = () => {
     setBackgroundVideo((prev) => !prev);
   };
 
@@ -117,47 +127,52 @@ function Footer({backgroundVideo, setBackgroundVideo, screenWidth}) {
   const handleUnmute = () => {
     setVolume(50);
   };
-  
+
   return (
     <>
       <div className={styles.videoContainer}>
         <YouTube
           onStateChange={handlePlayerStateChange}
-          style={{ display: location.pathname === "/Video" || backgroundVideo? "block" : "none",}}
-          videoId={playedPlaylist? songPlayed?.videoId : songPlayed?.id}
+          style={{
+            display:
+              location.pathname === "/Video" || backgroundVideo
+                ? "block"
+                : "none",
+          }}
+          videoId={playedPlaylist ? songPlayed?.videoId : songPlayed?.id}
           opts={opts}
           autoplay
           onReady={(e) => {
-            (playerRef.current = e.target)
-            setMinutes(0)
-            setSeconds(0)
-              }
-            }
+            playerRef.current = e.target;
+            setMinutes(0);
+            setSeconds(0);
+          }}
           onEnd={() => {
-           playedPlaylist? skipBackOrForward("forward", playedPlaylist) : skipBackOrForward("forward", songs);
-           setMinutes(0)
-           setSeconds(0)
+            playedPlaylist
+              ? skipBackOrForward("forward", playedPlaylist)
+              : skipBackOrForward("forward", songs);
+            setMinutes(0);
+            setSeconds(0);
           }}
         />
       </div>
-      <div className={`${styles.arrowButton} ${!showFooter && styles.arrowUpButton}`}
+      <div
+        className={`${styles.arrowButton} ${
+          !showFooter && styles.arrowUpButton
+        }`}
         onClick={() => setShowFooter((prev) => !prev)}
-        >
-        {showFooter ? (
-          <IoIosArrowDown size={41} />
-        ) : (
-          <IoIosArrowUp size={64} />
-        )}
+      >
+        {showFooter ? <IoIosArrowDown size={41} /> : <IoIosArrowUp size={64} />}
       </div>
       {showFooter && (
         <div className={styles.mainDiv}>
           <div className={styles.fullScreenButtons}>
             {location.pathname === "/Video" ? (
-              <Link 
-               onClick={() => {
-                navigate(-1)
-                
-              }}>
+              <Link
+                onClick={() => {
+                  navigate(-1);
+                }}
+              >
                 {
                   <BsFillCameraVideoOffFill
                     size={25}
@@ -166,60 +181,74 @@ function Footer({backgroundVideo, setBackgroundVideo, screenWidth}) {
                 }
               </Link>
             ) : (
-              <Link to={"Video"} 
-              >
+              <Link to={"Video"}>
                 {
                   <BsCameraVideoFill
                     size={25}
-                    style={{display: screenWidth < 513 && "none", marginLeft: "0.2vw"}}
+                    style={{
+                      display: screenWidth < 513 && "none",
+                      marginLeft: "0.2vw",
+                    }}
                   />
                 }
               </Link>
             )}
             {!backgroundVideo && (
-              <div >
-              <FaExpandArrowsAlt
-                size={24}
-                onClick={handleBackgrundVideo}
-                className={styles.iconButton}
-                style={{display: screenWidth < 513 && "none"}}
-              />
+              <div>
+                <FaExpandArrowsAlt
+                  size={24}
+                  onClick={handleBackgroundVideo}
+                  className={styles.iconButton}
+                  style={{ display: screenWidth < 513 && "none" }}
+                />
               </div>
             )}
             {backgroundVideo && (
               <FaCompressArrowsAlt
                 size={24}
-                onClick={handleBackgrundVideo}
+                onClick={handleBackgroundVideo}
                 className={styles.iconButton}
-                style={{display: screenWidth < 513 && "none"}}
+                style={{ display: screenWidth < 513 && "none" }}
               />
             )}
           </div>
           <div className={styles.artistDetails}>
-            <img 
-            className={isSongPlaying? styles.spinImg : ""}
-              src={playedPlaylist? (songPlayed?.channelImg) : (songPlayed?.channel?.icon)}
+            <img
+              className={isSongPlaying ? styles.spinImg : ""}
+              src={
+                playedPlaylist
+                  ? songPlayed?.channelImg
+                  : songPlayed?.channel?.icon
+              }
               onError={(e) => {
-                (e.target.src = playedPlaylist? songPlayed?.songImg : songPlayed?.thumbnail?.url)
+                e.target.src = playedPlaylist
+                  ? songPlayed?.songImg
+                  : songPlayed?.thumbnail?.url;
               }}
             />
-            <span>{playedPlaylist? songPlayed?.channelName : songPlayed?.channel?.name}</span>
+            <span>
+              {playedPlaylist
+                ? songPlayed?.channelName
+                : songPlayed?.channel?.name}
+            </span>
           </div>
           <div className={styles.centerItemsContainer}>
-            <div className={styles.palyingButtonsContainer} >
+            <div className={styles.palyingButtonsContainer}>
               <HandleFavoriteSong screenWidth={screenWidth} />
               <TbPlayerSkipBackFilled
                 onClick={() => {
-                  playedPlaylist? skipBackOrForward("back", playedPlaylist) : skipBackOrForward("back", songs)
+                  playedPlaylist
+                    ? skipBackOrForward("back", playedPlaylist)
+                    : skipBackOrForward("back", songs);
                 }}
-                size={screenWidth > 500? 19 : 35}
+                size={screenWidth > 500 ? 19 : 35}
                 className={styles.iconButton}
               />
               {!isSongPlaying && (
                 <FaPlay
                   className={`${styles.iconButton} ${styles.playAndPauseButton}`}
                   onClick={handlePlay}
-                  size={screenWidth > 500? 30 : 40}
+                  size={screenWidth > 500 ? 30 : 40}
                   // size={40}
                 />
               )}
@@ -227,18 +256,23 @@ function Footer({backgroundVideo, setBackgroundVideo, screenWidth}) {
                 <TbPlayerPauseFilled
                   className={`${styles.iconButton} ${styles.playAndPauseButton}`}
                   onClick={handlePause}
-                  size={screenWidth > 500? 30 : 40}
+                  size={screenWidth > 500 ? 30 : 40}
                 />
               )}
               <TbPlayerSkipForwardFilled
                 onClick={() => {
-                   playedPlaylist? skipBackOrForward("forward", playedPlaylist) : skipBackOrForward("forward", songs);}}
-                   size={screenWidth > 500? 19 : 35}
-                   className={styles.iconButton}
+                  playedPlaylist
+                    ? skipBackOrForward("forward", playedPlaylist)
+                    : skipBackOrForward("forward", songs);
+                }}
+                size={screenWidth > 500 ? 19 : 35}
+                className={styles.iconButton}
               />
               <div className={styles.AddToPlaylist}>
                 <BsPlusCircle
-                  onClick={() => {if(token) setShowAddToPlaylistPopup((prev) => !prev)}}
+                  onClick={() => {
+                    if (token) setShowAddToPlaylistPopup((prev) => !prev);
+                  }}
                   size={19}
                   className={`${styles.iconButton} ${styles.addToPlaylistButton}`}
                 />

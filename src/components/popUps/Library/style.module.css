@@ -1,9 +1,7 @@
 .libraryContainer {
   position: fixed;
-  /* position: sticky; */
   top: 0;
   left: 0;
-  /* width: 20vw; */
   min-width: 220px;
   height: 100vh;
   background-color: rgb(0, 0, 0);
@@ -14,7 +12,6 @@
   display: flex;
   flex-direction: column;
   padding-left: 3vw;
-  /* gap: 4.5vh; */
   font-size: 1.1rem;
   overflow: hidden;
   justify-content: space-between;
@@ -22,8 +19,7 @@
 .linksContainer {
   display: flex;
   flex-direction: column;
-    gap: 4.5vh;
-
+  gap: 4.5vh;
 }
 @keyframes entryAnimation {
   from {
@@ -34,9 +30,7 @@
     left: 0;
   }
   to {
-    /* width: 20vw; */
-    /* overflow: visible; */
-    left:0;
+    left: 0;
   }
 }
 .libraryContainer a {
@@ -68,16 +62,11 @@
   animation: moveIn 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55) forwards;
 }
 .contact {
-  /* position: absolute; */
-  /* left: 0; */
-  /* padding-left: 2.5%; */
-  /* bottom: 20px; */
   width: calc(2vw + 100%);
   transform: translate(-2vw);
   text-overflow: ellipsis;
   z-index: 1;
-  animation: entryAnimation 3s; 
-  /* overflow: hidden; */
+  animation: entryAnimation 3s;
   min-width: 185px;
   padding-bottom: 3em;
 }
@@ -93,18 +82,16 @@
   }
 }
 @media screen and (max-width: 513px) {
-  .libraryContainer { 
+  .libraryContainer {
     height: 100%;
     bottom: 0;
     z-index: 9;
-    padding-left:10%;  
-}
-  .contact{
+    padding-left: 10%;
+  }
+  .contact {
     z-index: 9;
   }
   .libraryContainer span {
     margin-left: 4vw;
   }
-  
-
 }

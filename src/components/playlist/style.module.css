@@ -7,7 +7,7 @@
   overflow-y: auto;
   background: linear-gradient(to bottom, rgba(0, 0, 0, 0.24) 0.005%, black);
 }
-.hedingDiv {
+.headingDiv {
   width: 100%;
   color: wheat;
   padding: 3.5em 14% 3.5em 3em;
@@ -21,11 +21,10 @@
   top: 20px;
 }
 .PlayButton {
-  margin-top: 10px;
   cursor: pointer;
 }
-.hedingDiv span {
-  font-size: clamp(1rem, 13vmin,4rem);
+.headingDiv span {
+  font-size: clamp(1rem, 13vmin, 4rem);
   font-weight: 600;
   max-width: 70%;
   max-height: 100%;
@@ -35,7 +34,7 @@
 }
 .songsContainer {
   position: sticky;
-  top:30%;
+  top: 30%;
   display: flex;
   flex-direction: column;
   gap: 5px;
@@ -47,13 +46,13 @@
     top: max(60px, 12%);
   }
 }
-@media  screen and (max-width: 600px) {
-  .hedingDiv {
+@media screen and (max-width: 600px) {
+  .headingDiv {
     flex-direction: column;
     align-items: flex-start;
     padding: 1em;
   }
-  .hedingDiv span {
+  .headingDiv span {
     max-width: 100%;
-  }  
+  }
 }

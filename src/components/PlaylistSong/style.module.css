@@ -1,86 +1,86 @@
 .mainDiv {
-    background-color: rgba(253, 247, 236, 0.022);
-    border-radius: 7px;
-    height: 70px;
-    display: flex;
-    gap: 2%;
-    align-items: center;
-    padding: 0 20px;
-    color: wheat;
-    position: relative;
-    backdrop-filter: blur(30px);
+  background-color: rgba(253, 247, 236, 0.022);
+  border-radius: 7px;
+  height: 70px;
+  display: flex;
+  gap: 2%;
+  align-items: center;
+  padding: 0 20px;
+  color: wheat;
+  position: relative;
+  backdrop-filter: blur(30px);
 }
 .mainDiv:hover .songButtons {
-    display: block;
+  display: block;
 }
 .mainDiv:hover .numberAndButtonsContainer > .songNumber {
-    display: none;
+  display: none;
 }
 .playButton {
-    cursor: pointer;
-    display: none;
+  cursor: pointer;
+  display: none;
 }
 .mainDiv:hover .playButton {
-    display: block;
+  display: block;
 }
 .imgContainer {
-    position: relative;
-    max-height: 44.8px;
+  position: relative;
+  max-height: 44.8px;
 }
 .imgContainer > div {
-    position: absolute;
-    left: 0;
-    right: 0;
-    bottom: 0vh;
-    overflow: hidden;
-    border-radius: 5px;
-    max-height: 70%;
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0vh;
+  overflow: hidden;
+  border-radius: 5px;
+  max-height: 70%;
 }
 .imgContainer img {
-    width: 80px;
-    height: 44.8px;
-    border-radius: 5px;
+  width: 80px;
+  height: 44.8px;
+  border-radius: 5px;
 }
 .numberAndButtonsContainer > div:first-child,
-.numberAndButtonsContainer .songButtons{
-    width: 1.7em;
+.numberAndButtonsContainer .songButtons {
+  width: 1.7em;
 }
 .title {
-    display: -webkit-box;
-    -webkit-box-orient: vertical;
-    -webkit-line-clamp: 2; 
-    max-width: 60%;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    max-height: 90%;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  max-width: 60%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-height: 90%;
 }
-.delete{
-    position: absolute;
-    right: 70px;
-    cursor: pointer;
+.delete {
+  position: absolute;
+  right: 70px;
+  cursor: pointer;
 }
 .delete:hover {
-    color: red;
+  color: red;
 }
 .mainDiv > span:last-child {
-    position: absolute;
-    right: 20px;
+  position: absolute;
+  right: 20px;
 }
 @media screen and (max-width: 660px) {
-    .mainDiv {
-        padding: 0 20px 0 8px ;
-    }
-    .duration{
-        display: none;
-    }
-    .delete{
-        right: 14px;
-    }
-    .numberAndButtonsContainer > div:first-child,
-.numberAndButtonsContainer .songButtons{
+  .mainDiv {
+    padding: 0 20px 0 8px;
+  }
+  .duration {
+    display: none;
+  }
+  .delete {
+    right: 14px;
+  }
+  .numberAndButtonsContainer > div:first-child,
+  .numberAndButtonsContainer .songButtons {
     width: 1.4em;
-}
-.title {
+  }
+  .title {
     max-width: 47%;
-}
+  }
 }

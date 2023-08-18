@@ -10,24 +10,24 @@ function AuthForm({ title, setUserSearch }) {
   const [passwordErrors, setPasswordErrors] = useState([]);
   const [userNameErrors, setUserNameErrors] = useState([]);
   const [isDemoMode, setIsDemoMode] = useState(false);
-  const demoUserData = { userName: "demoUser", password: "55Da$s"};
+  const demoUserData = { userName: "demoUser", password: "55Da$s" };
   const location = useLocation().pathname;
-  const formRef = useRef()
-  
+  const formRef = useRef();
+
   const { setToken } = useContext(Token);
   const navigate = useNavigate();
   const passwordRegex =
     /^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,}$/;
-    const userNameRef = useRef();
+  const userNameRef = useRef();
 
-    useEffect(() => userNameRef.current.focus(), [])
+  useEffect(() => userNameRef.current.focus(), []);
 
   useEffect(() => {
     setUserNameErrors([]);
     if (data.userName.trim().length < 3 && data.userName.trim().length >= 1) {
       setUserNameErrors((prev) => [
         ...prev,
-        "User name should contain at least 3 chracters",
+        "User name should contain at least 3 characters",
       ]);
     }
   }, [data.userName]);
@@ -58,23 +58,23 @@ function AuthForm({ title, setUserSearch }) {
   };
 
   const handleLogin = async (userData) => {
-              try {
-            const loginToken = await api.post(`users/login`, userData);
-            localStorage.setItem("token", loginToken);
-            setUserSearch("Dua Lipa");
-            setToken(loginToken);
-            navigate("/");
-          } catch (err) {
-            formRef.current.style.cursor = 'auto';
-            if (
-              err?.response?.data === "User not exist" ||
-              err?.response?.data === "password mismatch"
-            ) {
-              setUserNameErrors("Wrong user name or password");
-            }
-          }
-  }
-  
+    try {
+      const loginToken = await api.post(`users/login`, userData);
+      localStorage.setItem("token", loginToken);
+      setUserSearch("Dua Lipa");
+      setToken(loginToken);
+      navigate("/");
+    } catch (err) {
+      formRef.current.style.cursor = "auto";
+      if (
+        err?.response?.data === "User not exist" ||
+        err?.response?.data === "password mismatch"
+      ) {
+        setUserNameErrors("Wrong user name or password");
+      }
+    }
+  };
+
   const handleRegister = async () => {
     try {
       const registerToken = await api.post("users/register", data);
@@ -83,38 +83,36 @@ function AuthForm({ title, setUserSearch }) {
       setUserSearch("Dua lipa");
       navigate("/");
     } catch (err) {
-      formRef.current.style.cursor = 'auto';
+      formRef.current.style.cursor = "auto";
       if (err?.response?.data === "User already exist") {
         setUserNameErrors(
           "This user name is not available. Please choose a new one"
         );
       }
     }
-
-  }
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    formRef.current.style.cursor = 'wait';
-    if(isDemoMode){
-      handleLogin(demoUserData)
-      return
+    formRef.current.style.cursor = "wait";
+    if (isDemoMode) {
+      handleLogin(demoUserData);
+      return;
     }
-    if(!(data.userName.trim().length >= 3)) {
-      setUserNameErrors("User name should contain at least 3 chracters");
-      formRef.current.style.cursor = 'auto';
-      return
+    if (!(data.userName.trim().length >= 3)) {
+      setUserNameErrors("User name should contain at least 3 characters");
+      formRef.current.style.cursor = "auto";
+      return;
     }
-    if(!validatePassword(data.password)){
-      formRef.current.style.cursor = 'auto';
-      return
-    } 
+    if (!validatePassword(data.password)) {
+      formRef.current.style.cursor = "auto";
+      return;
+    }
     if (title === "Login") {
-          handleLogin(data)
-          return
-    } 
-    else if (title === "Register") {
-          handleRegister()
+      handleLogin(data);
+      return;
+    } else if (title === "Register") {
+      handleRegister();
     }
   };
 
@@ -128,13 +126,13 @@ function AuthForm({ title, setUserSearch }) {
       </div>
 
       <div className={styles.loginContainer} ref={formRef}>
-        <form className={styles.form}  onSubmit={handleSubmit} noValidate>
+        <form className={styles.form} onSubmit={handleSubmit} noValidate>
           <span>{title}</span>
           <div className={styles.inputContainer}>
             <div>
               <label htmlFor="username">User name</label>
               <input
-              ref={userNameRef}
+                ref={userNameRef}
                 type="text"
                 id="username"
                 placeholder="user name"
@@ -181,15 +179,22 @@ function AuthForm({ title, setUserSearch }) {
             </div>
           </div>
           <button type="submit">{title}</button>
-          <div className={styles.orContent} >
-              <span>Or</span>
-              <span>For a quick preview - <button type="submit" onClick={() => setIsDemoMode(true)}>Demo mode</button></span>
-              <Link to={"/"} onClick={handleGuest}>
-                Continue as a guest
-              </Link>
-              {location == "/Login"? 
-                <Link to={"/SignUp"}>Register</Link> 
-              : <Link to={"/Login"}>Log in</Link>}
+          <div className={styles.orContent}>
+            <span>Or</span>
+            <span>
+              For a quick preview -{" "}
+              <button type="submit" onClick={() => setIsDemoMode(true)}>
+                Demo mode
+              </button>
+            </span>
+            <Link to={"/"} onClick={handleGuest}>
+              Continue as a guest
+            </Link>
+            {location == "/Login" ? (
+              <Link to={"/SignUp"}>Register</Link>
+            ) : (
+              <Link to={"/Login"}>Log in</Link>
+            )}
           </div>
         </form>
       </div>

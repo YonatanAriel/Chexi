@@ -17,8 +17,6 @@
 }
 .libraryOpenMainDiv {
   border-bottom-left-radius: 0;
-  /* left: 20vw;
-  width: 80vw; */
   transition: all 2.3s ease-in-out;
 }
 .logoBackground {
@@ -39,7 +37,6 @@
 }
 .IncreaseLogoPadding {
   padding: 6vh 0 0 1.5vw;
-  /* background:none; */
   transition: padding 2.3s ease-in-out;
 }
 .logoText {
@@ -76,19 +73,16 @@ div span {
     display: none;
   }
   .mainDiv {
-    width: 100%; 
+    width: 100%;
     left: 0;
     right: 0;
   }
-
-
 }
-
 
 @media screen and (max-width: 768px) {
   .mainDiv {
     min-height: 12%;
-    width: 100%; 
+    width: 100%;
     left: 0;
     right: 0;
   }
@@ -96,4 +90,3 @@ div span {
     display: none;
   }
 }
-

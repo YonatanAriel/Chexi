@@ -1,13 +1,13 @@
-import styles from "./style.module.css"
+import styles from "./style.module.css";
 import { useEffect, useRef, useState } from "react";
 import { HiPlus } from "react-icons/hi";
-import api from "../../apiCalls/apiCalls"
-import axios from 'axios'
+import api from "../../apiCalls/apiCalls";
+import axios from "axios";
 
-function AddArtist({setShowPopup}) {
+function AddArtist({ setShowPopup }) {
   const [fetchArtistImgRetryCount, setFetchArtistImgRetryCount] = useState(0);
   const maxFetchArtistImgRetryCount = 3;
-  const inputRef = useRef(null)
+  const inputRef = useRef(null);
   const options = {
     method: "GET",
     url: "https://simple-youtube-search.p.rapidapi.com/search",
@@ -19,8 +19,7 @@ function AddArtist({setShowPopup}) {
       "X-RapidAPI-Host": "simple-youtube-search.p.rapidapi.com",
     },
   };
-  useEffect(() => inputRef.current.focus(), [])
-  
+  useEffect(() => inputRef.current.focus(), []);
 
   const getArtistImg = async (artistName) => {
     try {
@@ -30,9 +29,11 @@ function AddArtist({setShowPopup}) {
       return img;
     } catch (err) {
       if (fetchArtistImgRetryCount < maxFetchArtistImgRetryCount) {
-          setTimeout(() => {
-            setFetchArtistImgRetryCount((prevFetchArtistImgRetryCount) => prevFetchArtistImgRetryCount + 1);
-          }, 1000);
+        setTimeout(() => {
+          setFetchArtistImgRetryCount(
+            (prevFetchArtistImgRetryCount) => prevFetchArtistImgRetryCount + 1
+          );
+        }, 1000);
       }
     }
   };
@@ -42,14 +43,20 @@ function AddArtist({setShowPopup}) {
     if (artistName.trim()) {
       setShowPopup(false);
       let artistImg = await getArtistImg(artistName);
-            while (!artistImg && fetchArtistImgRetryCount < maxFetchArtistImgRetryCount) {
+      while (
+        !artistImg &&
+        fetchArtistImgRetryCount < maxFetchArtistImgRetryCount
+      ) {
         artistImg = await getArtistImg(artistName);
       }
 
       if (artistImg) {
-        await api.post("users/addfavoriteartist", { artistName: artistName, artistImg: artistImg });
-      } 
-      
+        await api.post("users/addfavoriteartist", {
+          artistName: artistName,
+          artistImg: artistImg,
+        });
+      }
+
       setShowPopup(null);
     }
   };
@@ -58,17 +65,20 @@ function AddArtist({setShowPopup}) {
     <div className={styles.addNewArtistPopup}>
       <input
         type="text"
-        ref={inputRef} 
+        ref={inputRef}
         className={styles.popupInput}
         placeholder="Artist name"
-        onKeyDown={(e) => {if(e.key === 'Enter'){HandleAddArtist()}}}
+        onKeyDown={(e) => {
+          if (e.key === "Enter") {
+            HandleAddArtist();
+          }
+        }}
       />
       <button onClick={HandleAddArtist} className={styles.popupButton}>
         <HiPlus size={25} />
       </button>
-  </div>
-
-  )
+    </div>
+  );
 }
 
-export default AddArtist
+export default AddArtist;

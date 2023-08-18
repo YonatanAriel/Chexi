@@ -34,7 +34,7 @@ function AddToPlaylist() {
     await api.post(`playlists/addsong/${playlist._id}`, songPlayedData);
     setRenderPlaylistsPage((prev) => !prev);
   };
-  
+
   return (
     token && (
       <div className={styles.popup}>
@@ -73,4 +73,3 @@ function AddToPlaylist() {
   );
 }
 export default AddToPlaylist;
-

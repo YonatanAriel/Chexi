@@ -1,11 +1,11 @@
-.appContainer{
-    min-height: 100vh;
+.appContainer {
+  min-height: 100vh;
 }
 .loadingContainer {
-    position: absolute;
-    top: 60px;
-    right: 0;
-    width: 100%;
-    height: calc(100% - 60px);
-    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.24) 0.005%, black);
+  position: absolute;
+  top: 60px;
+  right: 0;
+  width: 100%;
+  height: calc(100% - 60px);
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.24) 0.005%, black);
 }

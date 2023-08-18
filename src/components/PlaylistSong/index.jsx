@@ -9,8 +9,8 @@ import Playlists from "../../contexts/Playlists";
 import api from "../../apiCalls/apiCalls";
 
 function PlaylistSong({ song, index, handlePlayPlaylist }) {
-
-  const { isSongPlaying, songPlayed, setSongPlayed, handleSongsId} = useContext(HandlePlayingSongContext);
+  const { isSongPlaying, songPlayed, setSongPlayed, handleSongsId } =
+    useContext(HandlePlayingSongContext);
   const {
     setPlaylists,
     playedPlaylist,
@@ -21,61 +21,74 @@ function PlaylistSong({ song, index, handlePlayPlaylist }) {
     setCurrentPlaylistData,
   } = useContext(Playlists);
   const location = useLocation().pathname;
-  const id = { firstId: playedPlaylist ? "videoId" : "id",
-               secondId: location === "/FavoriteArtists" ? "id" : "videoId",};
-  const condition = (songPlayed && songPlayed[id.firstId]) === song[id.secondId];
+  const id = {
+    firstId: playedPlaylist ? "videoId" : "id",
+    secondId: location === "/FavoriteArtists" ? "id" : "videoId",
+  };
+  const condition =
+    (songPlayed && songPlayed[id.firstId]) === song[id.secondId];
 
   const deleteSongFromPlaylist = () => {
-    const playlistToUpdate = location === "/Playlists" ? currentPlaylistData : likedSongsPlaylist;
+    const playlistToUpdate =
+      location === "/Playlists" ? currentPlaylistData : likedSongsPlaylist;
     const updatedPlaylist = {
       ...playlistToUpdate,
       songsId: playlistToUpdate.songsId.filter(
         (playlistSong) => playlistSong._id !== song._id
-        ),
-      };
-    if(location === "/Playlists"){
-      const newSongs = handleSongsId(updatedPlaylist?.songsId, true)
-      const playedPlaylistWithoutIndexes = playedPlaylist?.map(({ index, ...rest }) => rest);
-      const isCurrentPlaylistPlayed = JSON.stringify(playedPlaylistWithoutIndexes) === JSON.stringify(currentPlaylistData?.songsId)
-      if(isCurrentPlaylistPlayed && playedPlaylist.length > 0){
-        const playedSongIndex = playedPlaylist?.findIndex(song => song._id === songPlayed?._id)
-        const newSongToPlay = (playedSongIndex === newSongs.length)? newSongs[0] : newSongs[playedSongIndex]
-        setSongPlayed(newSongToPlay)
-        setPlayedPlaylist(newSongs)
+      ),
+    };
+    if (location === "/Playlists") {
+      const newSongs = handleSongsId(updatedPlaylist?.songsId, true);
+      const playedPlaylistWithoutIndexes = playedPlaylist?.map(
+        ({ index, ...rest }) => rest
+      );
+      const isCurrentPlaylistPlayed =
+        JSON.stringify(playedPlaylistWithoutIndexes) ===
+        JSON.stringify(currentPlaylistData?.songsId);
+      if (isCurrentPlaylistPlayed && playedPlaylist.length > 0) {
+        const playedSongIndex = playedPlaylist?.findIndex(
+          (song) => song._id === songPlayed?._id
+        );
+        const newSongToPlay =
+          playedSongIndex === newSongs.length
+            ? newSongs[0]
+            : newSongs[playedSongIndex];
+        setSongPlayed(newSongToPlay);
+        setPlayedPlaylist(newSongs);
       }
     }
-      playlistToUpdate === currentPlaylistData
+    playlistToUpdate === currentPlaylistData
       ? (setCurrentPlaylistData(updatedPlaylist),
-      setPlaylists((prev) => {
-        return prev.map((playlist) => {
-          if (playlist._id === updatedPlaylist._id) {
-            return updatedPlaylist;
-          }
-          return playlist;
-        });
-      }))
+        setPlaylists((prev) => {
+          return prev.map((playlist) => {
+            if (playlist._id === updatedPlaylist._id) {
+              return updatedPlaylist;
+            }
+            return playlist;
+          });
+        }))
       : setLikedSongsPlaylist(updatedPlaylist);
 
-        api.post(`playlists/deletesong/${playlistToUpdate._id}`, { id: song._id });
+    api.post(`playlists/deletesong/${playlistToUpdate._id}`, { id: song._id });
   };
 
   return (
     <>
-      <div
-        key={index}
-        className={styles.mainDiv}
-      >
+      <div key={index} className={styles.mainDiv}>
         <div className={styles.numberAndButtonsContainer}>
-          <div className={styles.songNumber} style={{display: condition && "none"}}>{index}</div>
+          <div
+            className={styles.songNumber}
+            style={{ display: condition && "none" }}
+          >
+            {index}
+          </div>
           <div className={styles.songButtons}>
             {!condition ? (
               <div
                 className={styles.playButton}
                 onClick={() => handlePlayPlaylist(index - 1)}
               >
-                <FaPlay size={23}
-                 style={{marginTop:"6px"}} 
-                 />
+                <FaPlay size={23} style={{ marginTop: "6px" }} />
               </div>
             ) : (
               <div className={styles.songNumber}>{index}</div>
@@ -91,7 +104,7 @@ function PlaylistSong({ song, index, handlePlayPlaylist }) {
             alt={song?.title}
           />
           {condition && isSongPlaying && (
-            <div >
+            <div>
               <WaveSpinner size={33} />
             </div>
           )}
@@ -99,7 +112,7 @@ function PlaylistSong({ song, index, handlePlayPlaylist }) {
         <span className={styles.title}>{song?.title}</span>
         {["/Playlists", "/LikedSongs"].includes(location) && (
           <div className={styles.delete} onClick={deleteSongFromPlaylist}>
-            <AiTwotoneDelete style={{marginTop:"6px"}} size={20} />
+            <AiTwotoneDelete style={{ marginTop: "6px" }} size={20} />
           </div>
         )}
         <span className={styles.duration}>{song?.duration_formatted}</span>
