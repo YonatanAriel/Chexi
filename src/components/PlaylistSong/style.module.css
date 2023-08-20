@@ -10,6 +10,12 @@
   position: relative;
   backdrop-filter: blur(30px);
 }
+.mainDiv:hover {
+  background-color: rgba(253, 247, 236, 0.06);
+}
+.mainDiv:hover .delete {
+  display: block;
+}
 .mainDiv:hover .songButtons {
   display: block;
 }
@@ -58,6 +64,7 @@
   position: absolute;
   right: 70px;
   cursor: pointer;
+  display: none;
 }
 .delete:hover {
   color: red;

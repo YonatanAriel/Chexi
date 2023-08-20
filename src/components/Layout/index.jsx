@@ -92,7 +92,7 @@ function Layout() {
   }, []);
 
   useEffect(() => {
-    async function fetchData() {
+    async function fetchPlaylists() {
       if (token) {
         try {
           const res = await api.get("playlists/user");
@@ -101,7 +101,7 @@ function Layout() {
         } catch (err) {}
       }
     }
-    fetchData();
+    fetchPlaylists();
   }, [renderPlaylistsPage, token]);
 
   useEffect(() => {
