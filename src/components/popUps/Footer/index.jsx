@@ -20,6 +20,8 @@ import Playlists from "../../../contexts/Playlists";
 import Token from "../../../contexts/Token";
 
 function Footer({ backgroundVideo, setBackgroundVideo, screenWidth }) {
+  const [isPlayerReady, setIsPlayerReady] = useState(false);
+
   const { token } = useContext(Token);
   const { playedPlaylist } = useContext(Playlists);
   const {
@@ -99,17 +101,19 @@ function Footer({ backgroundVideo, setBackgroundVideo, screenWidth }) {
   };
 
   useEffect(() => {
-    if (playerRef?.current) {
-      if (isSongPlaying) {
-        playerRef.current?.playVideo();
-      } else {
-        playerRef.current?.pauseVideo();
-      }
+    if (isPlayerReady) {
       if (playerRef?.current) {
         playerRef.current?.setVolume(volume);
+        if (isSongPlaying) {
+          playerRef.current?.playVideo();
+        } else {
+          playerRef.current?.pauseVideo();
+        }
       }
+      // if (playerRef?.current) {
+      // }
     }
-  }, [isSongPlaying, volume]);
+  }, [isSongPlaying, volume, songPlayed]);
 
   const handleBackgroundVideo = () => {
     setBackgroundVideo((prev) => !prev);
@@ -117,7 +121,7 @@ function Footer({ backgroundVideo, setBackgroundVideo, screenWidth }) {
 
   const handleVolumeChange = (e) => {
     const newVolume = Number(e.target.value);
-    setVolume(newVolume);
+    if (isPlayerReady) setVolume(newVolume);
   };
 
   const handleMute = () => {
@@ -146,6 +150,7 @@ function Footer({ backgroundVideo, setBackgroundVideo, screenWidth }) {
             playerRef.current = e.target;
             setMinutes(0);
             setSeconds(0);
+            setIsPlayerReady(true);
           }}
           onEnd={() => {
             playedPlaylist

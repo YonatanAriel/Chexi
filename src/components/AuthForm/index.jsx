@@ -4,12 +4,14 @@ import { BsMusicNote } from "react-icons/bs";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import Token from "../../contexts/Token";
 import api from "../../apiCalls/apiCalls";
+import Loading from "../Loading";
 
 function AuthForm({ title, setUserSearch }) {
   const [data, setData] = useState({ userName: "", password: "" });
   const [passwordErrors, setPasswordErrors] = useState([]);
   const [userNameErrors, setUserNameErrors] = useState([]);
   const [isDemoMode, setIsDemoMode] = useState(false);
+  const [showLoadingDiv, setShowLoadingDiv] = useState(false);
   const demoUserData = { userName: "demoUser", password: "55Da$s" };
   const location = useLocation().pathname;
   const formRef = useRef();
@@ -65,6 +67,7 @@ function AuthForm({ title, setUserSearch }) {
       setToken(loginToken);
       navigate("/");
     } catch (err) {
+      setShowLoadingDiv(false);
       formRef.current.style.cursor = "auto";
       if (
         err?.response?.data === "User not exist" ||
@@ -83,6 +86,7 @@ function AuthForm({ title, setUserSearch }) {
       setUserSearch("Dua lipa");
       navigate("/");
     } catch (err) {
+      setShowLoadingDiv(false);
       formRef.current.style.cursor = "auto";
       if (err?.response?.data === "User already exist") {
         setUserNameErrors(
@@ -94,6 +98,8 @@ function AuthForm({ title, setUserSearch }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setShowLoadingDiv(true);
+
     formRef.current.style.cursor = "wait";
     if (isDemoMode) {
       handleLogin(demoUserData);
@@ -102,10 +108,12 @@ function AuthForm({ title, setUserSearch }) {
     if (!(data.userName.trim().length >= 3)) {
       setUserNameErrors("User name should contain at least 3 characters");
       formRef.current.style.cursor = "auto";
+      setShowLoadingDiv(false);
       return;
     }
     if (!validatePassword(data.password)) {
       formRef.current.style.cursor = "auto";
+      setShowLoadingDiv(false);
       return;
     }
     if (title === "Login") {
@@ -126,7 +134,17 @@ function AuthForm({ title, setUserSearch }) {
       </div>
 
       <div className={styles.loginContainer} ref={formRef}>
-        <form className={styles.form} onSubmit={handleSubmit} noValidate>
+        {showLoadingDiv && (
+          <div className={styles.loadingDiv}>
+            <Loading />
+          </div>
+        )}
+        <form
+          style={{ display: showLoadingDiv && "none" }}
+          className={styles.form}
+          onSubmit={handleSubmit}
+          noValidate
+        >
           <span>{title}</span>
           <div className={styles.inputContainer}>
             <div>
@@ -182,7 +200,7 @@ function AuthForm({ title, setUserSearch }) {
           <div className={styles.orContent}>
             <span>Or</span>
             <span>
-              For a quick preview -{" "}
+              For a quick preview -
               <button type="submit" onClick={() => setIsDemoMode(true)}>
                 Demo mode
               </button>

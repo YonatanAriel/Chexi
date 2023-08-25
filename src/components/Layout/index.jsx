@@ -12,6 +12,7 @@ import ShowPopupsContext from "../../contexts/ShowPopups";
 import Header from "../Header";
 import Footer from "../popUps/Footer";
 import Library from "../popUps/Library";
+import AccessInfo from "../AccessInfo";
 const Home = lazy(() => import("../../pages/Home"));
 const Login = lazy(() => import("../../pages/Login"));
 const SignUp = lazy(() => import("../../pages/SignUp"));
@@ -238,38 +239,59 @@ function Layout() {
                         />
                       }
                     />
-                    {token && (
-                      <>
-                        <Route
-                          path="/LikedSongs"
-                          element={
+                    {/* {token && ( */}
+                    <>
+                      <Route
+                        path="/LikedSongs"
+                        element={
+                          token ? (
                             <LikedSongs
                               libraryWidth={libraryWidth}
                               screenWidth={screenWidth}
                             />
-                          }
-                        />
-                        <Route
-                          path="/Playlists"
-                          element={
+                          ) : (
+                            <AccessInfo
+                              libraryWidth={libraryWidth}
+                              screenWidth={screenWidth}
+                            />
+                          )
+                        }
+                      />
+                      <Route
+                        path="/Playlists"
+                        element={
+                          token ? (
                             <Playlists
                               libraryWidth={libraryWidth}
                               screenWidth={screenWidth}
                             />
-                          }
-                        />
-                        <Route
-                          path="/FavoriteArtists"
-                          element={
+                          ) : (
+                            <AccessInfo
+                              libraryWidth={libraryWidth}
+                              screenWidth={screenWidth}
+                            />
+                          )
+                        }
+                      />
+                      <Route
+                        path="/FavoriteArtists"
+                        element={
+                          token ? (
                             <FavoriteArtists
                               screenWidth={screenWidth}
                               setSongs={setSongs}
                               libraryWidth={libraryWidth}
                             />
-                          }
-                        />
-                      </>
-                    )}
+                          ) : (
+                            <AccessInfo
+                              libraryWidth={libraryWidth}
+                              screenWidth={screenWidth}
+                            />
+                          )
+                        }
+                      />
+                    </>
+                    {/* // )} */}
                     <Route
                       path="/Login"
                       element={<Login setUserSearch={setUserSearch} />}

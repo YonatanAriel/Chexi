@@ -1,3 +1,8 @@
+.loadingDiv {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 .logoBackground {
   position: fixed;
   z-index: 10;
@@ -96,10 +101,11 @@
   margin: 20px 0;
   color: wheat;
   background-color: rgba(255, 255, 255, 0.045);
+  transition: transform 0.7s ease-out, background-color 0.7s ease-out;
 }
 .form button:hover {
   background-color: rgb(255, 255, 255, 0.12);
-  scale: 0.97;
+  transform: scale(0.97);
 }
 .orContent {
   padding-top: 3vh;
@@ -118,6 +124,7 @@
 }
 .orContent a {
   font-size: 1.2rem;
+  transition: transform 0.4s ease-out;
 }
 .orContent a:hover {
   transform: scale(1.04);
