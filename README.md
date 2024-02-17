@@ -8,8 +8,9 @@ Chexi is an innovative web application that allows users to enjoy their favorite
 music and video streaming experience. My platform is designed with a user-centric approach, enabling music enthusiasts to create playlists,
 add new artists, and save their preferred tracks effortlessly.
 
-## Visit Chexi Website - [Chexi website](https://chexi.netlify.app/)
+## Video - [Video](https://www.youtube.com/watch?v=jwihEcUi6Mo)
 
+## Website - [Chexi](https://chexi.netlify.app/)
 
 ### Key Features
 
