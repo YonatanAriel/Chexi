@@ -43,7 +43,8 @@ function Footer({ backgroundVideo, setBackgroundVideo, screenWidth }) {
   const playerRef = useRef(null);
   const opts = {
     playerVars: {
-      autoplay: 1,
+      // autoplay: 1,
+      autoplay: 0,
       fs: 1,
       controls: 0,
       disablekb: 1,
@@ -53,6 +54,19 @@ function Footer({ backgroundVideo, setBackgroundVideo, screenWidth }) {
       Loop: 1,
     },
   };
+
+  useEffect(() => {
+    const params = new URLSearchParams(location.search);
+    const playSong = params.get("playSong") === "true";
+
+    if (playSong) {
+      if (playSong && isPlayerReady) {
+        setIsSongPlaying(true);
+
+        setBackgroundVideo(true);
+      }
+    }
+  }, [location.search, isPlayerReady]);
 
   const handlePlayerStateChange = (e) => {
     let interval;
@@ -101,18 +115,16 @@ function Footer({ backgroundVideo, setBackgroundVideo, screenWidth }) {
   };
 
   useEffect(() => {
-    if (isPlayerReady) {
-      if (playerRef?.current) {
-        playerRef.current?.setVolume(volume);
-        if (isSongPlaying) {
-          playerRef.current?.playVideo();
-        } else {
-          playerRef.current?.pauseVideo();
-        }
-      }
-      // if (playerRef?.current) {
-      // }
-    }
+    // if (isPlayerReady) {
+    //   if (playerRef?.current) {
+    //     playerRef.current?.setVolume(volume);
+    //     if (isSongPlaying) {
+    //       playerRef.current?.playVideo();
+    //     } else {
+    //       playerRef.current?.pauseVideo();
+    //     }
+    //   }
+    // }
   }, [isSongPlaying, volume, songPlayed]);
 
   const handleBackgroundVideo = () => {
@@ -131,7 +143,6 @@ function Footer({ backgroundVideo, setBackgroundVideo, screenWidth }) {
   const handleUnmute = () => {
     setVolume(50);
   };
-  useEffect(() => console.log(songPlayed), [songPlayed]);
 
   return (
     <>

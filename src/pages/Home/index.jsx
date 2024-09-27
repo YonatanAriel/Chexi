@@ -5,6 +5,7 @@ import HandlePlayingSongContext from "../../contexts/HandlePlayingSong";
 import { WaveSpinner } from "react-spinners-kit";
 import Playlists from "../../contexts/Playlists";
 import Loading from "../../components/Loading";
+import { useLocation } from "react-router-dom";
 
 function Home({ isLibraryOpen, screenWidth, libraryWidth }) {
   const {
@@ -25,10 +26,37 @@ function Home({ isLibraryOpen, screenWidth, libraryWidth }) {
   // const condition = songPlayed && songPlayed[playedPlaylist ? "videoId" : "id"]; old api
   const condition = songPlayed && songPlayed["videoId"];
   const [hoveredSong, setHoveredSong] = useState(null);
+  const [hasVisited, setHasVisited] = useState(false);
+  const location = useLocation();
   const containerWidth =
     !isLibraryOpen || screenWidth < 513
       ? "100vw"
       : `calc(100vw - ${libraryWidth})`;
+
+  useEffect(() => {
+    const storedSearchSongs = localStorage.getItem("searchSongs");
+    if (storedSearchSongs) {
+      try {
+        setSearchSongs(JSON.parse(storedSearchSongs));
+      } catch (error) {
+        console.log(error);
+      }
+    }
+  }, [songs]);
+
+  useEffect(() => {
+    const params = new URLSearchParams(location.search);
+    const playSong = params.get("playSong") === "true";
+
+    if (playSong && searchSongs && !hasVisited) {
+      setSongPlayed(searchSongs[2]);
+
+      // setIsSongPlaying(true);
+      setSongs(searchSongs);
+      setPlayedPlaylist(null);
+      setHasVisited(true);
+    }
+  }, [location.search, searchSongs]);
 
   useEffect(() => {
     const storedSearchSongs = localStorage.getItem("searchSongs");
@@ -61,8 +89,6 @@ function Home({ isLibraryOpen, screenWidth, libraryWidth }) {
       setImgHeight("15vw");
     }
   }, [imagesErrorCount, songs?.length, songs]);
-
-  useEffect(() => console.log(songs), [songs]);
 
   return (
     <>

@@ -35,8 +35,7 @@ function Layout() {
 
   const [showCreatePlaylistPopup, setShowCreatePlaylistPopup] = useState(false);
   const [showAddToPlaylistPopup, setShowAddToPlaylistPopup] = useState(false);
-  // const [userSearch, setUserSearch] = useState("dua lipa");
-  const [userSearch, setUserSearch] = useState("פאר טסי");
+  const [userSearch, setUserSearch] = useState("dua lipa");
   const [isLibraryOpen, setIsLibraryOpen] = useState(false);
   const [backgroundVideo, setBackgroundVideo] = useState(false);
   const [token, setToken] = useState(

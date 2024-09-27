@@ -13,7 +13,7 @@ function AuthForm({ title, setUserSearch }) {
   const [isDemoMode, setIsDemoMode] = useState(false);
   const [showLoadingDiv, setShowLoadingDiv] = useState(false);
   const demoUserData = { userName: "demoUser", password: "55Da$s" };
-  const location = useLocation().pathname;
+  const location = useLocation();
   const formRef = useRef();
 
   const { setToken } = useContext(Token);
@@ -21,6 +21,19 @@ function AuthForm({ title, setUserSearch }) {
   const passwordRegex =
     /^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,}$/;
   const userNameRef = useRef();
+
+  useEffect(() => {
+    const params = new URLSearchParams(location.search);
+    const demoMode = params.get("demo") === "true";
+    const playSong = params.get("playSong") === "true";
+    console.log(2, playSong);
+
+    if (demoMode && playSong) {
+      setIsDemoMode(true);
+      setShowLoadingDiv(true);
+      handleLogin(demoUserData, playSong);
+    }
+  }, [location.search]);
 
   useEffect(() => userNameRef.current.focus(), []);
 
@@ -59,13 +72,19 @@ function AuthForm({ title, setUserSearch }) {
     return errors.length === 0;
   };
 
-  const handleLogin = async (userData) => {
+  ///login?demo=true&playSong=true
+
+  const handleLogin = async (userData, playSong) => {
     try {
       const loginToken = await api.post(`users/login`, userData);
       localStorage.setItem("token", loginToken);
       setUserSearch("Dua Lipa");
       setToken(loginToken);
-      navigate("/");
+      if (playSong) {
+        navigate("/?playSong=true");
+      } else {
+        navigate("/");
+      }
     } catch (err) {
       setShowLoadingDiv(false);
       formRef.current.style.cursor = "auto";
@@ -208,7 +227,7 @@ function AuthForm({ title, setUserSearch }) {
             <Link to={"/"} onClick={handleGuest}>
               Continue as a guest
             </Link>
-            {location == "/Login" ? (
+            {location.pathname == "/Login" ? (
               <Link to={"/SignUp"}>Register</Link>
             ) : (
               <Link to={"/Login"}>Log in</Link>
