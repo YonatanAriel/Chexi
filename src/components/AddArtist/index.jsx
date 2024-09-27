@@ -8,24 +8,36 @@ function AddArtist({ setShowPopup }) {
   const [fetchArtistImgRetryCount, setFetchArtistImgRetryCount] = useState(0);
   const maxFetchArtistImgRetryCount = 3;
   const inputRef = useRef(null);
+  // const options = {
+  //   method: "GET",
+  //   url: "https://simple-youtube-search.p.rapidapi.com/search",
+  //   params: {
+  //     safesearch: "false",
+  //   },
+  //   headers: {
+  //     "X-RapidAPI-Key": "8be7d08215msh45d28e3d9c633e3p109efajsn0dad38837480",
+  //     "X-RapidAPI-Host": "simple-youtube-search.p.rapidapi.com",
+  //   },
+  // };
+
   const options = {
     method: "GET",
-    url: "https://simple-youtube-search.p.rapidapi.com/search",
-    params: {
-      safesearch: "false",
-    },
+    url: "https://yt-api.p.rapidapi.com/search?query=QUERY&type=video&sort=relevance",
+    params: {},
     headers: {
-      "X-RapidAPI-Key": "8be7d08215msh45d28e3d9c633e3p109efajsn0dad38837480",
-      "X-RapidAPI-Host": "simple-youtube-search.p.rapidapi.com",
+      "x-rapidapi-key": "8be7d08215msh45d28e3d9c633e3p109efajsn0dad38837480",
+      "x-rapidapi-host": "yt-api.p.rapidapi.com",
     },
   };
+
   useEffect(() => inputRef.current.focus(), []);
 
   const getArtistImg = async (artistName) => {
     try {
       options.params.query = artistName;
       const res = await axios.request(options);
-      const img = res.data.results[0].channel.icon;
+      // const img = res.data.results[0].channel.icon; old api
+      const img = res.data.data[0]?.thumbnail[0]?.url;
       return img;
     } catch (err) {
       if (fetchArtistImgRetryCount < maxFetchArtistImgRetryCount) {

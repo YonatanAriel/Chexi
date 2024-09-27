@@ -15,18 +15,35 @@ function AddToPlaylist() {
   const { setShowAddToPlaylistPopup } = useContext(ShowPopups);
   const { songPlayed } = useContext(HandlePlayingSongContext);
   const { token } = useContext(Token);
+  // const songPlayedData = { old api
+  //   title: songPlayed?.title,
+  //   videoId: playedPlaylist ? songPlayed?.videoId : songPlayed?.id,
+  //   songImg: playedPlaylist ? songPlayed?.songImg : songPlayed?.thumbnail.url,
+  //   channelName: playedPlaylist
+  //     ? songPlayed?.channelName
+  //     : songPlayed?.channel.name,
+  //   channelImg: playedPlaylist
+  //     ? songPlayed?.channelImg
+  //     : songPlayed?.channel.icon,
+  //   duration: songPlayed?.duration,
+  //   duration_formatted: songPlayed?.duration_formatted,
+  // };
   const songPlayedData = {
     title: songPlayed?.title,
-    videoId: playedPlaylist ? songPlayed?.videoId : songPlayed?.id,
-    songImg: playedPlaylist ? songPlayed?.songImg : songPlayed?.thumbnail.url,
+    videoId: songPlayed?.videoId,
+    songImg: playedPlaylist
+      ? songPlayed?.songImg
+      : songPlayed?.thumbnail[0]?.url,
     channelName: playedPlaylist
       ? songPlayed?.channelName
-      : songPlayed?.channel.name,
+      : songPlayed?.channelTitle,
     channelImg: playedPlaylist
       ? songPlayed?.channelImg
-      : songPlayed?.channel.icon,
-    duration: songPlayed?.duration,
-    duration_formatted: songPlayed?.duration_formatted,
+      : songPlayed?.channelThumbnail[0]?.url,
+    duration: playedPlaylist ? songPlayed?.duration : songPlayed?.lengthText,
+    duration_formatted: playedPlaylist
+      ? songPlayed?.duration_formatted
+      : songPlayed?.lengthText,
   };
 
   const addSongToPlaylist = async (playlist) => {

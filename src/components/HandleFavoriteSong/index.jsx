@@ -30,19 +30,36 @@ function HandleFavoriteSong({ screenWidth }) {
   useEffect(() => {
     setSongPlayedData((prev) => ({
       ...prev,
+
+      // title: songPlayed?.title,  old api
+      // videoId: playedPlaylist ? songPlayed?.videoId : songPlayed?.id,
+      // songImg: playedPlaylist
+      //   ? songPlayed?.songImg
+      //   : songPlayed?.thumbnail?.url,
+      // channelName: playedPlaylist
+      //   ? songPlayed?.channelName
+      //   : songPlayed?.channel?.name,
+      // channelImg: playedPlaylist
+      //   ? songPlayed?.channelImg
+      //   : songPlayed?.channel?.icon,
+      // duration: songPlayed?.duration,
+      // duration_formatted: songPlayed?.duration_formatted,
+
       title: songPlayed?.title,
-      videoId: playedPlaylist ? songPlayed?.videoId : songPlayed?.id,
+      videoId: songPlayed?.videoId,
       songImg: playedPlaylist
         ? songPlayed?.songImg
-        : songPlayed?.thumbnail?.url,
+        : songPlayed?.thumbnail[0]?.url,
       channelName: playedPlaylist
         ? songPlayed?.channelName
-        : songPlayed?.channel?.name,
+        : songPlayed?.channelTitle,
       channelImg: playedPlaylist
         ? songPlayed?.channelImg
-        : songPlayed?.channel?.icon,
-      duration: songPlayed?.duration,
-      duration_formatted: songPlayed?.duration_formatted,
+        : songPlayed?.thumbnail[0]?.url,
+      duration: playedPlaylist ? songPlayed?.duration : songPlayed?.lengthText,
+      duration_formatted: playedPlaylist
+        ? songPlayed?.duration_formatted
+        : songPlayed?.lengthText,
     }));
   }, [songPlayed]);
 

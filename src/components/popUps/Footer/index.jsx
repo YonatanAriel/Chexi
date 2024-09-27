@@ -131,6 +131,7 @@ function Footer({ backgroundVideo, setBackgroundVideo, screenWidth }) {
   const handleUnmute = () => {
     setVolume(50);
   };
+  useEffect(() => console.log(songPlayed), [songPlayed]);
 
   return (
     <>
@@ -143,7 +144,8 @@ function Footer({ backgroundVideo, setBackgroundVideo, screenWidth }) {
                 ? "block"
                 : "none",
           }}
-          videoId={playedPlaylist ? songPlayed?.videoId : songPlayed?.id}
+          // videoId={playedPlaylist ? songPlayed?.videoId : songPlayed?.id} old api
+          videoId={songPlayed?.videoId}
           opts={opts}
           autoplay
           onReady={(e) => {
@@ -221,20 +223,32 @@ function Footer({ backgroundVideo, setBackgroundVideo, screenWidth }) {
             <img
               className={isSongPlaying ? styles.spinImg : ""}
               src={
+                // playedPlaylist  old api
+                //   ? songPlayed?.channelImg
+                //   : songPlayed?.channel?.icon
+
                 playedPlaylist
                   ? songPlayed?.channelImg
-                  : songPlayed?.channel?.icon
+                  : songPlayed?.thumbnail[0]?.url
               }
               onError={(e) => {
+                // e.target.src = playedPlaylist   old api
+                //   ? songPlayed?.songImg
+                //   : songPlayed?.thumbnail?.url;
                 e.target.src = playedPlaylist
                   ? songPlayed?.songImg
-                  : songPlayed?.thumbnail?.url;
+                  : songPlayed?.thumbnail[1]?.url;
               }}
             />
             <span>
-              {playedPlaylist
-                ? songPlayed?.channelName
-                : songPlayed?.channel?.name}
+              {
+                // playedPlaylist   old api
+                //   ? songPlayed?.channelName
+                //   : songPlayed?.channel?.name
+                playedPlaylist
+                  ? songPlayed?.channelName
+                  : songPlayed?.channelTitle
+              }
             </span>
           </div>
           <div className={styles.centerItemsContainer}>

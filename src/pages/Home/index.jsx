@@ -22,7 +22,9 @@ function Home({ isLibraryOpen, screenWidth, libraryWidth }) {
   const [imgHeight, setImgHeight] = useState("15vw");
   const [loadedImages, setLoadedImages] = useState(0);
   const [loadRemainingImgs, setloadRemainingImgs] = useState(false);
-  const condition = songPlayed && songPlayed[playedPlaylist ? "videoId" : "id"];
+  // const condition = songPlayed && songPlayed[playedPlaylist ? "videoId" : "id"]; old api
+  const condition = songPlayed && songPlayed["videoId"];
+  const [hoveredSong, setHoveredSong] = useState(null);
   const containerWidth =
     !isLibraryOpen || screenWidth < 513
       ? "100vw"
@@ -33,7 +35,9 @@ function Home({ isLibraryOpen, screenWidth, libraryWidth }) {
     if (storedSearchSongs) {
       try {
         setSearchSongs(JSON.parse(storedSearchSongs));
-      } catch (error) {}
+      } catch (error) {
+        console.log(error);
+      }
     }
   }, [songs]);
 
@@ -58,6 +62,8 @@ function Home({ isLibraryOpen, screenWidth, libraryWidth }) {
     }
   }, [imagesErrorCount, songs?.length, songs]);
 
+  useEffect(() => console.log(songs), [songs]);
+
   return (
     <>
       <div
@@ -81,24 +87,39 @@ function Home({ isLibraryOpen, screenWidth, libraryWidth }) {
                   setSongs(searchSongs);
               }}
               key={i}
+              onMouseEnter={() => setHoveredSong(i)}
+              onMouseLeave={() => setHoveredSong(null)}
             >
               <div className={styles.imgAndButton}>
                 <img
-                  key={song?.thumbnail?.id}
+                  // key={song?.thumbnail?.id} old api
+                  key={song?.thumbnail[0]?.url}
                   className={styles.songImg}
-                  src={song?.channel?.icon}
+                  // src={song?.channel?.icon} old api
+                  src={
+                    !song?.richThumbnail
+                      ? song?.thumbnail[0]?.url
+                      : hoveredSong === i
+                      ? song?.richThumbnail[0]?.url
+                      : song?.thumbnail[0]?.url
+                  }
                   style={{ height: imgHeight }}
                   loading={
                     i < 10 ? "lazy" : loadRemainingImgs ? "eager" : "lazy"
                   }
                   onError={(e) => {
-                    e.target.src = song.thumbnail.url;
+                    e.target.src = song?.thumbnail[1]?.url;
                     setImagesErrorCount((prev) => prev + 1);
                   }}
+                  // onError={(e) => { old api
+                  //   e.target.src = song.thumbnail.url;
+                  //   setImagesErrorCount((prev) => prev + 1);
+                  // }}
                   alt={song.title}
                   onLoad={i < 10 ? handleLoadingImgs : undefined}
                 />
-                {condition === song.id && isSongPlaying ? (
+                {/* {condition === song.id && isSongPlaying ? (  old api*/}
+                {condition === song.videoId && isSongPlaying ? (
                   <div className={styles.WaveSpinner}>
                     <WaveSpinner
                       color={"wheat"}

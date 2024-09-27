@@ -21,19 +21,28 @@ function FavoriteArtists({ setSongs, libraryWidth, screenWidth }) {
     libraryWidth == 0 || screenWidth < 900
       ? "100vw"
       : `calc(100vw - ${libraryWidth})`;
+  // const options = { pld api
+  //   method: "GET",
+  //   url: "https://simple-youtube-search.p.rapidapi.com/search",
+  //   params: {
+  //     query: currentArtist.artistName,
+  //     safesearch: "false",
+  //   },
+  //   headers: {
+  //     "X-RapidAPI-Key": "8be7d08215msh45d28e3d9c633e3p109efajsn0dad38837480",
+  //     "X-RapidAPI-Host": "simple-youtube-search.p.rapidapi.com",
+  //   },
+  // };
+
   const options = {
     method: "GET",
-    url: "https://simple-youtube-search.p.rapidapi.com/search",
-    params: {
-      query: currentArtist.artistName,
-      safesearch: "false",
-    },
+    url: "https://yt-api.p.rapidapi.com/search?query=QUERY&type=video&sort=relevance",
+    params: { query: currentArtist.artistName },
     headers: {
-      "X-RapidAPI-Key": "8be7d08215msh45d28e3d9c633e3p109efajsn0dad38837480",
-      "X-RapidAPI-Host": "simple-youtube-search.p.rapidapi.com",
+      "x-rapidapi-key": "8be7d08215msh45d28e3d9c633e3p109efajsn0dad38837480",
+      "x-rapidapi-host": "yt-api.p.rapidapi.com",
     },
   };
-
   useEffect(() => {
     async function fetchData() {
       const res = await api.get("users/getfavoritartists");
@@ -55,7 +64,11 @@ function FavoriteArtists({ setSongs, libraryWidth, screenWidth }) {
     const getSongs = async () => {
       try {
         const res = await axios.request(options);
-        const songsWithId = handleSongsId(res.data.results, true);
+        // const songsWithId = handleSongsId(res.data.results, true); old api
+        const filteredSongs = res.data.data.filter(
+          (video) => video.title !== "Shorts"
+        );
+        const songsWithId = handleSongsId(filteredSongs, true);
         setCurrentArtist((prev) => ({
           ...prev,
           songs: songsWithId,

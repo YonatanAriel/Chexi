@@ -53,8 +53,11 @@
 }
 .artist img {
   width: 90%;
+  max-width: 90%;
+  aspect-ratio: 1 / 1;
   height: 80%;
   border-radius: 5px;
+  object-fit: cover;
   margin: 0 0 13px 0;
 }
 .artist span {

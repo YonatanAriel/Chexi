@@ -35,7 +35,8 @@ function Layout() {
 
   const [showCreatePlaylistPopup, setShowCreatePlaylistPopup] = useState(false);
   const [showAddToPlaylistPopup, setShowAddToPlaylistPopup] = useState(false);
-  const [userSearch, setUserSearch] = useState("dua lipa");
+  // const [userSearch, setUserSearch] = useState("dua lipa");
+  const [userSearch, setUserSearch] = useState("פאר טסי");
   const [isLibraryOpen, setIsLibraryOpen] = useState(false);
   const [backgroundVideo, setBackgroundVideo] = useState(false);
   const [token, setToken] = useState(
@@ -58,16 +59,26 @@ function Layout() {
     ((["/LikedSongs", "/Playlists", "/FavoriteArtists"].includes(location) &&
       screenWidth > 900) ||
       isLibraryOpen);
+  // const options = { old api
+  //   method: "GET",
+  //   url: "https://simple-youtube-search.p.rapidapi.com/search",
+  //   params: {
+  //     // query: userSearch,
+  //     safesearch: "false",
+  //   },
+  //   headers: {
+  //     "X-RapidAPI-Key": "8be7d08215msh45d28e3d9c633e3p109efajsn0dad38837480",
+  //     "X-RapidAPI-Host": "simple-youtube-search.p.rapidapi.com",
+  //   },
+  // };
+
   const options = {
     method: "GET",
-    url: "https://simple-youtube-search.p.rapidapi.com/search",
-    params: {
-      query: userSearch,
-      safesearch: "false",
-    },
+    url: "https://yt-api.p.rapidapi.com/search?query=QUERY&type=video&sort=relevance",
+    params: { query: userSearch },
     headers: {
-      "X-RapidAPI-Key": "8be7d08215msh45d28e3d9c633e3p109efajsn0dad38837480",
-      "X-RapidAPI-Host": "simple-youtube-search.p.rapidapi.com",
+      "x-rapidapi-key": "8be7d08215msh45d28e3d9c633e3p109efajsn0dad38837480",
+      "x-rapidapi-host": "yt-api.p.rapidapi.com",
     },
   };
 
@@ -99,7 +110,9 @@ function Layout() {
           const res = await api.get("playlists/user");
           setPlaylists(res);
           return;
-        } catch (err) {}
+        } catch (err) {
+          console.log(err);
+        }
       }
     }
     fetchPlaylists();
@@ -118,7 +131,12 @@ function Layout() {
     async function fetchData() {
       try {
         const res = await axios.request(options);
-        handleSongsId(res.data.results);
+        console.log(res);
+        // handleSongsId(res.data.results) // old api;
+        const filteredSongs = res.data.data.filter(
+          (video) => video.title !== "Shorts"
+        );
+        handleSongsId(filteredSongs);
         setFetchSongsRetryCount(0);
       } catch (err) {
         if (fetchSongsRetryCount < maxFetchSongsRetryCount) {
@@ -239,7 +257,6 @@ function Layout() {
                         />
                       }
                     />
-                    {/* {token && ( */}
                     <>
                       <Route
                         path="/LikedSongs"
@@ -291,7 +308,6 @@ function Layout() {
                         }
                       />
                     </>
-                    {/* // )} */}
                     <Route
                       path="/Login"
                       element={<Login setUserSearch={setUserSearch} />}

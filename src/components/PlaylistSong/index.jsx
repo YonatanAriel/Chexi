@@ -22,8 +22,10 @@ function PlaylistSong({ song, index, handlePlayPlaylist }) {
   } = useContext(Playlists);
   const location = useLocation().pathname;
   const id = {
-    firstId: playedPlaylist ? "videoId" : "id",
-    secondId: location === "/FavoriteArtists" ? "id" : "videoId",
+    // firstId: playedPlaylist ? "videoId" : "id", old api
+    firstId: "videoId",
+    // secondId: location === "/FavoriteArtists" ? "id" : "videoId",old api
+    secondId: "videoId",
   };
   const condition =
     (songPlayed && songPlayed[id.firstId]) === song[id.secondId];
@@ -97,9 +99,20 @@ function PlaylistSong({ song, index, handlePlayPlaylist }) {
         </div>
         <div className={styles.imgContainer}>
           <img
-            src={song?.thumbnail?.url ? song.thumbnail.url : song?.songImg}
+            // src={song?.thumbnail?.url ? song.thumbnail.url : song?.songImg} old api
+            src={
+              song?.thumbnail?.length > 0 && song?.thumbnail[0]?.url
+                ? song?.thumbnail[0]?.url
+                : song?.songImg
+            }
             onError={(e) => {
-              e.target.src = song?.channelImg;
+              // e.target.src = song?.channelImg;old api
+              if (playedPlaylist && song?.channelImg) {
+                e.target.src = song?.channelImg;
+              }
+              if (song?.thumbnail[1]?.url) {
+                e.target.src = song?.thumbnail[1]?.url;
+              }
             }}
             alt={song?.title}
           />
@@ -115,7 +128,12 @@ function PlaylistSong({ song, index, handlePlayPlaylist }) {
             <AiTwotoneDelete style={{ marginTop: "6px" }} size={20} />
           </div>
         )}
-        <span className={styles.duration}>{song?.duration_formatted}</span>
+        {/* <span className={styles.duration}>{song?.duration_formatted}</span> old api*/}
+        <span className={styles.duration}>
+          {location === "/FavoriteArtists"
+            ? song?.lengthText
+            : song?.duration_formatted}
+        </span>
       </div>
     </>
   );
