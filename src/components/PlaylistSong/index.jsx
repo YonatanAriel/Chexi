@@ -8,9 +8,14 @@ import HandlePlayingSongContext from "../../contexts/HandlePlayingSong";
 import Playlists from "../../contexts/Playlists";
 import api from "../../apiCalls/apiCalls";
 
-function PlaylistSong({ song, index, handlePlayPlaylist }) {
-  const { isSongPlaying, songPlayed, setSongPlayed, handleSongsId } =
-    useContext(HandlePlayingSongContext);
+function PlaylistSong({ song, index, handlePlayPlaylist, isClickDisabled }) {
+  const {
+    isSongPlaying,
+    songPlayed,
+    setSongPlayed,
+    handleSongsId,
+    isPlayerLoading,
+  } = useContext(HandlePlayingSongContext);
   const {
     setPlaylists,
     playedPlaylist,
@@ -88,6 +93,10 @@ function PlaylistSong({ song, index, handlePlayPlaylist }) {
             {!condition ? (
               <div
                 className={styles.playButton}
+                style={{
+                  cursor:
+                    isPlayerLoading || isClickDisabled ? "default" : "pointer",
+                }}
                 onClick={() => handlePlayPlaylist(index - 1)}
               >
                 <FaPlay size={23} style={{ marginTop: "6px" }} />

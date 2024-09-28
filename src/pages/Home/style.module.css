@@ -103,7 +103,8 @@
   overflow: hidden;
   display: -webkit-box;
   -webkit-box-orient: vertical;
-  -webkit-line-clamp: 3;
+  /* -webkit-line-clamp: 3; */
+  -webkit-line-clamp: 2;
   text-overflow: ellipsis;
   text-shadow: 0.3px 0.3px 2px rgb(0, 0, 0), -0.3px -0.3px 2px rgb(0, 0, 0);
   max-width: 90%;

@@ -1,6 +1,6 @@
 import styles from "./style.module.css";
 import PlaylistSong from "../PlaylistSong";
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import { BsPlayCircleFill } from "react-icons/bs";
 import HandlePlayingSongContext from "../../contexts/HandlePlayingSong";
@@ -16,7 +16,7 @@ function Playlist({
   libraryWidth,
   screenWidth,
 }) {
-  const { setSongPlayed, setIsSongPlaying } = useContext(
+  const { setSongPlayed, setIsSongPlaying, isPlayerLoading } = useContext(
     HandlePlayingSongContext
   );
   const { setPlayedPlaylist } = useContext(Playlists);
@@ -26,7 +26,18 @@ function Playlist({
       ? "100vw"
       : `calc(100vw - ${libraryWidth})`;
 
+  const [isClickDisabled, setIsClickDisabled] = useState(false);
+
+  const disableClick = () => {
+    setIsClickDisabled(true);
+    setTimeout(() => {
+      setIsClickDisabled(false);
+    }, [800]);
+  };
+
   const handlePlayPlaylist = (index) => {
+    if (isPlayerLoading || isClickDisabled) return;
+    disableClick();
     if (songs?.length > 0) {
       setSongPlayed(songs[index]);
       setIsSongPlaying(true);
@@ -55,6 +66,10 @@ function Playlist({
         </div>
         <div className={styles.headingDiv}>
           <BsPlayCircleFill
+            style={{
+              cursor:
+                isPlayerLoading || isClickDisabled ? "default" : "pointer",
+            }}
             className={styles.PlayButton}
             onClick={() => handlePlayPlaylist(0)}
             size={90}
@@ -69,7 +84,8 @@ function Playlist({
                 handlePlayPlaylist={handlePlayPlaylist}
                 song={song}
                 index={i + 1}
-                key={song.videoId}
+                key={song.videoId + i}
+                isClickDisabled={isClickDisabled}
               />
             ))
           ) : (

@@ -1,13 +1,24 @@
 import styles from "./style.module.css";
 import { BsPlayCircleFill } from "react-icons/bs";
-import { useContext, useEffect, useState } from "react";
+import {
+  useContext,
+  useEffect,
+  useLayoutEffect,
+  useRef,
+  useState,
+} from "react";
 import HandlePlayingSongContext from "../../contexts/HandlePlayingSong";
 import { WaveSpinner } from "react-spinners-kit";
 import Playlists from "../../contexts/Playlists";
 import Loading from "../../components/Loading";
 import { useLocation } from "react-router-dom";
 
-function Home({ isLibraryOpen, screenWidth, libraryWidth }) {
+function Home({
+  isLibraryOpen,
+  screenWidth,
+  libraryWidth,
+  setBackgroundVideo,
+}) {
   const {
     isSongPlaying,
     setIsSongPlaying,
@@ -29,7 +40,9 @@ function Home({ isLibraryOpen, screenWidth, libraryWidth }) {
   const condition = songPlayed && songPlayed["videoId"];
   const [hoveredSong, setHoveredSong] = useState(null);
   const [hasVisited, setHasVisited] = useState(false);
+  const [isClickDisabled, setIsClickDisabled] = useState(false);
   const location = useLocation();
+  const firstSongRef = useRef(null);
   const containerWidth =
     !isLibraryOpen || screenWidth < 513
       ? "100vw"
@@ -48,17 +61,13 @@ function Home({ isLibraryOpen, screenWidth, libraryWidth }) {
 
   useEffect(() => {
     const params = new URLSearchParams(location.search);
-    const playSong = params.get("playSong") === "true";
+    const newVisitor = params.get("newVisitor") === "true";
 
-    if (playSong && searchSongs && !hasVisited) {
-      setSongPlayed(searchSongs[2]);
-
-      // setIsSongPlaying(true);
-      setSongs(searchSongs);
-      setPlayedPlaylist(null);
+    if (newVisitor && searchSongs && !hasVisited) {
       setHasVisited(true);
+      setBackgroundVideo(true);
     }
-  }, [location.search, searchSongs]);
+  }, [location.search, searchSongs, isPlayerLoading]);
 
   useEffect(() => {
     const storedSearchSongs = localStorage.getItem("searchSongs");
@@ -92,8 +101,6 @@ function Home({ isLibraryOpen, screenWidth, libraryWidth }) {
     }
   }, [imagesErrorCount, songs?.length, songs]);
 
-  const [isClickDisabled, setIsClickDisabled] = useState(false);
-
   const disableClick = () => {
     setIsClickDisabled(true);
     setTimeout(() => {
@@ -120,6 +127,7 @@ function Home({ isLibraryOpen, screenWidth, libraryWidth }) {
         {songs?.length > 0 ? (
           searchSongs?.map((song, i) => (
             <div
+              ref={i === 0 ? firstSongRef : null}
               className={`${styles.song} `}
               style={{
                 height: songDivHeight,

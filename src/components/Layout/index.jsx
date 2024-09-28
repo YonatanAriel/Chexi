@@ -35,7 +35,7 @@ function Layout() {
 
   const [showCreatePlaylistPopup, setShowCreatePlaylistPopup] = useState(false);
   const [showAddToPlaylistPopup, setShowAddToPlaylistPopup] = useState(false);
-  const [userSearch, setUserSearch] = useState("dua lipa");
+  const [userSearch, setUserSearch] = useState("post malone");
   const [isLibraryOpen, setIsLibraryOpen] = useState(false);
   const [backgroundVideo, setBackgroundVideo] = useState(false);
   const [token, setToken] = useState(
@@ -130,26 +130,23 @@ function Layout() {
   useEffect(() => {
     async function fetchData() {
       try {
-        // const res = await axios.request(options);
-        // console.log(res);
+        const res = await axios.request(options);
 
         // handleSongsId(res.data.results) // old api;
+        const filteredSongs = res.data.data.filter(
+          (video) => video.title !== "Shorts"
+        );
+        handleSongsId(filteredSongs);
 
-        // const filteredSongs = res.data.data.filter(
-        //   (video) => video.title !== "Shorts"
-        // );
         // localStorage.setItem(
         //   "Dua lipa songs array",
         //   JSON.stringify(filteredSongs)
         // );
-
-        const tempSongsArrFromLS = localStorage.getItem("Dua lipa songs array");
-        if (tempSongsArrFromLS) {
-          const parsedSongsArr = JSON.parse(tempSongsArrFromLS);
-          console.log(parsedSongsArr);
-          handleSongsId(parsedSongsArr);
-        }
-        // handleSongsId(filteredSongs);
+        // const tempSongsArrFromLS = localStorage.getItem("Dua lipa songs array"); to test the website without making api calls
+        // if (tempSongsArrFromLS) {
+        //   const parsedSongsArr = JSON.parse(tempSongsArrFromLS);
+        //   handleSongsId(parsedSongsArr);
+        // }
         setFetchSongsRetryCount(0);
       } catch (err) {
         if (fetchSongsRetryCount < maxFetchSongsRetryCount) {
@@ -170,7 +167,7 @@ function Layout() {
     setLikedSongsPlaylist(null);
     setPlaylists(null);
     setToken(null);
-    setUserSearch("dua Lipa");
+    setUserSearch("post Malone");
   };
 
   const handleSongsId = (songs, playPlaylist) => {
@@ -269,6 +266,7 @@ function Layout() {
                           isLibraryOpen={isLibraryOpen}
                           setUserSearch={setUserSearch}
                           screenWidth={screenWidth}
+                          setBackgroundVideo={setBackgroundVideo}
                         />
                       }
                     />

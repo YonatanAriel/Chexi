@@ -25,13 +25,11 @@ function AuthForm({ title, setUserSearch }) {
   useEffect(() => {
     const params = new URLSearchParams(location.search);
     const demoMode = params.get("demo") === "true";
-    const playSong = params.get("playSong") === "true";
-    console.log(2, playSong);
 
-    if (demoMode && playSong) {
+    if (demoMode) {
       setIsDemoMode(true);
       setShowLoadingDiv(true);
-      handleLogin(demoUserData, playSong);
+      handleLogin(demoUserData, true);
     }
   }, [location.search]);
 
@@ -72,16 +70,14 @@ function AuthForm({ title, setUserSearch }) {
     return errors.length === 0;
   };
 
-  ///login?demo=true&playSong=true
-
-  const handleLogin = async (userData, playSong) => {
+  const handleLogin = async (userData, newVisitor) => {
     try {
       const loginToken = await api.post(`users/login`, userData);
       localStorage.setItem("token", loginToken);
-      setUserSearch("Dua Lipa");
+      setUserSearch("Post malone ");
       setToken(loginToken);
-      if (playSong) {
-        navigate("/?playSong=true");
+      if (newVisitor) {
+        navigate("/?newVisitor=true");
       } else {
         navigate("/");
       }
@@ -102,7 +98,7 @@ function AuthForm({ title, setUserSearch }) {
       const registerToken = await api.post("users/register", data);
       localStorage.setItem("token", registerToken);
       setToken(registerToken);
-      setUserSearch("Dua lipa");
+      setUserSearch("Post malone");
       navigate("/");
     } catch (err) {
       setShowLoadingDiv(false);

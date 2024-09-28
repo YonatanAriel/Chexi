@@ -67,26 +67,7 @@ function Footer({ backgroundVideo, setBackgroundVideo, screenWidth }) {
     }, [1200]);
   };
 
-  useEffect(() => {
-    const params = new URLSearchParams(location.search);
-    const playSong = params.get("playSong") === "true";
-
-    if (playSong) {
-      if (playSong && isPlayerReady) {
-        setIsSongPlaying(true);
-
-        setBackgroundVideo(true);
-      }
-    }
-  }, [location.search, isPlayerReady]);
-
   const handlePlayerStateChange = (e) => {
-    console.log(e.data);
-    // if (e.data === -1 || e.data === 3) {
-    //   setIsPlayerLoading(true);
-    // } else {
-    //   setIsPlayerLoading(false);
-    // }
     const PLAYING = 1;
     const PAUSED = 2;
     if (e.data === PLAYING || e.data === PAUSED) {
