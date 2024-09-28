@@ -42,6 +42,7 @@ function Layout() {
     localStorage.getItem("token") === "null" ? null : localStorage.token
   );
   const [screenWidth, setScreenWidth] = useState(window.innerWidth);
+  const [isPlayerLoading, setIsPlayerLoading] = useState(false);
 
   const libraryWidth =
     screenWidth > 513
@@ -231,6 +232,8 @@ function Layout() {
                 setIsSongPlaying,
                 handleSongsId,
                 skipBackOrForward,
+                isPlayerLoading,
+                setIsPlayerLoading,
               }}
             >
               {!["/Login", "/SignUp"].includes(location) && (

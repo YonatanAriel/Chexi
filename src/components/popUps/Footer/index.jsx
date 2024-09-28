@@ -30,6 +30,8 @@ function Footer({ backgroundVideo, setBackgroundVideo, screenWidth }) {
     songs,
     songPlayed,
     skipBackOrForward,
+    isPlayerLoading,
+    setIsPlayerLoading,
   } = useContext(HandlePlayingSongContext);
   const { showAddToPlaylistPopup, setShowAddToPlaylistPopup } =
     useContext(ShowPopups);
@@ -54,6 +56,9 @@ function Footer({ backgroundVideo, setBackgroundVideo, screenWidth }) {
       Loop: 1,
     },
   };
+  useEffect(() => {
+    setIsPlayerLoading(true);
+  }, []);
 
   const disableSkip = () => {
     setSkipDisabled(true);
@@ -76,16 +81,25 @@ function Footer({ backgroundVideo, setBackgroundVideo, screenWidth }) {
   }, [location.search, isPlayerReady]);
 
   const handlePlayerStateChange = (e) => {
+    console.log(e.data);
+    // if (e.data === -1 || e.data === 3) {
+    //   setIsPlayerLoading(true);
+    // } else {
+    //   setIsPlayerLoading(false);
+    // }
+    const PLAYING = 1;
+    const PAUSED = 2;
+    if (e.data === PLAYING || e.data === PAUSED) {
+      setIsPlayerLoading(false);
+    } else {
+      setIsPlayerLoading(true);
+    }
     let interval;
     const handleSongEnd = () => {
       clearInterval(interval);
       setMinutes(0);
       setSeconds(0);
     };
-    // if (e.data === window.YT.PlayerState.BUFFERING) {
-    if (e.data === -1 || e.data === 3) {
-      setSkipDisabled(true);
-    } else setSkipDisabled(false);
     if (e.data === window.YT.PlayerState.PLAYING) {
       interval = setInterval(() => {
         const duration = playerRef?.current?.getDuration();
@@ -118,10 +132,12 @@ function Footer({ backgroundVideo, setBackgroundVideo, screenWidth }) {
   };
 
   const handlePause = () => {
+    if (isPlayerLoading) return;
     setIsSongPlaying(false);
   };
 
   const handlePlay = () => {
+    if (isPlayerLoading) return;
     setIsSongPlaying(true);
   };
 
@@ -159,11 +175,7 @@ function Footer({ backgroundVideo, setBackgroundVideo, screenWidth }) {
     <>
       <div className={styles.videoContainer}>
         <YouTube
-          // onStateChange={handlePlayerStateChange}
-          onStateChange={(e) => {
-            console.log(e.data);
-            handlePlayerStateChange(e);
-          }}
+          onStateChange={handlePlayerStateChange}
           style={{
             display:
               location.pathname === "/Video" || backgroundVideo
@@ -178,7 +190,6 @@ function Footer({ backgroundVideo, setBackgroundVideo, screenWidth }) {
             playerRef.current = e.target;
             setMinutes(0);
             setSeconds(0);
-            e.target.playVideo();
             setIsPlayerReady(true);
           }}
           onEnd={() => {
@@ -283,7 +294,7 @@ function Footer({ backgroundVideo, setBackgroundVideo, screenWidth }) {
               <HandleFavoriteSong screenWidth={screenWidth} />
               <TbPlayerSkipBackFilled
                 onClick={() => {
-                  if (skipDisabled) return;
+                  if (skipDisabled || isPlayerLoading) return;
                   disableSkip();
                   playedPlaylist
                     ? skipBackOrForward("back", playedPlaylist)
@@ -291,14 +302,19 @@ function Footer({ backgroundVideo, setBackgroundVideo, screenWidth }) {
                 }}
                 size={screenWidth > 500 ? 19 : 35}
                 className={styles.iconButton}
-                style={{ cursor: skipDisabled ? "default" : "pointer" }}
+                style={{
+                  cursor:
+                    skipDisabled || isPlayerLoading ? "default" : "pointer",
+                }}
               />
               {!isSongPlaying && (
                 <FaPlay
                   className={`${styles.iconButton} ${styles.playAndPauseButton}`}
                   onClick={handlePlay}
                   size={screenWidth > 500 ? 30 : 40}
-                  // size={40}
+                  style={{
+                    cursor: isPlayerLoading ? "default" : "pointer",
+                  }}
                 />
               )}
               {isSongPlaying && (
@@ -306,11 +322,14 @@ function Footer({ backgroundVideo, setBackgroundVideo, screenWidth }) {
                   className={`${styles.iconButton} ${styles.playAndPauseButton}`}
                   onClick={handlePause}
                   size={screenWidth > 500 ? 30 : 40}
+                  style={{
+                    cursor: isPlayerLoading ? "default" : "pointer",
+                  }}
                 />
               )}
               <TbPlayerSkipForwardFilled
                 onClick={() => {
-                  if (skipDisabled) return;
+                  if (skipDisabled || isPlayerLoading) return;
                   disableSkip();
                   playedPlaylist
                     ? skipBackOrForward("forward", playedPlaylist)
@@ -318,7 +337,10 @@ function Footer({ backgroundVideo, setBackgroundVideo, screenWidth }) {
                 }}
                 size={screenWidth > 500 ? 19 : 35}
                 className={styles.iconButton}
-                style={{ cursor: skipDisabled ? "default" : "pointer" }}
+                style={{
+                  cursor:
+                    skipDisabled || isPlayerLoading ? "default" : "pointer",
+                }}
               />
               <div className={styles.AddToPlaylist}>
                 <BsPlusCircle

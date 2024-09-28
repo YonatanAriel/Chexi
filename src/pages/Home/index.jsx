@@ -15,6 +15,8 @@ function Home({ isLibraryOpen, screenWidth, libraryWidth }) {
     setSongPlayed,
     songs,
     setSongs,
+    isPlayerLoading,
+    setIsPlayerLoading,
   } = useContext(HandlePlayingSongContext);
   const [searchSongs, setSearchSongs] = useState();
   const { setPlayedPlaylist, playedPlaylist } = useContext(Playlists);
@@ -90,6 +92,23 @@ function Home({ isLibraryOpen, screenWidth, libraryWidth }) {
     }
   }, [imagesErrorCount, songs?.length, songs]);
 
+  const [isClickDisabled, setIsClickDisabled] = useState(false);
+
+  const disableClick = () => {
+    setIsClickDisabled(true);
+    setTimeout(() => {
+      setIsClickDisabled(false);
+    }, [800]);
+  };
+  const handleSongClick = (song) => {
+    if (isPlayerLoading || isClickDisabled) return;
+    disableClick();
+    setPlayedPlaylist(null),
+      setSongPlayed(song),
+      setIsSongPlaying(true),
+      setSongs(searchSongs);
+  };
+
   return (
     <>
       <div
@@ -104,13 +123,13 @@ function Home({ isLibraryOpen, screenWidth, libraryWidth }) {
               className={`${styles.song} `}
               style={{
                 height: songDivHeight,
-                cursor: condition !== song.id && "pointer",
+                cursor:
+                  isPlayerLoading || isClickDisabled
+                    ? "default"
+                    : condition !== song.id && "pointer",
               }}
               onClick={() => {
-                setPlayedPlaylist(null),
-                  setSongPlayed(song),
-                  setIsSongPlaying(true),
-                  setSongs(searchSongs);
+                handleSongClick(song);
               }}
               key={i}
               onMouseEnter={() => setHoveredSong(i)}
@@ -161,7 +180,13 @@ function Home({ isLibraryOpen, screenWidth, libraryWidth }) {
                     />
                   </div>
                 ) : (
-                  <BsPlayCircleFill className={styles.songButton} size={40} />
+                  <BsPlayCircleFill
+                    style={{
+                      display: (isPlayerLoading || isClickDisabled) && "none",
+                    }}
+                    className={styles.songButton}
+                    size={40}
+                  />
                 )}
               </div>
               <h3 className={styles.songTitle}>
