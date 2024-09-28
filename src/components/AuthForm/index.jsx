@@ -22,17 +22,6 @@ function AuthForm({ title, setUserSearch }) {
     /^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,}$/;
   const userNameRef = useRef();
 
-  useEffect(() => {
-    const params = new URLSearchParams(location.search);
-    const demoMode = params.get("demo") === "true";
-
-    if (demoMode) {
-      setIsDemoMode(true);
-      setShowLoadingDiv(true);
-      handleLogin(demoUserData, true);
-    }
-  }, [location.search]);
-
   useEffect(() => userNameRef.current.focus(), []);
 
   useEffect(() => {
@@ -74,13 +63,13 @@ function AuthForm({ title, setUserSearch }) {
     try {
       const loginToken = await api.post(`users/login`, userData);
       localStorage.setItem("token", loginToken);
-      setUserSearch("Post malone ");
+      setUserSearch("Post malone");
       setToken(loginToken);
-      if (newVisitor) {
-        navigate("/?newVisitor=true");
-      } else {
-        navigate("/");
-      }
+      // if (newVisitor) {
+      //   navigate("/?newVisitor=true");
+      // } else {
+      //   navigate("/");
+      // }
     } catch (err) {
       setShowLoadingDiv(false);
       formRef.current.style.cursor = "auto";
@@ -236,3 +225,14 @@ function AuthForm({ title, setUserSearch }) {
 }
 
 export default AuthForm;
+
+//another way to do automatic login, works great, but because the server is slow the user sometimes will just see a spinner..
+/* useEffect(() => {
+   const params = new URLSearchParams(location.search);
+   const demoMode = params.get("demo") === "true";
+   if (demoMode) {
+   // setIsDemoMode(true);
+     setShowLoadingDiv(true);
+     }  handleLogin(demoUserData, true);
+   }
+  , [location.search]); */

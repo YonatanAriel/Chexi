@@ -12,6 +12,8 @@ import { WaveSpinner } from "react-spinners-kit";
 import Playlists from "../../contexts/Playlists";
 import Loading from "../../components/Loading";
 import { useLocation } from "react-router-dom";
+import api from "../../apiCalls/apiCalls";
+import Token from "../../contexts/Token";
 
 function Home({
   isLibraryOpen,
@@ -19,6 +21,7 @@ function Home({
   libraryWidth,
   setBackgroundVideo,
 }) {
+  const { setToken } = useContext(Token);
   const {
     isSongPlaying,
     setIsSongPlaying,
@@ -62,6 +65,18 @@ function Home({
   useEffect(() => {
     const params = new URLSearchParams(location.search);
     const newVisitor = params.get("newVisitor") === "true";
+
+    const handleLoginDemoUser = async () => {
+      try {
+        const DEMOUSERDATA = { userName: "demoUser", password: "55Da$s" };
+        const loginToken = await api.post(`users/login`, DEMOUSERDATA);
+        localStorage.setItem("token", loginToken);
+        setToken(loginToken);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    handleLoginDemoUser();
 
     if (newVisitor && searchSongs && !hasVisited) {
       setHasVisited(true);
