@@ -1,6 +1,6 @@
 import styles from "./style.module.css";
 import YouTube from "react-youtube";
-import { useContext, useEffect, useRef, useState } from "react";
+import { useCallback, useContext, useEffect, useRef, useState } from "react";
 import { FaPlay, FaCompressArrowsAlt, FaExpandArrowsAlt } from "react-icons/fa";
 import {
   TbPlayerSkipForwardFilled,
@@ -41,10 +41,10 @@ function Footer({ backgroundVideo, setBackgroundVideo, screenWidth }) {
   const navigate = useNavigate();
   const location = useLocation();
   const playerRef = useRef(null);
+  const [skipDisabled, setSkipDisabled] = useState(false);
   const opts = {
     playerVars: {
-      // autoplay: 1,
-      autoplay: 0,
+      autoplay: 1,
       fs: 1,
       controls: 0,
       disablekb: 1,
@@ -53,6 +53,13 @@ function Footer({ backgroundVideo, setBackgroundVideo, screenWidth }) {
       rel: 0,
       Loop: 1,
     },
+  };
+
+  const disableSkip = () => {
+    setSkipDisabled(true);
+    setTimeout(() => {
+      setSkipDisabled(false);
+    }, [1200]);
   };
 
   useEffect(() => {
@@ -75,6 +82,10 @@ function Footer({ backgroundVideo, setBackgroundVideo, screenWidth }) {
       setMinutes(0);
       setSeconds(0);
     };
+    // if (e.data === window.YT.PlayerState.BUFFERING) {
+    if (e.data === -1 || e.data === 3) {
+      setSkipDisabled(true);
+    } else setSkipDisabled(false);
     if (e.data === window.YT.PlayerState.PLAYING) {
       interval = setInterval(() => {
         const duration = playerRef?.current?.getDuration();
@@ -115,16 +126,16 @@ function Footer({ backgroundVideo, setBackgroundVideo, screenWidth }) {
   };
 
   useEffect(() => {
-    // if (isPlayerReady) {
-    //   if (playerRef?.current) {
-    //     playerRef.current?.setVolume(volume);
-    //     if (isSongPlaying) {
-    //       playerRef.current?.playVideo();
-    //     } else {
-    //       playerRef.current?.pauseVideo();
-    //     }
-    //   }
-    // }
+    if (isPlayerReady) {
+      if (playerRef?.current) {
+        playerRef.current?.setVolume(volume);
+        if (isSongPlaying) {
+          playerRef.current?.playVideo();
+        } else {
+          playerRef.current?.pauseVideo();
+        }
+      }
+    }
   }, [isSongPlaying, volume, songPlayed]);
 
   const handleBackgroundVideo = () => {
@@ -148,7 +159,11 @@ function Footer({ backgroundVideo, setBackgroundVideo, screenWidth }) {
     <>
       <div className={styles.videoContainer}>
         <YouTube
-          onStateChange={handlePlayerStateChange}
+          // onStateChange={handlePlayerStateChange}
+          onStateChange={(e) => {
+            console.log(e.data);
+            handlePlayerStateChange(e);
+          }}
           style={{
             display:
               location.pathname === "/Video" || backgroundVideo
@@ -163,6 +178,7 @@ function Footer({ backgroundVideo, setBackgroundVideo, screenWidth }) {
             playerRef.current = e.target;
             setMinutes(0);
             setSeconds(0);
+            e.target.playVideo();
             setIsPlayerReady(true);
           }}
           onEnd={() => {
@@ -267,12 +283,15 @@ function Footer({ backgroundVideo, setBackgroundVideo, screenWidth }) {
               <HandleFavoriteSong screenWidth={screenWidth} />
               <TbPlayerSkipBackFilled
                 onClick={() => {
+                  if (skipDisabled) return;
+                  disableSkip();
                   playedPlaylist
                     ? skipBackOrForward("back", playedPlaylist)
                     : skipBackOrForward("back", songs);
                 }}
                 size={screenWidth > 500 ? 19 : 35}
                 className={styles.iconButton}
+                style={{ cursor: skipDisabled ? "default" : "pointer" }}
               />
               {!isSongPlaying && (
                 <FaPlay
@@ -291,12 +310,15 @@ function Footer({ backgroundVideo, setBackgroundVideo, screenWidth }) {
               )}
               <TbPlayerSkipForwardFilled
                 onClick={() => {
+                  if (skipDisabled) return;
+                  disableSkip();
                   playedPlaylist
                     ? skipBackOrForward("forward", playedPlaylist)
                     : skipBackOrForward("forward", songs);
                 }}
                 size={screenWidth > 500 ? 19 : 35}
                 className={styles.iconButton}
+                style={{ cursor: skipDisabled ? "default" : "pointer" }}
               />
               <div className={styles.AddToPlaylist}>
                 <BsPlusCircle

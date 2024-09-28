@@ -129,13 +129,26 @@ function Layout() {
   useEffect(() => {
     async function fetchData() {
       try {
-        const res = await axios.request(options);
-        console.log(res);
+        // const res = await axios.request(options);
+        // console.log(res);
+
         // handleSongsId(res.data.results) // old api;
-        const filteredSongs = res.data.data.filter(
-          (video) => video.title !== "Shorts"
-        );
-        handleSongsId(filteredSongs);
+
+        // const filteredSongs = res.data.data.filter(
+        //   (video) => video.title !== "Shorts"
+        // );
+        // localStorage.setItem(
+        //   "Dua lipa songs array",
+        //   JSON.stringify(filteredSongs)
+        // );
+
+        const tempSongsArrFromLS = localStorage.getItem("Dua lipa songs array");
+        if (tempSongsArrFromLS) {
+          const parsedSongsArr = JSON.parse(tempSongsArrFromLS);
+          console.log(parsedSongsArr);
+          handleSongsId(parsedSongsArr);
+        }
+        // handleSongsId(filteredSongs);
         setFetchSongsRetryCount(0);
       } catch (err) {
         if (fetchSongsRetryCount < maxFetchSongsRetryCount) {
