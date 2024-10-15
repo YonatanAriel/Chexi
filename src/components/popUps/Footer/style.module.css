@@ -88,6 +88,9 @@ body {
 input[type="range"] {
   -webkit-appearance: none;
   background: none;
+
+  -moz-appearance: none;
+  appearance: none;
 }
 input[type="range"]:focus {
   outline: none;
@@ -105,6 +108,22 @@ input[type="range"]::-webkit-slider-thumb {
   -webkit-appearance: none;
   margin-top: -5px;
 }
+
+input[type="range"]::-moz-range-track {
+  height: 5px;
+  border-radius: 5px;
+  background-color: wheat;
+}
+
+input[type="range"]::-moz-range-thumb {
+  height: 15px;
+  width: 15px;
+  border-radius: 50%;
+  background: wheat;
+  -moz-appearance: none;
+  margin-top: -5px;
+}
+
 .fullScreenButtons {
   position: absolute;
   left: 2vw;
