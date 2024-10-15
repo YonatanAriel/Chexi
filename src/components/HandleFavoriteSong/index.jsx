@@ -144,7 +144,8 @@ function HandleFavoriteSong({ screenWidth }) {
 
   useEffect(() => {
     async function addSongToPlaylist() {
-      if (!isFavorite && likedSongsPlaylistId) {
+      // if (!isFavorite && likedSongsPlaylistId) { //original
+      if (songPlayedData && token && !isFavorite && likedSongsPlaylistId) {
         setIsFavorite(true);
         const newFavoriteSongId = await api.post(
           `playlists/addsong/${likedSongsPlaylistId}`,

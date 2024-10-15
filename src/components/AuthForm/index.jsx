@@ -65,6 +65,7 @@ function AuthForm({ title, setUserSearch }) {
       localStorage.setItem("token", loginToken);
       setUserSearch("Post malone");
       setToken(loginToken);
+      navigate("/");
       // if (newVisitor) {
       //   navigate("/?newVisitor=true");
       // } else {

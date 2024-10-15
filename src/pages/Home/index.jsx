@@ -76,11 +76,11 @@ function Home({
         console.log(err);
       }
     };
-    handleLoginDemoUser();
 
     if (newVisitor && searchSongs && !hasVisited) {
       setHasVisited(true);
       setBackgroundVideo(true);
+      handleLoginDemoUser();
     }
   }, [location.search, searchSongs, isPlayerLoading]);
 

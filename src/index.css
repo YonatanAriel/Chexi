@@ -14,6 +14,9 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+
+  /* scrollbar-width: auto; */
+  /* scrollbar-color: wheat transparent; */
 }
 body {
   display: flex;
@@ -60,6 +63,7 @@ img {
   backdrop-filter: blur(20px);
   background-color: wheat;
 }
+
 input {
   background-color: white;
 }
