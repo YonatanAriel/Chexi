@@ -1,8 +1,5 @@
 import axios from "axios";
 
-// const BASE_URL = import.meta.env.VITE_BASE_URL
-// axios.defaults.baseURL = "https://chexi-server.onrender.com"
-
 const BASE_URL = import.meta.env.PROD
   ? import.meta.env.VITE_BASE_URL_PROD
   : import.meta.env.VITE_BASE_URL_LOCAL;

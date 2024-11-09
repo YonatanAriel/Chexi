@@ -56,6 +56,21 @@ function Footer({ backgroundVideo, setBackgroundVideo, screenWidth }) {
       Loop: 1,
     },
   };
+
+  const isPlayerFullyReady = () => {
+    try {
+      return (
+        playerRef.current &&
+        playerRef.current?.h &&
+        playerRef.current?.g &&
+        typeof playerRef.current.getCurrentTime === "function" &&
+        typeof playerRef.current.getPlayerState === "function"
+      );
+    } catch (error) {
+      return false;
+    }
+  };
+
   useEffect(() => {
     setIsPlayerLoading(true);
   }, []);
@@ -68,6 +83,10 @@ function Footer({ backgroundVideo, setBackgroundVideo, screenWidth }) {
   };
 
   const handlePlayerStateChange = (e) => {
+    //new version
+    if (!isPlayerFullyReady()) return;
+    //
+
     const PLAYING = 1;
     const PAUSED = 2;
     if (e.data === PLAYING || e.data === PAUSED) {
@@ -83,6 +102,13 @@ function Footer({ backgroundVideo, setBackgroundVideo, screenWidth }) {
     };
     if (e.data === window.YT.PlayerState.PLAYING) {
       interval = setInterval(() => {
+        //new version
+        if (!isPlayerFullyReady()) {
+          clearInterval(interval);
+          return;
+        }
+        //
+
         const duration = playerRef?.current?.getDuration();
         const currentTime = playerRef?.current?.getCurrentTime();
         const progress = (currentTime / duration) * 100;
@@ -105,11 +131,18 @@ function Footer({ backgroundVideo, setBackgroundVideo, screenWidth }) {
   };
 
   const handleProgressChange = (e) => {
-    const progress = parseInt(e.target.value);
-    const duration = playerRef.current.getDuration();
-    const seekTime = (progress / 100) * duration;
-    playerRef.current.seekTo(seekTime);
-    setSongProgress(progress);
+    //new version
+    if (!isPlayerFullyReady()) return;
+    //
+    try {
+      const progress = parseInt(e.target.value);
+      const duration = playerRef.current.getDuration();
+      const seekTime = (progress / 100) * duration;
+      playerRef.current.seekTo(seekTime);
+      setSongProgress(progress);
+    } catch (e) {
+      console.error("Error changing progress:", e);
+    }
   };
 
   const handlePause = () => {
@@ -123,14 +156,19 @@ function Footer({ backgroundVideo, setBackgroundVideo, screenWidth }) {
   };
 
   useEffect(() => {
-    if (isPlayerReady) {
-      if (playerRef?.current) {
-        playerRef.current?.setVolume(volume);
-        if (isSongPlaying) {
-          playerRef.current?.playVideo();
-        } else {
-          playerRef.current?.pauseVideo();
+    // if (isPlayerReady) { old version
+    if (isPlayerReady && isPlayerFullyReady()) {
+      try {
+        if (playerRef?.current) {
+          playerRef.current?.setVolume(volume);
+          if (isSongPlaying) {
+            playerRef.current?.playVideo();
+          } else {
+            playerRef.current?.pauseVideo();
+          }
         }
+      } catch (e) {
+        console.error("Player operation failed:", e);
       }
     }
   }, [isSongPlaying, volume, songPlayed]);
@@ -174,11 +212,18 @@ function Footer({ backgroundVideo, setBackgroundVideo, screenWidth }) {
             setIsPlayerReady(true);
           }}
           onEnd={() => {
+            //new version
+            if (!isPlayerFullyReady()) return;
+            //
+
             playedPlaylist
               ? skipBackOrForward("forward", playedPlaylist)
               : skipBackOrForward("forward", songs);
             setMinutes(0);
             setSeconds(0);
+          }}
+          onError={(e) => {
+            console.error("YouTube player error:", e);
           }}
         />
       </div>
