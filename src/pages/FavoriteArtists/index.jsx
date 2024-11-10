@@ -21,18 +21,7 @@ function FavoriteArtists({ setSongs, libraryWidth, screenWidth }) {
     libraryWidth == 0 || screenWidth < 900
       ? "100vw"
       : `calc(100vw - ${libraryWidth})`;
-  // const options = { pld api
-  //   method: "GET",
-  //   url: "https://simple-youtube-search.p.rapidapi.com/search",
-  //   params: {
-  //     query: currentArtist.artistName,
-  //     safesearch: "false",
-  //   },
-  //   headers: {
-  //     "X-RapidAPI-Key": "8be7d08215msh45d28e3d9c633e3p109efajsn0dad38837480",
-  //     "X-RapidAPI-Host": "simple-youtube-search.p.rapidapi.com",
-  //   },
-  // };
+  
 
   const options = {
     method: "GET",
