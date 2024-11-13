@@ -59,18 +59,13 @@ function AuthForm({ title, setUserSearch }) {
     return errors.length === 0;
   };
 
-  const handleLogin = async (userData, newVisitor) => {
+  const handleLogin = async (userData) => {
     try {
       const loginToken = await api.post(`users/login`, userData);
       localStorage.setItem("token", loginToken);
       setUserSearch("Post malone");
       setToken(loginToken);
       navigate("/");
-      // if (newVisitor) {
-      //   navigate("/?newVisitor=true");
-      // } else {
-      //   navigate("/");
-      // }
     } catch (err) {
       setShowLoadingDiv(false);
       formRef.current.style.cursor = "auto";

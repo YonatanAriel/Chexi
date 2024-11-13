@@ -1,12 +1,6 @@
 import styles from "./style.module.css";
 import { BsPlayCircleFill } from "react-icons/bs";
-import {
-  useContext,
-  useEffect,
-  useLayoutEffect,
-  useRef,
-  useState,
-} from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import HandlePlayingSongContext from "../../contexts/HandlePlayingSong";
 import { WaveSpinner } from "react-spinners-kit";
 import Playlists from "../../contexts/Playlists";
@@ -30,10 +24,9 @@ function Home({
     songs,
     setSongs,
     isPlayerLoading,
-    setIsPlayerLoading,
   } = useContext(HandlePlayingSongContext);
   const [searchSongs, setSearchSongs] = useState();
-  const { setPlayedPlaylist, playedPlaylist } = useContext(Playlists);
+  const { setPlayedPlaylist } = useContext(Playlists);
   const [imagesErrorCount, setImagesErrorCount] = useState(0);
   const [songDivHeight, setSongDivHeight] = useState("52.3vh");
   const [imgHeight, setImgHeight] = useState("15vw");
@@ -68,8 +61,8 @@ function Home({
 
     const handleLoginDemoUser = async () => {
       try {
-        const DEMOUSERDATA = { userName: "demoUser", password: "55Da$s" };
-        const loginToken = await api.post(`users/login`, DEMOUSERDATA);
+        const demoUserData = { userName: "demoUser", password: "55Da$s" };
+        const loginToken = await api.post(`users/login`, demoUserData);
         localStorage.setItem("token", loginToken);
         setToken(loginToken);
       } catch (err) {

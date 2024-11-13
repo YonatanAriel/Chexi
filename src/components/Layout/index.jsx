@@ -1,6 +1,6 @@
 import styles from "./style.module.css";
 import { useEffect, useState, lazy, Suspense } from "react";
-import { Route, Routes, useLocation, useNavigate } from "react-router-dom";
+import { Route, Routes, useLocation } from "react-router-dom";
 import { BsMusicNote } from "react-icons/bs";
 import { getIconAsSvgDataURL } from "../../utils";
 import axios from "axios";
@@ -71,8 +71,6 @@ function Layout() {
   //     "X-RapidAPI-Host": "simple-youtube-search.p.rapidapi.com",
   //   },
   // };
-
-  const navigate = useNavigate().pathname;
 
   const options = {
     method: "GET",

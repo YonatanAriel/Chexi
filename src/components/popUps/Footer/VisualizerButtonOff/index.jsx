@@ -1,6 +1,6 @@
 import { FaCompressArrowsAlt } from "react-icons/fa";
 
-function VisualizerButton({ handleBackgroundVideo, screenWidth }) {
+function VisualizerButtonOff({ handleBackgroundVideo, screenWidth }) {
   return (
     <FaCompressArrowsAlt
       size={24}
@@ -9,4 +9,4 @@ function VisualizerButton({ handleBackgroundVideo, screenWidth }) {
     />
   );
 }
-export default VisualizerButton;
+export default VisualizerButtonOff;

@@ -1,7 +1,7 @@
 import styles from "./style.module.css";
 import YouTube from "react-youtube";
-import { useCallback, useContext, useEffect, useRef, useState } from "react";
-import { FaPlay, FaCompressArrowsAlt, FaExpandArrowsAlt } from "react-icons/fa";
+import { useContext, useEffect, useRef, useState } from "react";
+import { FaPlay, FaExpandArrowsAlt } from "react-icons/fa";
 import {
   TbPlayerSkipForwardFilled,
   TbPlayerSkipBackFilled,
@@ -18,6 +18,9 @@ import HandleFavoriteSong from "../../HandleFavoriteSong";
 import ShowPopups from "../../../contexts/ShowPopups";
 import Playlists from "../../../contexts/Playlists";
 import Token from "../../../contexts/Token";
+import VisualizerButtonOff from "./VisualizerButtonOff";
+import Tooltip from "../tooltip";
+import VisualizerButtonOn from "./VisualizerButtonOn";
 
 function Footer({ backgroundVideo, setBackgroundVideo, screenWidth }) {
   const [isPlayerReady, setIsPlayerReady] = useState(false);
@@ -66,7 +69,7 @@ function Footer({ backgroundVideo, setBackgroundVideo, screenWidth }) {
         typeof playerRef.current.getCurrentTime === "function" &&
         typeof playerRef.current.getPlayerState === "function"
       );
-    } catch (error) {
+    } catch (e) {
       return false;
     }
   };
@@ -265,22 +268,20 @@ function Footer({ backgroundVideo, setBackgroundVideo, screenWidth }) {
               </Link>
             )}
             {!backgroundVideo && (
-              <div>
-                <FaExpandArrowsAlt
-                  size={24}
-                  onClick={handleBackgroundVideo}
-                  className={styles.iconButton}
-                  style={{ display: screenWidth < 513 && "none" }}
+              <Tooltip content="Visualizer" marginLeft={true}>
+                <VisualizerButtonOn
+                  screenWidth={screenWidth}
+                  handleBackgroundVideo={handleBackgroundVideo}
                 />
-              </div>
+              </Tooltip>
             )}
             {backgroundVideo && (
-              <FaCompressArrowsAlt
-                size={24}
-                onClick={handleBackgroundVideo}
-                className={styles.iconButton}
-                style={{ display: screenWidth < 513 && "none" }}
-              />
+              <Tooltip content="Visualizer" marginLeft={true}>
+                <VisualizerButtonOff
+                  handleBackgroundVideo={handleBackgroundVideo}
+                  screenWidth={screenWidth}
+                />
+              </Tooltip>
             )}
           </div>
           <div className={styles.artistDetails}>
