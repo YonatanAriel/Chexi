@@ -10,7 +10,7 @@ add new artists, and save their preferred tracks effortlessly.
 
 ## Video - [Video](https://www.youtube.com/watch?v=jwihEcUi6Mo)
 
-## Website - [Chexi](https://chexi.netlify.app/)
+## Website - [Chexi](https://chexi.netlify.app/?newVisitor=true)
 
 ### Key Features
 
@@ -67,4 +67,6 @@ Thank you for visiting the Chexi GitHub repository, and I hope you have a fantas
 
 Happy listening and watching!
 
+```
 
+```
