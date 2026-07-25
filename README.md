@@ -2,11 +2,13 @@
 
 Welcome to the "Chexi" GitHub Repository!
 
-## About Chexi
+## About Chexi                                                                                    
 
 Chexi is an innovative web application that allows users to enjoy their favorite songs and videos while providing a seamless and enjoyable
 music and video streaming experience. My platform is designed with a user-centric approach, enabling music enthusiasts to create playlists,
 add new artists, and save their preferred tracks effortlessly.
+
+[![Ask DeepWiki](https://deepwiki.com/badge.svg)](https://deepwiki.com/YonatanAriel/Chexi)
 
 ## Video - [Video](https://www.youtube.com/watch?v=jwihEcUi6Mo)
 
