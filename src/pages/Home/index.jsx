@@ -154,22 +154,22 @@ function Home({
               <div className={styles.imgAndButton}>
                 <img
                   // key={song?.thumbnail?.id} old api
-                  key={song?.thumbnail[0]?.url}
+                  key={song?.thumbnail?.[0]?.url ?? i}
                   className={styles.songImg}
                   // src={song?.channel?.icon} old api
                   src={
                     !song?.richThumbnail
-                      ? song?.thumbnail[0]?.url
+                      ? song?.thumbnail?.[0]?.url
                       : hoveredSong === i
-                      ? song?.richThumbnail[0]?.url
-                      : song?.thumbnail[0]?.url
+                      ? song?.richThumbnail?.[0]?.url
+                      : song?.thumbnail?.[0]?.url
                   }
                   style={{ height: imgHeight }}
                   loading={
                     i < 10 ? "lazy" : loadRemainingImgs ? "eager" : "lazy"
                   }
                   onError={(e) => {
-                    e.target.src = song?.thumbnail[1]?.url;
+                    e.target.src = song?.thumbnail?.[1]?.url ?? "";
                     setImagesErrorCount((prev) => prev + 1);
                   }}
                   // onError={(e) => { old api
@@ -206,7 +206,7 @@ function Home({
                 )}
               </div>
               <h3 className={styles.songTitle}>
-                {song.title
+                {(song.title || "")
                   .split(/[\(\[]/)[0]
                   .trim()
                   .replace(/(.*)\s*-\s*(.*)/, "$2\n$1")
