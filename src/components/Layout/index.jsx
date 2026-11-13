@@ -133,8 +133,13 @@ function Layout() {
         const res = await axios.request(options);
 
         // handleSongsId(res.data.results) // old api;
+        // The API now mixes in ads (type "ad", no thumbnail); keep only real videos.
         const filteredSongs = res.data.data.filter(
-          (video) => video.title !== "Shorts"
+          (video) =>
+            video.type === "video" &&
+            video.videoId &&
+            video.thumbnail?.length &&
+            video.title !== "Shorts"
         );
         handleSongsId(filteredSongs);
 

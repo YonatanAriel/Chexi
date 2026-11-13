@@ -32,6 +32,13 @@ async function apiCalls(method, url, data) {
     });
     return res.data;
   } catch (error) {
+    // Expired or invalid token: drop it and send the user to the login screen
+    if (error?.response?.status === 401) {
+      localStorage.removeItem("token");
+      if (window.location.pathname !== "/Login") {
+        window.location.href = "/Login";
+      }
+    }
     throw error;
   }
 }
