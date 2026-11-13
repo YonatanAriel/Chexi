@@ -60,14 +60,18 @@ function Footer({ backgroundVideo, setBackgroundVideo, screenWidth }) {
     },
   };
 
+  // react-youtube passes the native YT.Player as e.target; check only its public API.
   const isPlayerFullyReady = () => {
     try {
+      const p = playerRef.current;
       return (
-        playerRef.current &&
-        playerRef.current?.h &&
-        playerRef.current?.g &&
-        typeof playerRef.current.getCurrentTime === "function" &&
-        typeof playerRef.current.getPlayerState === "function"
+        !!p &&
+        typeof p.getCurrentTime === "function" &&
+        typeof p.getDuration === "function" &&
+        typeof p.getPlayerState === "function" &&
+        typeof p.setVolume === "function" &&
+        typeof p.playVideo === "function" &&
+        typeof p.pauseVideo === "function"
       );
     } catch (e) {
       return false;
